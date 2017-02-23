@@ -1,0 +1,2 @@
+#Requirements for the Reversi game GUI
+pyqt5
