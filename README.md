@@ -1,2 +1,2 @@
 # reversi
-Reversi game in PyQT5
+Reversi game written in Python using Kivy framework.
