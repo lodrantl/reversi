@@ -1,0 +1,82 @@
+#:kivy 1.0.9
+<MenuScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Reversi'
+            font_size: 80
+        Button:
+            text: 'Single player'
+            on_press: root.manager.current = 'settings'
+        Button:
+            text: 'Two players'
+            on_press: app.start_two_players()
+        Button:
+            text: 'Game rules'
+            on_press: root.manager.current = 'rules'
+        Button:
+            text: 'Quit'
+            on_press: app.stop()
+
+<SettingsScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Match settings'
+            font_size: 20
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                text: 'Play as:'
+            ToggleButton:
+                text: 'White'
+                group: 'color'
+                state: 'down'
+            ToggleButton:
+                text: 'Black'
+                group: 'color'
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                text: 'Difficulty:'
+            ToggleButton:
+                text: 'Easy'
+                group: 'diff'
+            ToggleButton:
+                text: 'Medium'
+                group: 'diff'
+                state: 'down'
+            ToggleButton:
+                text: 'Hard'
+                group: 'diff'
+        BoxLayout:
+            Button:
+                text: 'Back'
+                on_press: root.manager.current = 'menu'
+            Button:
+                text: 'Play'
+                on_press: app.start_single_player()
+
+<GameScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Game screen'
+            font_size: 20
+        Button:
+            text: 'End game'
+            on_press: app.end_game()
+
+<RulesScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Game rules'
+            font_size: 20
+        Label:
+            text: 'TODO: indepth rule explanation'
+            font_size: 12
+        Button:
+            text: 'Back'
+            on_press: root.manager.current = 'menu'
+
