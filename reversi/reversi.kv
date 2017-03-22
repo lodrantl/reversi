@@ -1,6 +1,6 @@
 #:kivy 1.9.1
 
-<MenuScreen>:
+<MeniZaslon>:
     RelativeLayout:
         canvas:
             Color:
@@ -9,28 +9,28 @@
                 size: self.size
                 pos: self.pos
         Image:
-            source: 'artwork/naslov.png'
+            source: 'grafika/naslov.png'
             size_hint: None, None
             size: 447, 70
             pos_hint: {'center_x': 0.5, 'center_y': 0.9}
-        NajinGumb:
-            text: 'Single player'
-            on_release: root.manager.current = 'settings'
+        LepGumb:
+            text: 'En igralec'
+            on_release: root.manager.current = 'nastavitve'
             pos_hint: {'center_x': 0.5, 'center_y': 0.7}
-        NajinGumb:
-            text: 'Two players'
+        LepGumb:
+            text: 'Dva igralca'
             on_release: app.start_two_players()
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-        NajinGumb:
-            text: 'Game rules'
+        LepGumb:
+            text: 'Pravila'
             on_release: root.manager.current = 'rules'
             pos_hint: {'center_x': 0.5, 'center_y': 0.3}
-        NajinGumb:
-            text: 'Quit'
+        LepGumb:
+            text: 'Izhod'
             on_release: app.stop()
             pos_hint: {'center_x': 0.5, 'center_y': 0.1}
 
-<SettingsScreen>:
+<NastavitveZaslon>:
     RelativeLayout:
         canvas:
             Color:
@@ -39,7 +39,7 @@
                 size: self.size
                 pos: self.pos
         Image:
-            source: 'artwork/nastavi.png'
+            source: 'grafika/nastavi.png'
             size_hint: None, None
             size: 580, 60
             pos_hint: {'center_x': 0.5, 'center_y': 0.92}
@@ -56,13 +56,13 @@
                 size_hint_y: None
                 height: 100
                 orientation: 'horizontal'
-                NajinToggle:
-                    text: 'White'
-                    group: 'color'
+                LepRadio:
+                    text: 'Bela'
+                    group: 'barva'
                     state: 'down'
-                NajinToggle:
-                    text: 'Black'
-                    group: 'color'
+                LepRadio:
+                    text: 'Črna'
+                    group: 'barva'
         Label:
             text: '[color=#ffffff][b]Tezavnost:[/b][/color]'
             markup: True
@@ -76,26 +76,26 @@
                 size_hint_y: None
                 height: 100
                 orientation: 'horizontal'
-                NajinToggle:
-                    text: 'Easy'
-                    group: 'diff'
-                NajinToggle:
-                    text: 'Medium'
-                    group: 'diff'
+                LepRadio:
+                    text: 'Lahko'
+                    group: 'tezavnost'
+                LepRadio:
+                    text: 'Srednje'
+                    group: 'tezavnost'
                     state: 'down'
-                NajinToggle:
-                    text: 'Hard'
-                    group: 'diff'
-        NajinGumb:
+                LepRadio:
+                    text: 'Tezko'
+                    group: 'tezavnost'
+        LepGumb:
             text: 'Nazaj'
-            on_release: root.manager.current = 'menu'
+            on_release: root.manager.current = 'meni'
             pos_hint: {'center_x': 0.25, 'center_y': 0.14}
-        NajinGumb:
+        LepGumb:
             text: 'Igraj'
-            on_release: app.start_single_player()
+            on_release: app.zacni_dva_igralca()
             pos_hint: {'center_x': 0.75, 'center_y': 0.14}
 
-<GameScreen>:
+<IgraZaslon>:
     BoxLayout:
         orientation: 'vertical'
         spacing: 10
@@ -110,43 +110,43 @@
             Board:
         Button:
             text: 'End game'
-            on_release: app.end_game()
+            on_release: app.koncaj_igro()
             size_hint_y: None
             height: 25
 
-<Tile>
-    source: self.state + '.png'
+<Polje>
+    source: self.stanje + '.png'
     size_hint: 0.125, 0.125
 
 <Board>
     size_hint: None, None
     size: min(self.parent.width, self.parent.height), min(self.parent.width, self.parent.height)
 
-<RulesScreen>:
+<PravilaZaslon>:
     BoxLayout:
         orientation: 'vertical'
         Label:
-            text: 'Game rules'
+            text: 'Pravila'
             font_size: 20
         Label:
             text: 'TODO: indepth rule explanation'
             font_size: 12
         Button:
             text: 'Back'
-            on_release: root.manager.current = 'menu'
+            on_release: root.manager.current = 'meni'
 
-<NajinGumb@Button>:
+<LepGumb@Button>:
     color: 0, 0, 0, 1
     size_hint: None, None
     size: 231, 100
     font_size: '25sp'
-    background_normal: 'artwork/gumb.png'
-    background_down: 'artwork/gumb_pritisnjen.png'
+    background_normal: 'grafika/gumb.png'
+    background_down: 'grafika/gumb_pritisnjen.png'
 
-<NajinToggle@ToggleButton>:
+<LepRadio@ToggleButton>:
     color: 0, 0, 0, 1
     size_hint: None, None
     size: 154, 100
     font_size: '25sp'
-    background_normal: 'artwork/toggle.png'
-    background_down: 'artwork/toggle_izbran.png'
+    background_normal: 'grafika/radio.png'
+    background_down: 'grafika/radio_izbran.png'
