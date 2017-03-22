@@ -10,63 +10,63 @@ from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.uix.anchorlayout import AnchorLayout
 
-WHITE = 'white'
-BLACK = 'black'
-EMPTY = 'empty'
+BELI = 'white'
+CRNI = 'black'
+PRAZNO = 'empty'
 
 # Declare all application screens.
-class MenuScreen(Screen):
+class MeniZaslon(Screen):
     pass
-class SettingsScreen(Screen):
+class NastavitveZaslon(Screen):
     pass
-class GameScreen(Screen):
+class IgraZaslon(Screen):
     pass
-class RulesScreen(Screen):
+class PravilaZaslon(Screen):
     pass
 
-class Tile(Image):
-    state = StringProperty(EMPTY)
+class Polje(Image):
+    stanje = StringProperty(PRAZNO)
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
-            if self.state ==  EMPTY:
-                print(self.parent.turn)
-                self.state = self.parent.turn
-                if self.parent.turn == WHITE:
-                    self.parent.turn = BLACK
+            if self.stanje ==  PRAZNO:
+                print(self.parent.na_vrsti)
+                self.stanje = self.parent.na_vrsti
+                if self.parent.na_vrsti == BELI:
+                    self.parent.na_vrsti = CRNI
                 else:
-                    self.parent.turn = WHITE
+                    self.parent.na_vrsti = BELI
 
 
 class Board(RelativeLayout):
-    turn = StringProperty(WHITE)
+    na_vrsti = StringProperty(BELI)
     def __init__(self, **kwargs):
         super(Board, self).__init__(**kwargs)
         for i in range(8):
             for j in range(8):
-                t = Tile(pos_hint={'x': .125*j, 'y': .125*i})
+                t = Polje(pos_hint={'x': .125 * j, 'y': .125 * i})
                 if (i, j) == (3,3) or (i, j) == (4, 4):
-                    t.state = WHITE
+                    t.state = BELI
                 elif (i, j) == (3, 4) or (i, j) == (4, 3):
-                    t.state = BLACK
+                    t.state = CRNI
                 self.add_widget(t)
 
 
 class ReversiApp(App):
-    def start_single_player(self):
-        self.root.current = 'game'
+    def zacni_en_igralec(self):
+        self.root.current = 'igra'
 
-    def start_two_players(self):
-        self.root.current = 'game'
+    def zacni_dva_igralca(self):
+        self.root.current = 'igra'
 
-    def end_game(self):
-        self.root.current = 'menu'
+    def koncaj_igro(self):
+        self.root.current = 'meni'
 
     def build(self):
         sm = ScreenManager()
-        sm.add_widget(MenuScreen(name='menu'))
-        sm.add_widget(SettingsScreen(name='settings'))
-        sm.add_widget(GameScreen(name='game'))
-        sm.add_widget(RulesScreen(name='rules'))
+        sm.add_widget(MeniZaslon(name='meni'))
+        sm.add_widget(NastavitveZaslon(name='nastavitve'))
+        sm.add_widget(IgraZaslon(name='igra'))
+        sm.add_widget(PravilaZaslon(name='pravila'))
         return sm
 
 
