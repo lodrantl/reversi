@@ -47,10 +47,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.49497475"
-     inkscape:cx="127.0973"
+     inkscape:cx="133.26418"
      inkscape:cy="584.5622"
      inkscape:document-units="px"
-     inkscape:current-layer="g4533"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1280"
      inkscape:window-height="657"
@@ -78,13 +78,15 @@
        id="rect4284"
        width="1010.1525"
        height="824.28448"
-       x="-103.03556"
-       y="46.250259"
+       x="723.26923"
+       y="30.087818"
        rx="192.85699"
        ry="192.85699" />
     <g
        id="g4508"
-       transform="matrix(1.2248871,0,0,0.9925748,-127.58127,-32.609363)">
+       transform="matrix(1.2248871,0,0,0.9925748,-127.58127,-32.609363)"
+       inkscape:export-xdpi="150"
+       inkscape:export-ydpi="150">
       <path
          id="path4286"
          d="m 199.34858,125.25552 -50.68419,47.40611 0,126.47834 46.13788,43.15383 309.25749,0 50.686,-47.40779 0,-126.47833 -46.13607,-43.15216 -309.26111,0 z"
@@ -123,14 +125,14 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70.01101685px;line-height:125%;font-family:'Franklin Gothic Medium';-inkscape-font-specification:'Franklin Gothic Medium, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="453.34695"
-       y="91.314369"
+       x="661.43835"
+       y="97.375282"
        id="text4521"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4523"
-         x="453.34695"
-         y="91.314369">En igralec</tspan></text>
+         x="661.43835"
+         y="97.375282">En igralec</tspan></text>
     <text
        sodipodi:linespacing="125%"
        id="text4525"
@@ -154,8 +156,10 @@
          x="208.89005"
          y="537.80182">En igralec</tspan></text>
     <g
-       transform="matrix(1.2248871,0,0,0.9925748,-133.64219,213.86786)"
-       id="g4533">
+       transform="matrix(1.2248871,0,0,0.9925748,-594.27175,244.17244)"
+       id="g4533"
+       inkscape:export-xdpi="150"
+       inkscape:export-ydpi="150">
       <path
          inkscape:connector-curvature="0"
          style="fill:#f9f9f9;fill-opacity:1;stroke:none;stroke-width:10.20600033;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"

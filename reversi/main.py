@@ -6,6 +6,9 @@ from kivy.uix.button import Button
 from kivy.uix.image import Image
 from enum import Enum
 from kivy.properties import StringProperty
+from kivy.core.window import Window
+from kivy.uix.widget import Widget
+from kivy.uix.anchorlayout import AnchorLayout
 
 WHITE = 'white'
 BLACK = 'black'
@@ -19,6 +22,9 @@ class SettingsScreen(Screen):
 class GameScreen(Screen):
     pass
 class RulesScreen(Screen):
+    pass
+
+class NajinGumb(Button):
     pass
 
 class Tile(Image):

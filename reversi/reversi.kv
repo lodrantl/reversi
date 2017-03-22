@@ -1,23 +1,35 @@
 #:kivy 1.9.1
 
 <MenuScreen>:
-    BoxLayout:
-        orientation: 'vertical'
+    RelativeLayout:
+        canvas:
+            Color:
+                rgba: 0.5, 0, 0.5, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
         Label:
             text: 'Reversi'
             font_size: 80
-        Button:
+            size_hint_y: None
+            height: '100sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+        NajinGumb:
             text: 'Single player'
-            on_press: root.manager.current = 'settings'
-        Button:
+            on_release: root.manager.current = 'settings'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+        NajinGumb:
             text: 'Two players'
             on_press: app.start_two_players()
-        Button:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        NajinGumb:
             text: 'Game rules'
             on_press: root.manager.current = 'rules'
-        Button:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+        NajinGumb:
             text: 'Quit'
             on_press: app.stop()
+            pos_hint: {'center_x': 0.5, 'center_y': 0.1}
 
 <SettingsScreen>:
     BoxLayout:
@@ -97,3 +109,11 @@
         Button:
             text: 'Back'
             on_press: root.manager.current = 'menu'
+
+<NajinGumb@Button>:
+    color: 0, 0, 0, 1
+    size_hint: None, None
+    size: '250sp', '100sp'
+    font_size: '25sp'
+    background_normal: 'artwork/gumb.png'
+    background_down: 'artwork/gumb_pritisnjen.png'
