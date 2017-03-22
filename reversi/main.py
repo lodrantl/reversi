@@ -14,6 +14,7 @@ BELI = 'white'
 CRNI = 'black'
 PRAZNO = 'empty'
 
+
 # Declare all application screens.
 class MeniZaslon(Screen):
     pass
