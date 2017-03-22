@@ -1,4 +1,5 @@
-#:kivy 1.0.9
+#:kivy 1.9.1
+
 <MenuScreen>:
     BoxLayout:
         orientation: 'vertical'
@@ -60,12 +61,29 @@
 <GameScreen>:
     BoxLayout:
         orientation: 'vertical'
+        spacing: 10
         Label:
-            text: 'Game screen'
+            text: 'Reversi'
             font_size: 20
+            size_hint_y: None
+            height: 25
+        AnchorLayout:
+            size_hint_y: None
+            height: self.parent.height-70
+            Board:
         Button:
             text: 'End game'
             on_press: app.end_game()
+            size_hint_y: None
+            height: 25
+
+<Tile>
+    source: self.state + '.png'
+    size_hint: 0.125, 0.125
+
+<Board>
+    size_hint: None, None
+    size: min(self.parent.width, self.parent.height), min(self.parent.width, self.parent.height)
 
 <RulesScreen>:
     BoxLayout:
@@ -79,4 +97,3 @@
         Button:
             text: 'Back'
             on_press: root.manager.current = 'menu'
-
