@@ -10,10 +10,10 @@ from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.uix.anchorlayout import AnchorLayout
 
-BELI = 'white'
-CRNI = 'black'
-PRAZNO = 'empty'
-
+BELO = 'belo'
+CRNO = 'crno'
+PRAZNO = 'prazno'
+POTEZA = 'poteza'
 
 # Declare all application screens.
 class MeniZaslon(Screen):
@@ -32,23 +32,23 @@ class Polje(Image):
             if self.stanje ==  PRAZNO:
                 print(self.parent.na_vrsti)
                 self.stanje = self.parent.na_vrsti
-                if self.parent.na_vrsti == BELI:
-                    self.parent.na_vrsti = CRNI
+                if self.parent.na_vrsti == BELO:
+                    self.parent.na_vrsti = CRNO
                 else:
-                    self.parent.na_vrsti = BELI
+                    self.parent.na_vrsti = BELO
 
 
-class Board(RelativeLayout):
-    na_vrsti = StringProperty(BELI)
+class Deska(RelativeLayout):
+    na_vrsti = StringProperty(BELO)
     def __init__(self, **kwargs):
-        super(Board, self).__init__(**kwargs)
+        super(Deska, self).__init__(**kwargs)
         for i in range(8):
             for j in range(8):
                 t = Polje(pos_hint={'x': .125 * j, 'y': .125 * i})
                 if (i, j) == (3,3) or (i, j) == (4, 4):
-                    t.state = BELI
+                    t.state = BELO
                 elif (i, j) == (3, 4) or (i, j) == (4, 3):
-                    t.state = CRNI
+                    t.state = CRNO
                 self.add_widget(t)
 
 

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 744.09448819 1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="polja.svg">
+  <defs
+     id="defs4">
+    <filter
+       inkscape:label="In and Out"
+       inkscape:menu="Shadows and Glows"
+       inkscape:menu-tooltip="Inner colorized shadow, outer black shadow"
+       style="color-interpolation-filters:sRGB;"
+       id="filter4799">
+      <feGaussianBlur
+         result="result0"
+         in="SourceAlpha"
+         stdDeviation="17"
+         id="feGaussianBlur4801" />
+      <feOffset
+         dx="5"
+         dy="5"
+         result="result4"
+         id="feOffset4803" />
+      <feComposite
+         in="SourceGraphic"
+         in2="result4"
+         operator="xor"
+         result="result3"
+         id="feComposite4805" />
+    </filter>
+    <filter
+       inkscape:label="Raised Border"
+       inkscape:menu="Bevels"
+       inkscape:menu-tooltip="Strongly raised border around a flat surface"
+       height="1.5"
+       width="1.5"
+       y="-0.25"
+       x="-0.25"
+       style="color-interpolation-filters:sRGB;"
+       id="filter4850">
+      <feGaussianBlur
+         stdDeviation="30.100000000000001"
+         result="result1"
+         id="feGaussianBlur4852" />
+      <feComposite
+         in="result1"
+         in2="result1"
+         result="result4"
+         operator="in"
+         id="feComposite4854" />
+      <feGaussianBlur
+         stdDeviation="2"
+         result="result6"
+         in="result4"
+         id="feGaussianBlur4856" />
+      <feComposite
+         operator="xor"
+         in="result6"
+         in2="result4"
+         result="result8"
+         id="feComposite4858" />
+      <feComposite
+         operator="atop"
+         result="fbSourceGraphic"
+         in="result4"
+         in2="result8"
+         id="feComposite4860" />
+      <feSpecularLighting
+         specularExponent="10"
+         specularConstant="1.3"
+         surfaceScale="3"
+         lighting-color="rgb(255,255,255)"
+         result="result1"
+         in="fbSourceGraphic"
+         id="feSpecularLighting4862">
+        <feDistantLight
+           azimuth="235"
+           elevation="55"
+           id="feDistantLight4864" />
+      </feSpecularLighting>
+      <feComposite
+         operator="atop"
+         result="result2"
+         in="result1"
+         in2="fbSourceGraphic"
+         id="feComposite4866" />
+      <feComposite
+         k3="1"
+         k2="1"
+         operator="arithmetic"
+         result="result4"
+         in="fbSourceGraphic"
+         in2="result2"
+         id="feComposite4868" />
+      <feComposite
+         operator="over"
+         in="result4"
+         in2="SourceGraphic"
+         id="feComposite4870" />
+      <feBlend
+         mode="multiply"
+         in2="result2"
+         id="feBlend4872" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35355339"
+     inkscape:cx="-102.10163"
+     inkscape:cy="139.31314"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="657"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#1abb1a;fill-opacity:1;stroke:#0a6d0a;stroke-width:13.45615864;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4136"
+       width="407.04092"
+       height="407.04092"
+       x="133.52187"
+       y="319.15421"
+       rx="0"
+       ry="407.04092"
+       inkscape:export-xdpi="42.806477"
+       inkscape:export-ydpi="42.806477" />
+    <g
+       id="g4874"
+       transform="matrix(0.88679245,0,0,0.88679245,13.214698,34.229681)"
+       inkscape:export-xdpi="40.851067"
+       inkscape:export-ydpi="40.851067">
+      <circle
+         r="165.625"
+         cy="550.79968"
+         cx="365.1673"
+         id="path4176"
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:5.00600004;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4799)" />
+      <circle
+         r="165.625"
+         cy="550.79968"
+         cx="365.16733"
+         id="path4176-3"
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:5.00600004;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4850)" />
+    </g>
+    <rect
+       ry="407.04092"
+       rx="0"
+       y="775.40424"
+       x="160.30646"
+       height="407.04092"
+       width="407.04092"
+       id="rect4878"
+       style="fill:#1abb1a;fill-opacity:1;stroke:#0a6d0a;stroke-width:13.45615864;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       inkscape:export-xdpi="42.80648"
+       inkscape:export-ydpi="42.80648" />
+    <g
+       transform="matrix(0.88679245,0,0,0.88679245,80.402198,487.35468)"
+       id="g4880"
+       inkscape:export-xdpi="40.851067"
+       inkscape:export-ydpi="40.851067">
+      <circle
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:5.00600004;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4799)"
+         id="circle4882"
+         cx="319.60657"
+         cy="554.32361"
+         r="165.625" />
+      <circle
+         style="fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:5.00600004;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4850)"
+         id="circle4884"
+         cx="319.6066"
+         cy="554.32361"
+         r="165.625" />
+    </g>
+    <rect
+       inkscape:export-ydpi="42.80648"
+       inkscape:export-xdpi="42.80648"
+       style="fill:#1abb1a;fill-opacity:1;stroke:#0a6d0a;stroke-width:13.45615864;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4904"
+       width="407.04092"
+       height="407.04092"
+       x="-489.3479"
+       y="510.2392"
+       rx="0"
+       ry="407.04092" />
+  </g>
+</svg>

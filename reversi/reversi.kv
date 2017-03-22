@@ -99,6 +99,12 @@
 
 <IgraZaslon>:
     BoxLayout:
+        canvas:
+            Color:
+                rgba: 0.5, 0, 0.5, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
         orientation: 'vertical'
         spacing: '10sp'
         Label:
@@ -109,18 +115,18 @@
         AnchorLayout:
             size_hint_y: None
             height: self.parent.height-70
-            Board:
+            Deska:
         Button:
             text: 'End game'
             on_release: app.koncaj_igro()
             size_hint_y: None
             height: '25sp'
 
-<Polje>
-    source: self.stanje + '.png'
+<Polje@Image>
+    source: 'grafika/' + self.stanje + '.png'
     size_hint: 0.125, 0.125
 
-<Board>
+<Deska@RelativeLayout>
     size_hint: None, None
     size: min(self.parent.width, self.parent.height), min(self.parent.width, self.parent.height)
 
