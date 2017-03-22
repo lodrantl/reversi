@@ -60,15 +60,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="100.71429"
+     inkscape:cx="-125.77466"
      inkscape:cy="862.85714"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1280"
-     inkscape:window-height="703"
-     inkscape:window-x="0"
-     inkscape:window-y="1"
+     inkscape:window-height="657"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -78,7 +78,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -96,15 +96,17 @@
     <flowRoot
        xml:space="preserve"
        id="flowRoot3336"
-       style="font-style:normal;font-weight:normal;font-size:70px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:#008000;stroke-width:3.42299867;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter4482)"
-       transform="matrix(1.5667549,0,0,1.5667549,-229.41845,-350.93138)"><flowRegion
+       style="font-style:normal;font-weight:normal;font-size:70px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:#008000;stroke-width:1.7233072;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter4482)"
+       inkscape:export-xdpi="54.135002"
+       inkscape:export-ydpi="54.135002"
+       transform="matrix(1.5667549,0,0,1.5667549,-560.84702,-400.93138)"><flowRegion
          id="flowRegion3338"><rect
            id="rect3340"
            width="625.71429"
            height="234.28572"
            x="68.571426"
            y="169.50507"
-           style="font-size:70px;fill:#ffffff;fill-opacity:1;stroke:#008000;stroke-width:3.42299867;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" /></flowRegion><flowPara
+           style="font-size:70px;fill:#ffffff;fill-opacity:1;stroke:#008000;stroke-width:1.7233072;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" /></flowRegion><flowPara
          id="flowPara3342"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:134.00000334%;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0.11px;word-spacing:0.13px;fill:#ffffff;fill-opacity:1;stroke:#008000;stroke-width:3.42299867;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">REVERSI</flowPara></flowRoot>  </g>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:134.00000334%;font-family:sans-serif;-inkscape-font-specification:sans-serif;letter-spacing:0.11px;word-spacing:0.13px;fill:#ffffff;fill-opacity:1;stroke:#008000;stroke-width:1.7233072;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">NASTAVI IGRO</flowPara></flowRoot>  </g>
 </svg>
