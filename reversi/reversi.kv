@@ -11,7 +11,7 @@
         Image:
             source: 'grafika/naslov.png'
             size_hint: None, None
-            size: 447, 70
+            size: '447sp', '70sp'
             pos_hint: {'center_x': 0.5, 'center_y': 0.9}
         LepGumb:
             text: 'En igralec'
@@ -41,12 +41,12 @@
         Image:
             source: 'grafika/nastavi.png'
             size_hint: None, None
-            size: 580, 60
+            size: '580sp', '60sp'
             pos_hint: {'center_x': 0.5, 'center_y': 0.92}
         Label:
             text: '[color=#ffffff][b]Igraj kot:[/b][/color]'
             markup: True
-            font_size: 30
+            font_size: '30sp'
             size_hint: 0.3, 0.28
             pos_hint: {'x': 0, 'center_y': 0.7}
         AnchorLayout:
@@ -54,7 +54,7 @@
             pos_hint: {'x': 0.3, 'center_y': 0.7}
             BoxLayout:
                 size_hint_y: None
-                height: 100
+                height: '100sp'
                 orientation: 'horizontal'
                 LepRadio:
                     text: 'Bela'
@@ -66,7 +66,7 @@
         Label:
             text: '[color=#ffffff][b]Tezavnost:[/b][/color]'
             markup: True
-            font_size: 30
+            font_size: '30sp'
             size_hint: 0.3, 0.28
             pos_hint: {'x': 0, 'center_y': 0.42}
         AnchorLayout:
@@ -74,7 +74,7 @@
             pos_hint: {'x': 0.3, 'center_y': 0.42}
             BoxLayout:
                 size_hint_y: None
-                height: 100
+                height: '100sp'
                 orientation: 'horizontal'
                 LepRadio:
                     text: 'Lahko'
@@ -98,12 +98,12 @@
 <IgraZaslon>:
     BoxLayout:
         orientation: 'vertical'
-        spacing: 10
+        spacing: '10sp'
         Label:
             text: 'Reversi'
-            font_size: 20
+            font_size: '20sp'
             size_hint_y: None
-            height: 25
+            height: '25sp'
         AnchorLayout:
             size_hint_y: None
             height: self.parent.height-70
@@ -112,7 +112,7 @@
             text: 'End game'
             on_release: app.koncaj_igro()
             size_hint_y: None
-            height: 25
+            height: '25sp'
 
 <Polje>
     source: self.stanje + '.png'
@@ -127,10 +127,10 @@
         orientation: 'vertical'
         Label:
             text: 'Pravila'
-            font_size: 20
+            font_size: '20sp'
         Label:
             text: 'TODO: indepth rule explanation'
-            font_size: 12
+            font_size: '12sp'
         Button:
             text: 'Back'
             on_release: root.manager.current = 'meni'
@@ -138,7 +138,7 @@
 <LepGumb@Button>:
     color: 0, 0, 0, 1
     size_hint: None, None
-    size: 231, 100
+    size: '231sp', '100sp'
     font_size: '25sp'
     background_normal: 'grafika/gumb.png'
     background_down: 'grafika/gumb_pritisnjen.png'
@@ -146,7 +146,7 @@
 <LepRadio@ToggleButton>:
     color: 0, 0, 0, 1
     size_hint: None, None
-    size: 154, 100
+    size: '154sp', '100sp'
     font_size: '25sp'
     background_normal: 'grafika/radio.png'
     background_down: 'grafika/radio_izbran.png'
