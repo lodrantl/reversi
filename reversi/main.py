@@ -9,6 +9,12 @@ from kivy.properties import StringProperty
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.uix.anchorlayout import AnchorLayout
+from kivy.properties import NumericProperty
+
+from kivy.metrics import sp
+
+Window.minimum_width = sp(500)
+Window.minimum_height = sp(550)
 
 BELO = 'belo'
 CRNO = 'crno'
@@ -20,9 +26,10 @@ class MeniZaslon(Screen):
     pass
 class NastavitveZaslon(Screen):
     pass
-class IgraZaslon(Screen):
-    pass
 class PravilaZaslon(Screen):
+    pass
+
+class IgraZaslon(Screen):
     pass
 
 class Polje(Image):
@@ -40,6 +47,12 @@ class Polje(Image):
 
 class Deska(RelativeLayout):
     na_vrsti = StringProperty(BELO)
+
+    stevilo_crnih = NumericProperty(0)
+    stevilo_belih = NumericProperty(0)
+    ime_crnega = StringProperty('Računalnik')
+    ime_belega = StringProperty('Človek')
+
     def __init__(self, **kwargs):
         super(Deska, self).__init__(**kwargs)
         for i in range(8):
@@ -63,6 +76,11 @@ class ReversiApp(App):
         self.root.current = 'meni'
 
     def build(self):
+       # Config.set('graphics', 'minimum_width', sp(200))
+      #  Config.set('graphics', 'minimum_height', 200)
+      #  Config.write()
+
+
         sm = ScreenManager()
         sm.add_widget(MeniZaslon(name='meni'))
         sm.add_widget(NastavitveZaslon(name='nastavitve'))

@@ -107,26 +107,35 @@
                 pos: self.pos
         orientation: 'vertical'
         spacing: '10sp'
-        Label:
-            text: 'Reversi'
-            font_size: '20sp'
-            size_hint_y: None
-            height: '25sp'
+        RelativeLayout:
+            size_hint: 1, None
+            height: '70sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
         AnchorLayout:
             size_hint_y: None
-            height: self.parent.height-70
+            height: self.parent.height - sp(170)
+            Label:
+                text: self.parent.ids['deska'].ime_belega
+                font_size: '30sp'
+                size_hint: 0.3, 0.28
+                pos_hint: {'x': 0, 'center_y': 0.42}
             Deska:
-        Button:
-            text: 'End game'
+                id: 'deska'
+        LepGumb:
+            text: 'Kon\u010Daj igro'
+            font_size: '20sp'
             on_release: app.koncaj_igro()
-            size_hint_y: None
-            height: '25sp'
+            size: '150sp', '65sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        Widget: #Bottom margin
+            size_hint: None, None
+            size: '1sp', 0
 
-<Polje@Image>
+<Polje>
     source: 'grafika/' + self.stanje + '.png'
     size_hint: 0.125, 0.125
 
-<Deska@RelativeLayout>
+<Deska>
     size_hint: None, None
     size: min(self.parent.width, self.parent.height), min(self.parent.width, self.parent.height)
 
