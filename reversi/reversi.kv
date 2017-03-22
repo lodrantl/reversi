@@ -13,17 +13,18 @@
             size_hint: None, None
             size: '447sp', '70sp'
             pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+            mipmap: True
         LepGumb:
             text: 'En igralec'
             on_release: root.manager.current = 'nastavitve'
             pos_hint: {'center_x': 0.5, 'center_y': 0.7}
         LepGumb:
             text: 'Dva igralca'
-            on_release: app.start_two_players()
+            on_release: app.zacni_dva_igralca()
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
         LepGumb:
             text: 'Pravila'
-            on_release: root.manager.current = 'rules'
+            on_release: root.manager.current = 'pravila'
             pos_hint: {'center_x': 0.5, 'center_y': 0.3}
         LepGumb:
             text: 'Izhod'
@@ -43,6 +44,7 @@
             size_hint: None, None
             size: '580sp', '60sp'
             pos_hint: {'center_x': 0.5, 'center_y': 0.92}
+            mipmap: True
         Label:
             text: '[color=#ffffff][b]Igraj kot:[/b][/color]'
             markup: True
@@ -57,14 +59,14 @@
                 height: '100sp'
                 orientation: 'horizontal'
                 LepRadio:
-                    text: 'Bela'
+                    text: 'beli'
                     group: 'barva'
                     state: 'down'
                 LepRadio:
-                    text: u'Črna'
+                    text: '\u010Drni'
                     group: 'barva'
         Label:
-            text: '[color=#ffffff][b]Tezavnost:[/b][/color]'
+            text: '[color=#ffffff][b]Te\u017Eavnost:[/b][/color]'
             markup: True
             font_size: '30sp'
             size_hint: 0.3, 0.28
@@ -77,14 +79,14 @@
                 height: '100sp'
                 orientation: 'horizontal'
                 LepRadio:
-                    text: 'Lahko'
+                    text: 'lahko'
                     group: 'tezavnost'
                 LepRadio:
-                    text: 'Srednje'
+                    text: 'srednje'
                     group: 'tezavnost'
                     state: 'down'
                 LepRadio:
-                    text: 'Tezko'
+                    text: 'te\u017Eko'
                     group: 'tezavnost'
         LepGumb:
             text: 'Nazaj'
