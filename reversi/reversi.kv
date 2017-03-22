@@ -8,11 +8,10 @@
             Rectangle:
                 size: self.size
                 pos: self.pos
-        Label:
-            text: 'Reversi'
-            font_size: 80
-            size_hint_y: None
-            height: '100sp'
+        Image:
+            source: 'artwork/naslov.png'
+            size_hint: None, None
+            size: 447, 70
             pos_hint: {'center_x': 0.5, 'center_y': 0.9}
         NajinGumb:
             text: 'Single player'
@@ -20,55 +19,81 @@
             pos_hint: {'center_x': 0.5, 'center_y': 0.7}
         NajinGumb:
             text: 'Two players'
-            on_press: app.start_two_players()
+            on_release: app.start_two_players()
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
         NajinGumb:
             text: 'Game rules'
-            on_press: root.manager.current = 'rules'
+            on_release: root.manager.current = 'rules'
             pos_hint: {'center_x': 0.5, 'center_y': 0.3}
         NajinGumb:
             text: 'Quit'
-            on_press: app.stop()
+            on_release: app.stop()
             pos_hint: {'center_x': 0.5, 'center_y': 0.1}
 
 <SettingsScreen>:
-    BoxLayout:
-        orientation: 'vertical'
+    RelativeLayout:
+        canvas:
+            Color:
+                rgba: 0.5, 0, 0.5, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Image:
+            source: 'artwork/nastavi.png'
+            size_hint: None, None
+            size: 580, 60
+            pos_hint: {'center_x': 0.5, 'center_y': 0.92}
         Label:
-            text: 'Match settings'
-            font_size: 20
-        BoxLayout:
-            orientation: 'horizontal'
-            Label:
-                text: 'Play as:'
-            ToggleButton:
-                text: 'White'
-                group: 'color'
-                state: 'down'
-            ToggleButton:
-                text: 'Black'
-                group: 'color'
-        BoxLayout:
-            orientation: 'horizontal'
-            Label:
-                text: 'Difficulty:'
-            ToggleButton:
-                text: 'Easy'
-                group: 'diff'
-            ToggleButton:
-                text: 'Medium'
-                group: 'diff'
-                state: 'down'
-            ToggleButton:
-                text: 'Hard'
-                group: 'diff'
-        BoxLayout:
-            Button:
-                text: 'Back'
-                on_press: root.manager.current = 'menu'
-            Button:
-                text: 'Play'
-                on_press: app.start_single_player()
+            text: '[color=#ffffff][b]Igraj kot:[/b][/color]'
+            markup: True
+            font_size: 30
+            size_hint: 0.3, 0.28
+            pos_hint: {'x': 0, 'center_y': 0.7}
+        AnchorLayout:
+            size_hint: 0.7, 0.28
+            pos_hint: {'x': 0.3, 'center_y': 0.7}
+            BoxLayout:
+                size_hint_y: None
+                height: 100
+                orientation: 'horizontal'
+                NajinToggle:
+                    text: 'White'
+                    group: 'color'
+                    state: 'down'
+                NajinToggle:
+                    text: 'Black'
+                    group: 'color'
+        Label:
+            text: '[color=#ffffff][b]Tezavnost:[/b][/color]'
+            markup: True
+            font_size: 30
+            size_hint: 0.3, 0.28
+            pos_hint: {'x': 0, 'center_y': 0.42}
+        AnchorLayout:
+            size_hint: 0.7, 0.28
+            pos_hint: {'x': 0.3, 'center_y': 0.42}
+            BoxLayout:
+                size_hint_y: None
+                height: 100
+                orientation: 'horizontal'
+                NajinToggle:
+                    text: 'Easy'
+                    group: 'diff'
+                NajinToggle:
+                    text: 'Medium'
+                    group: 'diff'
+                    state: 'down'
+                NajinToggle:
+                    text: 'Hard'
+                    group: 'diff'
+        NajinGumb:
+            text: 'Nazaj'
+            on_release: root.manager.current = 'menu'
+            pos_hint: {'center_x': 0.25, 'center_y': 0.14}
+        NajinGumb:
+            text: 'Igraj'
+            on_release: app.start_single_player()
+            pos_hint: {'center_x': 0.75, 'center_y': 0.14}
 
 <GameScreen>:
     BoxLayout:
@@ -85,7 +110,7 @@
             Board:
         Button:
             text: 'End game'
-            on_press: app.end_game()
+            on_release: app.end_game()
             size_hint_y: None
             height: 25
 
@@ -108,12 +133,20 @@
             font_size: 12
         Button:
             text: 'Back'
-            on_press: root.manager.current = 'menu'
+            on_release: root.manager.current = 'menu'
 
 <NajinGumb@Button>:
     color: 0, 0, 0, 1
     size_hint: None, None
-    size: '250sp', '100sp'
+    size: 231, 100
     font_size: '25sp'
     background_normal: 'artwork/gumb.png'
     background_down: 'artwork/gumb_pritisnjen.png'
+
+<NajinToggle@ToggleButton>:
+    color: 0, 0, 0, 1
+    size_hint: None, None
+    size: 154, 100
+    font_size: '25sp'
+    background_normal: 'artwork/toggle.png'
+    background_down: 'artwork/toggle_izbran.png'

@@ -24,9 +24,6 @@ class GameScreen(Screen):
 class RulesScreen(Screen):
     pass
 
-class NajinGumb(Button):
-    pass
-
 class Tile(Image):
     state = StringProperty(EMPTY)
     def on_touch_down(self, touch):
