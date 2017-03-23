@@ -30,7 +30,11 @@ class PravilaZaslon(Screen):
     pass
 
 class IgraZaslon(Screen):
-    pass
+    stevilo_crnih = NumericProperty(0)
+    stevilo_belih = NumericProperty(0)
+    ime_crnega = StringProperty('Računalnik')
+    ime_belega = StringProperty('Človek')
+
 
 class Polje(Image):
     stanje = StringProperty(PRAZNO)
@@ -47,11 +51,6 @@ class Polje(Image):
 
 class Deska(RelativeLayout):
     na_vrsti = StringProperty(BELO)
-
-    stevilo_crnih = NumericProperty(0)
-    stevilo_belih = NumericProperty(0)
-    ime_crnega = StringProperty('Računalnik')
-    ime_belega = StringProperty('Človek')
 
     def __init__(self, **kwargs):
         super(Deska, self).__init__(**kwargs)
@@ -76,11 +75,6 @@ class ReversiApp(App):
         self.root.current = 'meni'
 
     def build(self):
-       # Config.set('graphics', 'minimum_width', sp(200))
-      #  Config.set('graphics', 'minimum_height', 200)
-      #  Config.write()
-
-
         sm = ScreenManager()
         sm.add_widget(MeniZaslon(name='meni'))
         sm.add_widget(NastavitveZaslon(name='nastavitve'))
