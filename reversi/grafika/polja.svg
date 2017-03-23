@@ -123,16 +123,22 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
+<<<<<<< Updated upstream
      inkscape:zoom="0.16"
      inkscape:cx="-1271.1276"
      inkscape:cy="-247.48469"
+=======
+     inkscape:zoom="0.35355339"
+     inkscape:cx="-102.10163"
+     inkscape:cy="-313.2352"
+>>>>>>> Stashed changes
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1280"
-     inkscape:window-height="657"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-height="703"
+     inkscape:window-x="0"
+     inkscape:window-y="1"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -219,6 +225,7 @@
        y="513.67316"
        rx="0"
        ry="407.04092" />
+<<<<<<< Updated upstream
     <circle
        style="fill:#ffd600;fill-opacity:1;stroke:#ff8d00;stroke-width:5.00600004;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="path4158"
@@ -227,5 +234,45 @@
        r="63.63961"
        inkscape:export-xdpi="42.80648"
        inkscape:export-ydpi="42.80648" />
+=======
+    <g
+       inkscape:export-ydpi="40.851067"
+       inkscape:export-xdpi="40.851067"
+       id="g4166"
+       transform="matrix(0.88679245,0,0,0.88679245,-745.49853,863.53548)"
+       inkscape:transform-center-x="-647.7098"
+       inkscape:transform-center-y="-291.32799">
+      <circle
+         r="165.625"
+         cy="554.32361"
+         cx="319.60657"
+         id="circle4168"
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:5.00600004;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4799)" />
+      <circle
+         r="165.625"
+         cy="554.32361"
+         cx="319.6066"
+         id="circle4170"
+         style="fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:5.00600004;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4850)" />
+    </g>
+    <g
+       inkscape:export-ydpi="40.851067"
+       inkscape:export-xdpi="40.851067"
+       transform="matrix(0.88679245,0,0,0.88679245,-153.6625,1103.3751)"
+       id="g4172">
+      <circle
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:5.00600004;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4799)"
+         id="circle4174"
+         cx="365.1673"
+         cy="550.79968"
+         r="165.625" />
+      <circle
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:5.00600004;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter4850)"
+         id="circle4176"
+         cx="365.16733"
+         cy="550.79968"
+         r="165.625" />
+    </g>
+>>>>>>> Stashed changes
   </g>
 </svg>
