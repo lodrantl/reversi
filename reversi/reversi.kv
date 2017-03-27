@@ -4,7 +4,7 @@
     RelativeLayout:
         canvas:
             Color:
-                rgba: 0.5, 0, 0.5, 1
+                rgba: app.barva_primarna
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -100,6 +100,7 @@
             pos_hint: {'center_x': 0.75, 'center_y': 0.14}
 
 <IgraZaslon>:
+    deska: deska
     BoxLayout:
         canvas:
             Color:
@@ -109,6 +110,11 @@
                 pos: self.pos
         orientation: 'vertical'
         spacing: '10sp'
+        AnchorLayout:
+            size_hint_y: None
+            height: self.parent.height - sp(170)
+            Deska:
+                id: deska
         RelativeLayout:
             size_hint: 1, None
             height: '70sp'
@@ -125,26 +131,22 @@
                 pos_hint: {'center_x': 0.45, 'center_y': 0.5}
             Label:
                 color: 0,0,0,1
-                text: str(root.stevilo_crnih)
+                text: str(root.deska.stevilo_crnih)
+                id: 'labela'
                 pos_hint: {'center_x': 0.45, 'center_y': 0.5}
             Zeton:
                 source: 'grafika/crni_zeton.png'
                 pos_hint: {'center_x': 0.55, 'center_y': 0.5}
             Label:
                 color: 1,1,1,1
-                text: str(root.stevilo_belih)
+                text: str(root.deska.stevilo_belih)
                 pos_hint: {'center_x': 0.55, 'center_y': 0.5}
             BarvniLabel:
-                text: root.ime_crnega
+                text: root.ime_belega
                 font_size: '30sp'
                 size_hint: 0.4, 1
                 background_color: 0, 0.5, 0, 0
                 pos_hint: {'center_x': 0.8, 'center_y': 0.5}
-        AnchorLayout:
-            size_hint_y: None
-            height: self.parent.height - sp(170)
-            Deska:
-                id: 'deska'
         LepGumb:
             text: 'Kon\u010Daj igro'
             font_size: '20sp'
@@ -176,14 +178,14 @@
             text: 'Back'
             on_release: root.manager.current = 'meni'
 
-<LepGumb@Button>:
-    color: 0, 0, 0, 1
-    size_hint: None, None
-    size: '231sp', '100sp'
-    font_size: '25sp'
-    background_normal: 'grafika/gumb.png'
-    background_down: 'grafika/gumb_pritisnjen.png'
-    mipmap: True
+#<LepGumb@Button>:
+#    color: 0, 0, 0, 1
+#    size_hint: None, None
+#    size: '231sp', '100sp'
+#    font_size: '25sp'
+#    background_normal: 'grafika/gumb.png'
+#    background_down: 'grafika/gumb_pritisnjen.png'
+#    mipmap: True
 
 
 <LepRadio@ToggleButton>:
@@ -194,6 +196,29 @@
     background_normal: 'grafika/radio.png'
     background_down: 'grafika/radio_izbran.png'
     mipmap: True
+
+<LepGumb>:
+    color: 0, 0, 0, 1
+    size_hint: None, None
+    size: '231sp', '100sp'
+    font_size: '25sp'
+    background_color: 0, 0, 0, 0
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: app.barva_primarna
+        RoundedRectangle:
+            pos: self.pos[0] + 5, self.pos[1] + 5
+            size: self.size[0]-10, self.size[1]-10
+        Color:
+            rgba: self.notranja_barva
+        RoundedRectangle:
+            pos: self.pos[0] + 10, self.pos[1] + 10
+            size: self.size[0]-20, self.size[1]-20
 
 
 <Zeton@Image>:

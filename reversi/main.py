@@ -5,21 +5,20 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.button import Button
 from kivy.uix.image import Image
 from enum import Enum
-from kivy.properties import StringProperty
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.uix.anchorlayout import AnchorLayout
-from kivy.properties import NumericProperty
+from kivy.properties import NumericProperty, ListProperty, OptionProperty, StringProperty
+from kivy.uix.button import ButtonBehavior
 
 from kivy.metrics import sp
+
+from igra import Stanje, Igra
+
 
 Window.minimum_width = sp(500)
 Window.minimum_height = sp(550)
 
-BELO = 'belo'
-CRNO = 'crno'
-PRAZNO = 'prazno'
-POTEZA = 'poteza'
 
 # Declare all application screens.
 class MeniZaslon(Screen):
@@ -28,43 +27,81 @@ class NastavitveZaslon(Screen):
     pass
 class PravilaZaslon(Screen):
     pass
-
 class IgraZaslon(Screen):
-    stevilo_crnih = NumericProperty(0)
-    stevilo_belih = NumericProperty(0)
     ime_crnega = StringProperty('Računalnik')
     ime_belega = StringProperty('Človek')
 
 
-class Polje(Image):
-    stanje = StringProperty(PRAZNO)
-    def on_touch_down(self, touch):
-        if self.collide_point(*touch.pos):
-            if self.stanje ==  PRAZNO:
-                print(self.parent.na_vrsti)
-                self.stanje = self.parent.na_vrsti
-                if self.parent.na_vrsti == BELO:
-                    self.parent.na_vrsti = CRNO
-                else:
-                    self.parent.na_vrsti = BELO
+class LepGumb(Button):
+    notranja_barva = ListProperty([1, 1, 1, 1])
+
+    def on_state(self, event, x):
+        if x == 'down':
+            self.notranja_barva = [1, 0, 1, 1]
+        elif x == 'normal':
+            self.notranja_barva = [1, 1, 1, 1]
+
+
+class Polje(ButtonBehavior, Image):
+    stanje = OptionProperty(Stanje.PRAZNO, options=[Stanje.BELO, Stanje.CRNO, Stanje.PRAZNO, Stanje.MOGOCE])
+    koordinate = ListProperty([-1, -1])
+
+    def on_press(self):
+        if self.stanje == Stanje.PRAZNO:
+            self.parent.odigraj_potezo(self.koordinate)
+
+    def nastavi(self, barva):
+        self.stanje = barva
 
 
 class Deska(RelativeLayout):
-    na_vrsti = StringProperty(BELO)
+    na_potezi = OptionProperty(Stanje.BELO, options=[Stanje.BELO, Stanje.CRNO])
+    polja = []
+    igra = None
+    stevilo_crnih = NumericProperty(2)
+    stevilo_belih = NumericProperty(2)
 
     def __init__(self, **kwargs):
         super(Deska, self).__init__(**kwargs)
         for i in range(8):
+            self.polja.append([])
             for j in range(8):
-                t = Polje(pos_hint={'x': .125 * j, 'y': .125 * i})
-                if (i, j) == (3,3) or (i, j) == (4, 4):
-                    t.state = BELO
+                t = Polje(pos_hint={'x': .125 * j, 'y': .125 * i}, koordinate=[i,j])
+                if (i, j) == (3, 3) or (i, j) == (4, 4):
+                    t.stanje = Stanje.BELO
                 elif (i, j) == (3, 4) or (i, j) == (4, 3):
-                    t.state = CRNO
+                    t.stanje = Stanje.CRNO
                 self.add_widget(t)
+                self.polja[i].append(t)
+        self.nastavi_mogoce()
+
+    def izvozi_igro(self):
+        polja = [[polje.stanje for polje in vrstica] for vrstica in self.polja]
+        return Igra(self.na_potezi, polja)
+
+    def nastavi_mogoce(self):
+        igra = self.izvozi_igro()
+        for x, y in igra.mozne_poteze():
+            self.polja[x][y].nastavi(Stanje.MOGOCE)
+
+    def odigraj_potezo(self, koordinate):
+        print(koordinate)
+        x, y = koordinate
+        self.polja[x][y].nastavi(self.na_potezi)
+        if self.na_potezi == Stanje.BELO:
+            self.stevilo_belih += 1
+            self.na_potezi = Stanje.CRNO
+        else:
+            self.stevilo_crnih += 1
+            self.na_potezi = Stanje.BELO
+        self.nastavi_mogoce()
+
 
 
 class ReversiApp(App):
+    barva_primarna = ListProperty([.5, 0, .5, 1])
+    barva_sekundarna = ListProperty([0, .5, 0, 1])
+
     def zacni_en_igralec(self):
         self.root.current = 'igra'
 
