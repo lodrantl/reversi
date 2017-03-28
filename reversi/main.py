@@ -67,7 +67,7 @@ class Polje(ButtonBehavior, Image):
         Ob pritisku, če je polje prazno, odigra potezo
         :return:
         """
-        if self.stanje == Stanje.PRAZNO:
+        if self.stanje == Stanje.MOGOCE:
             self.parent.odigraj_potezo(self.koordinate)
 
     def nastavi(self, barva):
@@ -121,8 +121,7 @@ class Deska(RelativeLayout):
     def odigraj_potezo(self, koordinate):
         self.igra.odigraj_potezo(koordinate)
         self.uvozi_igro()
-        [(i, j) for i in range(8) for j in range(8) if True   ]
-
+        print(koordinate)
 
 class ReversiApp(App):
     barva_primarna = ListProperty([.5, 0, .5, 1])
