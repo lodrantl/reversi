@@ -8,7 +8,7 @@ class Stanje():
 
 class Igra:
     deska = [[Stanje.PRAZNO for _ in range(8)] for _ in range(8)]
-    poteza = Stanje.BELO
+    na_potezi = Stanje.BELO
     mozne_poteze = set()
     stevilo_belih = 0
     stevilo_crnih = 0
@@ -34,9 +34,9 @@ class Igra:
                 while 0 <= i <= 7 and 0<= j <= 7:
                     if self.deska[i][j] == Stanje.PRAZNO:
                         break
-                    if self.deska[i][j] == self.poteza and not zastavica:
+                    if self.deska[i][j] == self.na_potezi and not zastavica:
                         break
-                    if self.deska[i][j] == self.poteza and zastavica:
+                    if self.deska[i][j] == self.na_potezi and zastavica:
                         return True
                     i  += smer_x
                     j += smer_y
@@ -47,17 +47,12 @@ class Igra:
     def odigraj_potezo(self, koordinate):
         x, y = koordinate
         if (x, y) in self.mozne_poteze:
-            self.deska[x][y] = self.poteza
+            self.deska[x][y] = self.na_potezi
             print(self.deska[x][y])
             polja_za_obrnit = self.preveri_katera_polja_za_obrnit(x, y)
             print(polja_za_obrnit)
             for polje in polja_za_obrnit:
                 self.obrni_zeton(polje)
-            if self.poteza == Stanje.BELO:
-                self.poteza = Stanje.CRNO
-            elif self.poteza == Stanje.CRNO:
-                self.poteza = Stanje.BELO
-            self.deska[x][y] = self.na_potezi
             if self.na_potezi == Stanje.BELO:
                 self.stevilo_belih += 1
                 self.na_potezi = Stanje.CRNO
@@ -84,10 +79,10 @@ class Igra:
             trenutna_polja = []
             while 0 <= i and i <= 7 and 0 <= j and j <= 7:
                 print((i, j))
-                if self.deska[i][j] == self.poteza:
+                if self.deska[i][j] == self.na_potezi:
                     polja_za_obrnit += trenutna_polja
                     break
-                elif self.deska[i][j] == self.nasprotno_stanje(self.poteza):
+                elif self.deska[i][j] == self.nasprotno_stanje(self.na_potezi):
                     trenutna_polja.append((i, j))
                     i += smer_x
                     j += smer_y
