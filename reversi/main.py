@@ -6,6 +6,12 @@ Glavni razred reversi aplikacije, vsebuje konfiguracijo uporabniškega vmesnika
 
 """
 
+# Spremeni trenutno mapo, če je aplikacija zagnana kot PyInstaller exe (dirty)
+import sys
+import os
+if getattr(sys, 'frozen', False):
+    os.chdir(sys._MEIPASS)
+
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.gridlayout import GridLayout
@@ -23,7 +29,6 @@ from kivy.metrics import sp
 
 from reversi.igra import Stanje, Igra
 from reversi.hoverable import HoverBehavior
-
 
 Window.minimum_width = 500
 Window.minimum_height = 550
@@ -164,6 +169,7 @@ class Deska(RelativeLayout):
         :param koordinate: koordinate, tuple (x, y)
         :return:
         """
+        print(App.get_running_app().get_application_icon())
         self.igra.odigraj_potezo(koordinate)
         self.osvezi()
 
@@ -183,6 +189,7 @@ class ReversiApp(App):
         self.root.current = 'meni'
 
     def build(self):
+        self.icon = 'grafika/ikona.png'
         sm = ScreenManager()
         sm.add_widget(MeniZaslon(name='meni'))
         sm.add_widget(NastavitveZaslon(name='nastavitve'))

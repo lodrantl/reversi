@@ -4,3 +4,4 @@ pypiwin32
 kivy.deps.sdl2
 kivy.deps.glew
 kivy
+pyinstaller

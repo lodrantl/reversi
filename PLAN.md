@@ -10,6 +10,7 @@
    * ~~hover gumbki~~
    * popraviti layout strani z nastavitvami
    * Ali ste sigurni da želite zapustiti igro? popup
+   * ~~Ikonca aplikacije~~
 2. Priprava logike igre za 2 igralca
    * ~~iskanje možnih potez~~
    * ~~štetje žetonov~~
@@ -32,5 +33,9 @@
    * napisati pravila igre
    * napisati navodila za uporabo igre
    * oblikovti zaslon z navodili
+6. Distribucija z PyInstaller
+   * ~~Windows build~~
+   * MacOS build
+   * Travis
    
 ##BOLJ REDNO PISATI DOKUMENTACIJO!!!!
