@@ -123,7 +123,7 @@
                 text: root.ime_belega
                 font_size: '30sp'
                 size_hint: 0.4, 1
-                background_color: 0, 0.5, 0, 1
+                background_color: (lambda p: app.barva_sekundarna if p == Stanje.BELO else [0, 0, 0, 0])(root.deska.na_potezi)
                 pos_hint: {'center_x': 0.2, 'center_y': 0.5}
             Zeton:
                 source: 'grafika/beli_zeton.png'
@@ -131,7 +131,7 @@
                 pos_hint: {'center_x': 0.45, 'center_y': 0.5}
             Label:
                 color: 0,0,0,1
-                text: str(root.deska.stevilo_crnih)
+                text: str(root.deska.stevilo_belih)
                 id: 'labela'
                 pos_hint: {'center_x': 0.45, 'center_y': 0.5}
             Zeton:
@@ -139,13 +139,13 @@
                 pos_hint: {'center_x': 0.55, 'center_y': 0.5}
             Label:
                 color: 1,1,1,1
-                text: str(root.deska.stevilo_belih)
+                text: str(root.deska.stevilo_crnih)
                 pos_hint: {'center_x': 0.55, 'center_y': 0.5}
             BarvniLabel:
-                text: root.ime_belega
+                text: root.ime_crnega
                 font_size: '30sp'
                 size_hint: 0.4, 1
-                background_color: 0, 0.5, 0, 0
+                background_color: (lambda p: app.barva_sekundarna if p == 'crno' else [0, 0, 0, 0])(root.deska.na_potezi)
                 pos_hint: {'center_x': 0.8, 'center_y': 0.5}
         LepGumb:
             text: 'Kon\u010Daj igro'

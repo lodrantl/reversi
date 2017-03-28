@@ -22,5 +22,5 @@ Namesti potrebne pakete:
 pip install -r requirements.txt
 ```
 [Plan dela](./PLAN.md)
-
+[Shema projekta](./SHEMA.md)
 

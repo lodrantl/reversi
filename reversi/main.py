@@ -16,7 +16,7 @@ from enum import Enum
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.uix.anchorlayout import AnchorLayout
-from kivy.properties import NumericProperty, ListProperty, OptionProperty, StringProperty
+from kivy.properties import NumericProperty, ListProperty, OptionProperty, StringProperty, ObjectProperty
 from kivy.uix.button import ButtonBehavior
 
 from kivy.metrics import sp
@@ -81,18 +81,20 @@ class Polje(ButtonBehavior, Image):
 
 class Deska(RelativeLayout):
     """
-    Razred, ki vsebuje desko, ob inicializaciji nase postavi 64 polj in jih shrani v tabelo. Hrani tudi podatke o tem kdo je na potezi.
+    Razred, ki vsebuje desko, ob inicializaciji nase postavi 64 polj in jih shrani v tabelo.
+    V self.igra je shranjeno trenutno stanje v obliki razreda Igra
     """
-    na_potezi = OptionProperty(Stanje.BELO, options=[Stanje.BELO, Stanje.CRNO])
     polja = []
-    igra = Igra()
-    stevilo_crnih = NumericProperty(2)
-    stevilo_belih = NumericProperty(2)
+    igra = ObjectProperty(Igra(), rebind=True)
+
+    stevilo_crnih = NumericProperty(-1)
+    stevilo_belih = NumericProperty(-1)
+    na_potezi = OptionProperty(Stanje.BELO, options=[Stanje.BELO, Stanje.CRNO])
 
     def __init__(self, **kwargs):
         """
         Zgenerira polja na deski in si jih shrani v matriko self.polja
-        :param kwargs:
+        :param kwargs: argumenti za Kivy RelativeLayout
         """
         super(Deska, self).__init__(**kwargs)
         for i in range(8):
@@ -102,15 +104,17 @@ class Deska(RelativeLayout):
                 self.add_widget(t)
                 self.polja[i].append(t)
         self.igra = Igra()
-        self.uvozi_igro()
+        self.osvezi()
 
-    def izvozi_igro(self):
-        polja = [[polje.stanje for polje in vrstica] for vrstica in self.polja]
-        return Igra(self.na_potezi, polja)
 
-    def uvozi_igro(self):
-        self.stevilo_belih = self.igra.stevilo_belih
+    def osvezi(self):
+        """
+        Osveži desko na ekranu z novim stanjem v self.igra
+        :return:
+        """
         self.stevilo_crnih = self.igra.stevilo_crnih
+        self.stevilo_belih = self.igra.stevilo_belih
+        self.na_potezi = self.igra.na_potezi
         for i in range(8):
             for j in range(8):
                 if (i, j) in self.igra.mozne_poteze:
@@ -119,9 +123,14 @@ class Deska(RelativeLayout):
                     self.polja[i][j].nastavi(self.igra.deska[i][j])
 
     def odigraj_potezo(self, koordinate):
+        """
+        Odigra potezo na pritisnjenem polju
+        :param koordinate: koordinate, tuple (x, y)
+        :return:
+        """
         self.igra.odigraj_potezo(koordinate)
-        self.uvozi_igro()
-        print(koordinate)
+        self.osvezi()
+
 
 class ReversiApp(App):
     barva_primarna = ListProperty([.5, 0, .5, 1])
