@@ -1,24 +1,26 @@
 # reversi
-Reversi game written in Python using Kivy framework.
+Reversi igra napisana v Python ogrodju Kivy.
 
-## Setting up the environment
-We will use Anaconda to setup the development environment and PyInstaller for distribution.
+## Priprava okolja
+Razvojno okolje bomo nastavili z Anacondo, kasneje pa bomo aplikacijo zapakirali z PyInstaller oz. cx_freeze.
 
 #### Anaconda
-Create environment:
+Ustvari okolje:
 ```bash
 conda create --name reversi_env python=3.4
 ```
-On Windows:
+Windows:
 ```bash
 activate reversi_env
 ```
-On Mac / Linux:
+Mac / Linux:
 ```bash
 source activate reversi_env
 ```
-Install packages:
+Namesti potrebne pakete:
 ```bash
 pip install -r requirements.txt
 ```
+[Plan dela](./PLAN.md)
+
 
