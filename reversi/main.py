@@ -109,15 +109,19 @@ class Deska(RelativeLayout):
         return Igra(self.na_potezi, polja)
 
     def uvozi_igro(self):
-        self.stevilo_belih = self.igra.stevilo_belih()
-        self.stevilo_crnih = self.igra.stevilo_crnih()
+        self.stevilo_belih = self.igra.stevilo_belih
+        self.stevilo_crnih = self.igra.stevilo_crnih
         for i in range(8):
             for j in range(8):
-                self.polja[i][j].nastavi(self.igra.deska[i][j])
+                if (i, j) in self.igra.mozne_poteze:
+                    self.polja[i][j].nastavi(Stanje.MOGOCE)
+                else:
+                    self.polja[i][j].nastavi(self.igra.deska[i][j])
 
     def odigraj_potezo(self, koordinate):
         self.igra.odigraj_potezo(koordinate)
         self.uvozi_igro()
+        [(i, j) for i in range(8) for j in range(8) if True   ]
 
 
 class ReversiApp(App):
