@@ -123,7 +123,7 @@
                 text: root.ime_belega
                 font_size: '30sp'
                 size_hint: 0.4, 1
-                background_color: (lambda p: app.barva_sekundarna if p == Stanje.BELO else [0, 0, 0, 0])(root.deska.na_potezi)
+                background_color: (lambda p: app.barva_sekundarna if p == app.Stanje.BELO else [0, 0, 0, 0])(root.deska.na_potezi)
                 pos_hint: {'center_x': 0.2, 'center_y': 0.5}
             Zeton:
                 source: 'grafika/beli_zeton.png'
@@ -145,7 +145,7 @@
                 text: root.ime_crnega
                 font_size: '30sp'
                 size_hint: 0.4, 1
-                background_color: (lambda p: app.barva_sekundarna if p == 'crno' else [0, 0, 0, 0])(root.deska.na_potezi)
+                background_color: (lambda p: app.barva_sekundarna if p == app.Stanje.CRNO else [0, 0, 0, 0])(root.deska.na_potezi)
                 pos_hint: {'center_x': 0.8, 'center_y': 0.5}
         LepGumb:
             text: 'Kon\u010Daj igro'

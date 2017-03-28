@@ -135,6 +135,7 @@ class Deska(RelativeLayout):
 class ReversiApp(App):
     barva_primarna = ListProperty([.5, 0, .5, 1])
     barva_sekundarna = ListProperty([0, .5, 0, 1])
+    Stanje = Stanje
 
     def zacni_en_igralec(self):
         self.root.current = 'igra'
