@@ -10,8 +10,8 @@ class Igra:
     deska = [[Stanje.PRAZNO for _ in range(8)] for _ in range(8)]
     na_potezi = Stanje.BELO
     mozne_poteze = set()
-    stevilo_belih = 0
-    stevilo_crnih = 0
+    stevilo_belih = 2
+    stevilo_crnih = 2
     def __init__(self):
         self.deska[3][3] , self.deska[4][4] = Stanje.BELO, Stanje.BELO
         self.deska[3][4], self.deska[4][3] = Stanje.CRNO, Stanje.CRNO

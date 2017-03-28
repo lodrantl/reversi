@@ -18,10 +18,11 @@ from kivy.uix.widget import Widget
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.properties import NumericProperty, ListProperty, OptionProperty, StringProperty, ObjectProperty
 from kivy.uix.button import ButtonBehavior
-
+from kivy.uix.togglebutton import ToggleButton, ToggleButtonBehavior
 from kivy.metrics import sp
 
-from igra import Stanje, Igra
+from reversi.igra import Stanje, Igra
+from reversi.hoverable import HoverBehavior
 
 
 Window.minimum_width = 500
@@ -39,28 +40,62 @@ class IgraZaslon(Screen):
     ime_crnega = StringProperty('Računalnik')
     ime_belega = StringProperty('Človek')
 
-class LepGumb(Button):
+class LepWidget(Widget):
     """
-    Lepo oblikovan gumb, za uporabo v celotni aplikaciji
+    Lepo oblikovanje za vse gumbe v aplikaciji
     """
-    notranja_barva = ListProperty([1, 1, 1, 1])
 
+    notranja_barva = ListProperty([1,1,1,1])
     def on_state(self, event, x):
         """
         Ob pritisku gumba spremeni notranjo barvo
         """
         if x == 'down':
-            self.notranja_barva = [1, 0, 1, 1]
+            self.notranja_barva = self.izbrana_barva
         elif x == 'normal':
             self.notranja_barva = [1, 1, 1, 1]
 
 
-class Polje(ButtonBehavior, Image):
+# class LepRadio(LepGumb, ToggleButtonBehavior):
+#     """
+#     Lepo oblikovan radio gumb, za uporabo v celotni aplikaciji
+#     """
+#     notranja_barva = ListProperty([1, 1, 1, 1])
+#
+#     def on_state(self, event, x):
+#         """
+#         Ob pritisku gumba spremeni notranjo barvo
+#         """
+#         if x == 'down':
+#             self.notranja_barva = [0.8, 1, 0.8, 1]
+#         elif x == 'normal':
+#             self.notranja_barva = [1, 1, 1, 1]
+
+
+
+class Polje(ButtonBehavior, Image, HoverBehavior):
     """
     Razred vsake polja na plošči, hrani stanje in pa pozna svoje koordinate
     """
     stanje = OptionProperty(Stanje.PRAZNO, options=[Stanje.BELO, Stanje.CRNO, Stanje.PRAZNO, Stanje.MOGOCE])
     koordinate = ListProperty([-1, -1])
+    stil = StringProperty('')
+
+    def on_enter(self):
+        """
+        Če se z miško pomaknemo v možno polje se v polju pojavi prosojen žeton
+        :return:
+        """
+        if self.stanje == Stanje.MOGOCE:
+            self.stil = '_' + self.parent.na_potezi
+
+    def on_leave(self):
+        """
+        Izbrišemo prosojen žeton
+        :return:
+        """
+        if self.stil.startswith('_'):
+            self.stil = ''
 
     def on_press(self):
         """
@@ -68,6 +103,7 @@ class Polje(ButtonBehavior, Image):
         :return:
         """
         if self.stanje == Stanje.MOGOCE:
+            self.stil = ''
             self.parent.odigraj_potezo(self.koordinate)
 
     def nastavi(self, barva):
@@ -133,9 +169,9 @@ class Deska(RelativeLayout):
 
 
 class ReversiApp(App):
-    barva_primarna = ListProperty([.5, 0, .5, 1])
-    barva_sekundarna = ListProperty([0, .5, 0, 1])
-    Stanje = Stanje
+    """
+    Glavni Kivy Application razred, definira ScreenManager z našimi zasloni in vsebuje par uporabnih konstant
+    """
 
     def zacni_en_igralec(self):
         self.root.current = 'igra'

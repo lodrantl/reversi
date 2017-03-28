@@ -1,10 +1,15 @@
 #:kivy 1.9.1
+#:import Stanje reversi.Stanje
+
+#:set barva_primarna [.5, 0, .5, 1]
+#:set barva_sekundarna [0, .5, 0, 1]
+
 
 <MeniZaslon>:
     RelativeLayout:
         canvas:
             Color:
-                rgba: app.barva_primarna
+                rgba: barva_primarna
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -110,11 +115,6 @@
                 pos: self.pos
         orientation: 'vertical'
         spacing: '10sp'
-        AnchorLayout:
-            size_hint_y: None
-            height: self.parent.height - sp(170)
-            Deska:
-                id: deska
         RelativeLayout:
             size_hint: 1, None
             height: '70sp'
@@ -123,7 +123,7 @@
                 text: root.ime_belega
                 font_size: '30sp'
                 size_hint: 0.4, 1
-                background_color: (lambda p: app.barva_sekundarna if p == app.Stanje.BELO else [0, 0, 0, 0])(root.deska.na_potezi)
+                background_color: barva_sekundarna if root.deska.na_potezi == Stanje.BELO else [0, 0, 0, 0]
                 pos_hint: {'center_x': 0.2, 'center_y': 0.5}
             Zeton:
                 source: 'grafika/beli_zeton.png'
@@ -145,8 +145,13 @@
                 text: root.ime_crnega
                 font_size: '30sp'
                 size_hint: 0.4, 1
-                background_color: (lambda p: app.barva_sekundarna if p == app.Stanje.CRNO else [0, 0, 0, 0])(root.deska.na_potezi)
+                background_color: barva_sekundarna if root.deska.na_potezi == Stanje.CRNO else [0, 0, 0, 0]
                 pos_hint: {'center_x': 0.8, 'center_y': 0.5}
+        AnchorLayout:
+            size_hint_y: None
+            height: self.parent.height - sp(170)
+            Deska:
+                id: deska
         LepGumb:
             text: 'Kon\u010Daj igro'
             font_size: '20sp'
@@ -158,7 +163,7 @@
             size: '1sp', 0
 
 <Polje>
-    source: 'grafika/' + self.stanje + '.png'
+    source: 'grafika/' + self.stanje + self.stil + '.png'
     size_hint: 0.125, 0.125
 
 <Deska>
@@ -178,30 +183,8 @@
             text: 'Back'
             on_release: root.manager.current = 'meni'
 
-#<LepGumb@Button>:
-#    color: 0, 0, 0, 1
-#    size_hint: None, None
-#    size: '231sp', '100sp'
-#    font_size: '25sp'
-#    background_normal: 'grafika/gumb.png'
-#    background_down: 'grafika/gumb_pritisnjen.png'
-#    mipmap: True
-
-
-<LepRadio@ToggleButton>:
+<LepWidget>:
     color: 0, 0, 0, 1
-    size_hint: None, None
-    size: '154sp', '100sp'
-    font_size: '25sp'
-    background_normal: 'grafika/radio.png'
-    background_down: 'grafika/radio_izbran.png'
-    mipmap: True
-
-<LepGumb>:
-    color: 0, 0, 0, 1
-    size_hint: None, None
-    size: '231sp', '100sp'
-    font_size: '25sp'
     background_color: 0, 0, 0, 0
     canvas.before:
         Color:
@@ -210,7 +193,7 @@
             pos: self.pos
             size: self.size
         Color:
-            rgba: app.barva_primarna
+            rgba: barva_primarna
         RoundedRectangle:
             pos: self.pos[0] + 5, self.pos[1] + 5
             size: self.size[0]-10, self.size[1]-10
@@ -220,6 +203,17 @@
             pos: self.pos[0] + 10, self.pos[1] + 10
             size: self.size[0]-20, self.size[1]-20
 
+<LepRadio@LepWidget+ToggleButton>:
+    size_hint: None, None
+    size: '154sp', '100sp'
+    font_size: '25sp'
+    izbrana_barva: [0.8, 1, 0.8, 1]
+
+<LepGumb@LepWidget+Button>:
+    size_hint: None, None
+    size: '231sp', '100sp'
+    font_size: '25sp'
+    izbrana_barva: [1, 0.8, 1, 1]
 
 <Zeton@Image>:
     size_hint: None, None
@@ -231,6 +225,6 @@
         Color:
             rgba: self.background_color
         RoundedRectangle:
-            pos: self.pos[0] + sp(10), self.pos[1]
-            size: self.size[0] - sp(20), self.size[1] - sp(5)
+            pos: self.pos[0] + sp(10), self.pos[1] + sp(5)
+            size: self.size[0] - sp(20), self.size[1] - sp(10)
 
