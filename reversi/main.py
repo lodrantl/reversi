@@ -1,3 +1,11 @@
+"""
+.. module:: reversi.main
+.. moduleauthor:: Luka Lodrant <luka.lodrant@gmail.com, Lenart Treven <lenart.treven44@gmail.com>
+
+Glavni razred reversi aplikacije, vsebuje konfiguracijo uporabniškega vmesnika
+
+"""
+
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.gridlayout import GridLayout
@@ -16,8 +24,8 @@ from kivy.metrics import sp
 from igra import Stanje, Igra
 
 
-Window.minimum_width = sp(500)
-Window.minimum_height = sp(550)
+Window.minimum_width = 500
+Window.minimum_height = 550
 
 
 # Declare all application screens.
@@ -31,11 +39,16 @@ class IgraZaslon(Screen):
     ime_crnega = StringProperty('Računalnik')
     ime_belega = StringProperty('Človek')
 
-
 class LepGumb(Button):
+    """
+    Lepo oblikovan gumb, za uporabo v celotni aplikaciji
+    """
     notranja_barva = ListProperty([1, 1, 1, 1])
 
     def on_state(self, event, x):
+        """
+        Ob pritisku gumba spremeni notranjo barvo
+        """
         if x == 'down':
             self.notranja_barva = [1, 0, 1, 1]
         elif x == 'normal':
@@ -43,59 +56,68 @@ class LepGumb(Button):
 
 
 class Polje(ButtonBehavior, Image):
+    """
+    Razred vsake polja na plošči, hrani stanje in pa pozna svoje koordinate
+    """
     stanje = OptionProperty(Stanje.PRAZNO, options=[Stanje.BELO, Stanje.CRNO, Stanje.PRAZNO, Stanje.MOGOCE])
     koordinate = ListProperty([-1, -1])
 
     def on_press(self):
+        """
+        Ob pritisku, če je polje prazno, odigra potezo
+        :return:
+        """
         if self.stanje == Stanje.PRAZNO:
             self.parent.odigraj_potezo(self.koordinate)
 
     def nastavi(self, barva):
+        """
+        Nastavi barvo tega polja
+        :param barva: željena barva
+        :return:
+        """
         self.stanje = barva
 
 
 class Deska(RelativeLayout):
+    """
+    Razred, ki vsebuje desko, ob inicializaciji nase postavi 64 polj in jih shrani v tabelo. Hrani tudi podatke o tem kdo je na potezi.
+    """
     na_potezi = OptionProperty(Stanje.BELO, options=[Stanje.BELO, Stanje.CRNO])
     polja = []
-    igra = None
+    igra = Igra()
     stevilo_crnih = NumericProperty(2)
     stevilo_belih = NumericProperty(2)
 
     def __init__(self, **kwargs):
+        """
+        Zgenerira polja na deski in si jih shrani v matriko self.polja
+        :param kwargs:
+        """
         super(Deska, self).__init__(**kwargs)
         for i in range(8):
             self.polja.append([])
             for j in range(8):
                 t = Polje(pos_hint={'x': .125 * j, 'y': .125 * i}, koordinate=[i,j])
-                if (i, j) == (3, 3) or (i, j) == (4, 4):
-                    t.stanje = Stanje.BELO
-                elif (i, j) == (3, 4) or (i, j) == (4, 3):
-                    t.stanje = Stanje.CRNO
                 self.add_widget(t)
                 self.polja[i].append(t)
-        self.nastavi_mogoce()
+        self.igra = Igra()
+        self.uvozi_igro()
 
     def izvozi_igro(self):
         polja = [[polje.stanje for polje in vrstica] for vrstica in self.polja]
         return Igra(self.na_potezi, polja)
 
-    def nastavi_mogoce(self):
-        igra = self.izvozi_igro()
-        for x, y in igra.mozne_poteze():
-            self.polja[x][y].nastavi(Stanje.MOGOCE)
+    def uvozi_igro(self):
+        self.stevilo_belih = self.igra.stevilo_belih()
+        self.stevilo_crnih = self.igra.stevilo_crnih()
+        for i in range(8):
+            for j in range(8):
+                self.polja[i][j].nastavi(self.igra.deska[i][j])
 
     def odigraj_potezo(self, koordinate):
-        print(koordinate)
-        x, y = koordinate
-        self.polja[x][y].nastavi(self.na_potezi)
-        if self.na_potezi == Stanje.BELO:
-            self.stevilo_belih += 1
-            self.na_potezi = Stanje.CRNO
-        else:
-            self.stevilo_crnih += 1
-            self.na_potezi = Stanje.BELO
-        self.nastavi_mogoce()
-
+        self.igra.odigraj_potezo(koordinate)
+        self.uvozi_igro()
 
 
 class ReversiApp(App):
