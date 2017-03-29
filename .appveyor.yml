@@ -49,6 +49,8 @@ install:
 
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-desktop.ps1'))
 
+  - ps: iex ((new-object net.webclient).DownloadString('https://github.com/vispy/vispy/blob/master/make/install_opengl.ps1'))
+
 
 build_script:
   # Build the compiled extension
