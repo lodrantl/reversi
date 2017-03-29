@@ -168,7 +168,8 @@
 
 <Deska>
     size_hint: None, None
-    size: min(self.parent.width, self.parent.height), min(self.parent.width, self.parent.height)
+    velikost: min(self.parent.width, self.parent.height)
+    size: self.velikost, self.velikost
 
 <PravilaZaslon>:
     BoxLayout:
@@ -183,9 +184,10 @@
             text: 'Back'
             on_release: root.manager.current = 'meni'
 
-<LepWidget>:
+<LepWidget@Widget>:
     color: 0, 0, 0, 1
     background_color: 0, 0, 0, 0
+    izbrana_barva: 1, 0.8, 1, 1
     canvas.before:
         Color:
             rgba: 1, 1, 1, 1
@@ -195,25 +197,25 @@
         Color:
             rgba: barva_primarna
         RoundedRectangle:
-            pos: self.pos[0] + 5, self.pos[1] + 5
-            size: self.size[0]-10, self.size[1]-10
+            pos: self.pos[0] + sp(3), self.pos[1] + sp(3)
+            size: self.size[0] - sp(6), self.size[1] - sp(6)
         Color:
-            rgba: self.notranja_barva
+            rgba: self.izbrana_barva if self.state == 'down' else [1, 1 ,1 , 1]
         RoundedRectangle:
-            pos: self.pos[0] + 10, self.pos[1] + 10
-            size: self.size[0]-20, self.size[1]-20
+            pos: self.pos[0] + sp(6), self.pos[1] + sp(6)
+            size: self.size[0] - sp(12), self.size[1] - sp(12)
 
 <LepRadio@LepWidget+ToggleButton>:
     size_hint: None, None
     size: '154sp', '100sp'
     font_size: '25sp'
-    izbrana_barva: [0.8, 1, 0.8, 1]
+    izbrana_barva: 0.8, 1, 0.8, 1
 
 <LepGumb@LepWidget+Button>:
     size_hint: None, None
     size: '231sp', '100sp'
     font_size: '25sp'
-    izbrana_barva: [1, 0.8, 1, 1]
+    izbrana_barva: 1, 0.8, 1, 1
 
 <Zeton@Image>:
     size_hint: None, None
