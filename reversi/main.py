@@ -93,7 +93,6 @@ class Polje(ButtonBehavior, Image, HoverBehavior):
         Če se z miško pomaknemo v možno polje se v polju pojavi prosojen žeton
         :return:
         """
-        print(self.koordinate, "enter")
         if self.stanje == Stanje.MOGOCE:
             self.stil = '_' + self.parent.na_potezi
 
@@ -102,7 +101,6 @@ class Polje(ButtonBehavior, Image, HoverBehavior):
         Izbrišemo prosojen žeton
         :return:
         """
-        print(self.koordinate, "leave")
         if self.stil.startswith('_'):
             self.stil = ''
 
