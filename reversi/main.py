@@ -169,7 +169,6 @@ class Deska(RelativeLayout):
         :param koordinate: koordinate, tuple (x, y)
         :return:
         """
-        print(App.get_running_app().get_application_icon())
         self.igra.odigraj_potezo(koordinate)
         self.osvezi()
 
