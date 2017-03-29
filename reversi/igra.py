@@ -77,6 +77,8 @@ class Igra:
                 print("Še enkrat na vrsti")
                 self.na_potezi = Stanje.obrni(self.na_potezi)
                 self.mozne_poteze = self.dobi_mozne_poteze()
+                if len(self.mozne_poteze) == 0:
+                    print("konec igre")
             print(self.mozne_poteze)
 
         else:

@@ -15,8 +15,8 @@
    * ~~iskanje možnih potez~~
    * ~~štetje žetonov~~
    * ~~naredi potezo~~
-   * končanje igre
-   * kaj se zgodi ko nekdo nima nobene poteze
+   * ~~končanje igre~~
+   * ~~kaj se zgodi ko nekdo nima nobene poteze~~
 3. Povezava logike in grafičnega vmesnika
    * priprava interface Igralec
    * razreda Človek, Računalnik

@@ -33,8 +33,9 @@ class HoverBehavior(object):
         if not self.get_root_window():
             return # do proceed if I'm not displayed <=> If have no parent
         pos = args[1]
+        #print(pos)
         #Next line to_widget allow to compensate for relative layout
-        inside = self.collide_point(*self.to_widget(*pos))
+        inside = self.collide_point(*self.parent.to_widget(*pos, relative=True))
         if self.hovered == inside:
             #We have already done what was needed
             return

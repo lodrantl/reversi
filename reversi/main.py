@@ -26,6 +26,8 @@ from kivy.properties import NumericProperty, ListProperty, OptionProperty, Strin
 from kivy.uix.button import ButtonBehavior
 from kivy.uix.togglebutton import ToggleButton, ToggleButtonBehavior
 from kivy.metrics import sp
+from kivy.uix.popup import Popup
+
 
 from reversi.igra import Stanje, Igra
 from reversi.hoverable import HoverBehavior
@@ -91,6 +93,7 @@ class Polje(ButtonBehavior, Image, HoverBehavior):
         Če se z miško pomaknemo v možno polje se v polju pojavi prosojen žeton
         :return:
         """
+        print(self.koordinate, "enter")
         if self.stanje == Stanje.MOGOCE:
             self.stil = '_' + self.parent.na_potezi
 
@@ -99,6 +102,7 @@ class Polje(ButtonBehavior, Image, HoverBehavior):
         Izbrišemo prosojen žeton
         :return:
         """
+        print(self.koordinate, "leave")
         if self.stil.startswith('_'):
             self.stil = ''
 
@@ -107,6 +111,7 @@ class Polje(ButtonBehavior, Image, HoverBehavior):
         Ob pritisku, če je polje prazno, odigra potezo
         :return:
         """
+
         if self.stanje == Stanje.MOGOCE:
             self.stil = ''
             self.parent.odigraj_potezo(self.koordinate)
@@ -172,6 +177,8 @@ class Deska(RelativeLayout):
         self.igra.odigraj_potezo(koordinate)
         self.osvezi()
 
+class DialogKonec(Popup):
+    pass
 
 class ReversiApp(App):
     """
@@ -183,6 +190,8 @@ class ReversiApp(App):
 
     def zacni_dva_igralca(self):
         self.root.current = 'igra'
+        po = DialogKonec()
+        po.open()
 
     def koncaj_igro(self):
         self.root.current = 'meni'
