@@ -50,7 +50,7 @@ install:
 build_script:
   # Build the compiled extension
   - "pwd"
-  - "python -c \"import os; print(os.getcwd())\""
+  - "python -c \"import os; print(os.listdir('.'))\""
   - "%CMD_IN_ENV% python -m PyInstaller reversi.spec"
 
 #test_script:
