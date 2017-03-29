@@ -47,6 +47,9 @@ install:
   # target Python version and architecture
   - "%CMD_IN_ENV% pip install -r requirements.txt"
 
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-desktop.ps1'))
+
+
 build_script:
   # Build the compiled extension
   - "pwd"
