@@ -26,7 +26,7 @@ from kivy.properties import NumericProperty, ListProperty, OptionProperty, Strin
 from kivy.uix.button import ButtonBehavior
 from kivy.uix.togglebutton import ToggleButton, ToggleButtonBehavior
 from kivy.metrics import sp
-from kivy.uix.popup import Popup
+from kivy.uix.modalview import ModalView
 
 
 from reversi.igra import Stanje, Igra
@@ -175,7 +175,7 @@ class Deska(RelativeLayout):
         self.igra.odigraj_potezo(koordinate)
         self.osvezi()
 
-class DialogKonec(Popup):
+class DialogKonec(ModalView):
     pass
 
 class ReversiApp(App):
