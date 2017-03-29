@@ -1,21 +1,22 @@
 # -*- mode: python -*-
 
 from kivy.deps import sdl2, glew
+import sys
+from kivy.tools.packaging.pyinstaller_hooks import get_deps_minimal, get_deps_all, hookspath, runtime_hooks
 
 block_cipher = None
 
 
 a = Analysis(['reversi\\main.py'],
-             pathex=['C:\\Users\\Luka\\workspaces\\python-workspace\\reversi'],
+             pathex=['.'] + sys.path,
              binaries=[],
              datas=[],
-             hiddenimports=[],
-             hookspath=[],
-             runtime_hooks=[],
-             excludes=[],
+             hookspath=hookspath(),
+             runtime_hooks=runtime_hooks(),
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
-             cipher=block_cipher)
+             cipher=block_cipher,
+             **get_deps_minimal(video=None, audio=None, spelling=None))
 
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
