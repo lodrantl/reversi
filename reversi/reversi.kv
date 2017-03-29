@@ -229,10 +229,24 @@
             size: self.size[0] - sp(20), self.size[1] - sp(10)
 
 <DialogKonec>
-    background_color: 0.5, 0.5, 0.5, 1
+    background_color: 0,0,0,0
     size_hint: None, None
     size: 400, 400
-    title: 'Konec igre'
+    title: 'KONEC IGRE'
+    title_color: barva_sekundarna
+    title_align: 'center'
+    title_size: '40sp'
+    BoxLayout
+        orientation: 'vertical'
+        Label:
+            text: 'ZELIS IGRATI PONOVNO?'
+        BoxLayout
+            orientation: 'horizontal'
+            LepGumb:
+                text: 'Glavni meni'
+                size_hint: 1, 1
+            LepGumb:
+                text: 'Igraj znova'
+                size_hint: 1, 1
 
-    Label:
-        text: 'test'
+
