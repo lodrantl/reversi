@@ -7,6 +7,7 @@ __author__ = 'Olivier POYEN'
 
 from kivy.properties import BooleanProperty, ObjectProperty
 from kivy.core.window import Window
+from kivy.metrics import sp
 
 class HoverBehavior(object):
     """Hover behavior.
@@ -33,11 +34,9 @@ class HoverBehavior(object):
         if not self.get_root_window():
             return # do proceed if I'm not displayed <=> If have no parent
         pos = args[1]
-        #Next line to_widget allow to compensate for relative layout
-        print("Mouse", pos)
-        print("Widget", self.pos)
-        print("towidget", self.to_widget(*pos))
-        inside = self.collide_point(*self.to_widget(*pos))
+        #Next lines to_widget allow to compensate for relative layout
+        spx, spy = sp(pos[0]), sp(pos[1])
+        inside = self.collide_point(*self.to_widget(spx, spy))
         if self.hovered == inside:
             #We have already done what was needed
             return
