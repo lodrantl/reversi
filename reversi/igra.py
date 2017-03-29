@@ -17,7 +17,6 @@ class Igra:
         self.deska[3][4], self.deska[4][3] = Stanje.CRNO, Stanje.CRNO
         self.mozne_poteze = self.dobi_mozne_poteze()
 
-
     def dobi_mozne_poteze(self):
         mozne_poteze = set()
         for i in range(8):
@@ -25,6 +24,8 @@ class Igra:
                 if self._preveri_polje(i, j):
                     mozne_poteze.add((i, j))
         return mozne_poteze
+
+
 
     def _preveri_polje(self, x, y):
         if self.deska[x][y] == Stanje.PRAZNO:
@@ -60,6 +61,10 @@ class Igra:
                 self.stevilo_crnih += 1
                 self.na_potezi = Stanje.BELO
             self.mozne_poteze = self.dobi_mozne_poteze()
+            if len(self.mozne_poteze) == 0:
+                print("Še enkrat na vrsti")
+                self.na_potezi = self.nasprotno_stanje(self.na_potezi)
+                self.mozne_poteze = self.dobi_mozne_poteze()
             print(self.mozne_poteze)
 
         else:
