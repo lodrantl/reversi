@@ -45,8 +45,8 @@ install:
   # target Python version and architecture
   - "%CMD_IN_ENV% pip install cython"
   - "%CMD_IN_ENV% pip install -r requirements.txt"
-  - "curl -fsS -o kivy192.whl https://kivy.org/downloads/appveyor/kivy/Kivy-1.9.2.dev0-cp35-cp35m-win32.whl"
-  - "pip install kivy192.whl"
+  - "curl -fsS -o Kivy-1.9.2.dev0-cp35-cp35m-win32.whl https://kivy.org/downloads/appveyor/kivy/Kivy-1.9.2.dev0-cp35-cp35m-win32.whl"
+  - "pip install Kivy-1.9.2.dev0-cp35-cp35m-win32.whl"
 
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-desktop.ps1'))
 
