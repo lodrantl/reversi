@@ -31,8 +31,8 @@ install:
   # the parent CMD process).
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   - "SET KIVY_GL_BACKEND=angle_sdl2"
-  - "set USE_SDL2=1"
-  - "set USE_GSTREAMER=1"
+  - "SET USE_SDL2=1"
+  - "SET USE_GSTREAMER=1"
 
   # Check that we have the expected version and architecture for Python
   - "python --version"
@@ -48,8 +48,8 @@ install:
   # target Python version and architecture
   - "%CMD_IN_ENV% pip install cython"
   - "%CMD_IN_ENV% pip install -r dev-requirements.txt"
-  - "curl -fsS -o Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl https://kivy.org/downloads/appveyor/kivy/Kivy-1.9.2.dev0-cp35-cp35m-%PYTHON_ARCH%.whl"
-  - "pip install Kivy-1.9.2.dev0-cp35-cp35m-%PYTHON_ARCH%.whl"
+  - "curl -fsS -o Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl https://kivy.org/downloads/appveyor/kivy/Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl"
+  - "pip install Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl"
 
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-desktop.ps1'))
 
