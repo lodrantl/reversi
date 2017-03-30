@@ -36,6 +36,6 @@
 6. Distribucija z PyInstaller
    * ~~Windows build~~
    * MacOS build
-   * Travis
+   * Travis/Appveyor
    
 ##BOLJ REDNO PISATI DOKUMENTACIJO!!!!
