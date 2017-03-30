@@ -11,7 +11,7 @@ import sys
 import os
 if getattr(sys, 'frozen', False):
     os.chdir(sys._MEIPASS)
-print("SATAAAAAA")
+
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.gridlayout import GridLayout
