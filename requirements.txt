@@ -1,6 +1,7 @@
 docutils
 pygments
 pypiwin32
+kivy.deps.glew
 kivy.deps.sdl2
 kivy.deps.angle
 kivy
