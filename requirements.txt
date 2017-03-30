@@ -7,5 +7,4 @@ kivy.deps.sdl2
 kivy.deps.sdl2_dev
 kivy.deps.gstreamer_dev
 kivy.deps.angle
-kivy
 pyinstaller
