@@ -16,7 +16,7 @@ a = Analysis(['reversi\\main.py'],
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
              cipher=block_cipher,
-             **get_deps_minimal(video=None, audio=None, spelling=None))
+             **get_deps_all())
 
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
