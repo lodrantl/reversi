@@ -42,20 +42,20 @@ install:
   # about it being out of date.
   - "pip install --disable-pip-version-check --user --upgrade pip"
 
-  # Install the build dependencies of the project. If some dependencies contain
-  # compiled extensions and are not provided as pre-built wheel packages,
-  # pip will build them from source using the MSVC compiler matching the
-  # target Python version and architecture
+  # Install the build dependencies of the project.
   - "%CMD_IN_ENV% pip install cython"
   - "%CMD_IN_ENV% pip install -r dev-requirements.txt"
+
+  # Install development kivy wheel
   - "curl -fsS -o Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl https://kivy.org/downloads/appveyor/kivy/Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl"
   - "pip install Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl"
 
+  # Enable remote desktop (OpenGL fix)
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-desktop.ps1'))
 
 
 build_script:
-  # Build the compiled extension
+  # Build the pyinstaller exe
   - "%CMD_IN_ENV% python -m PyInstaller reversi.spec"
 
 #test_script:
