@@ -35,7 +35,8 @@
    * oblikovti zaslon z navodili
 6. Distribucija z PyInstaller
    * ~~Windows build~~
+   * Linux Build
    * MacOS build
-   * Travis/Appveyor
+   * ~~Travis/Appveyor~~
    
 ##BOLJ REDNO PISATI DOKUMENTACIJO!!!!
