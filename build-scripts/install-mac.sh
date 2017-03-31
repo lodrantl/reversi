@@ -1,4 +1,7 @@
 python -version
+python3 -version
+brew install python3
+python3 -version
 brew install sdl2 sdl2_image sdl2_ttf sdl2_mixer gstreamer
 pip install -I Cython==0.23
 pip install pyinstaller

@@ -7,7 +7,7 @@ matrix:
       dist: trusty
       sudo: required
     - os: osx
-      python: 3.5
+      language: generic
 
 install:
   #Print system info

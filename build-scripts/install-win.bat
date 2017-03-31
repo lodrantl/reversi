@@ -1,1 +1,0 @@
-pyinstaller --upx-dir=C:\opt\upx393w reversi.spec
