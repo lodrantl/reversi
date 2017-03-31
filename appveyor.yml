@@ -26,9 +26,7 @@ install:
   # not already installed.
   - ps: if (-not(Test-Path($env:PYTHON))) { & appveyor\install.ps1 }
 
-  # Prepend newly installed Python to the PATH of this build (this cannot be
-  # done from inside the powershell script as it would require to restart
-  # the parent CMD process).
+  # Set path and kivy options
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   - "SET KIVY_GL_BACKEND=angle_sdl2"
   - "SET USE_SDL2=1"

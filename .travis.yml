@@ -18,7 +18,7 @@ install:
   - if [[ $TRAVIS_OS_NAME == "linux" ]]; then bash build-scripts/install-linux.sh; fi
 
   #Build executable files
-  - python -m PyInstaller reversi.spec
+  - python3 -m PyInstaller reversi.spec
 
 #Run tests
 script: pytest
