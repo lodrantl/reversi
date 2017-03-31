@@ -9,13 +9,13 @@ import os
 
 if os.name == 'nt':
     from kivy.deps import sdl2, glew
-    path = 'reversi\\main.py'
+    delimiter = '\\'
     ddltree = [Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)]
 else:
-    path = 'reversi/main.py'
+    delimiter = '/'
     ddltree = []
 
-a = Analysis([path],
+a = Analysis(['reversi{}main.py'.format(delimiter)],
              pathex=['.'] + sys.path,
              binaries=[],
              datas=[],
@@ -34,11 +34,11 @@ exe = EXE(pyz,
           a.binaries,
           a.zipfiles,
           a.datas,
-          Tree('reversi\\'),
+          Tree('reversi{}'.format(delimiter)),
           *ddltree,
           name='reversi',
           debug=True,
           strip=False,
           upx=True,
           console=True,
-          icon='reversi\\grafika\\ikona.ico')
+          icon='reversi{}grafika{}ikona.ico'.format(delimiter, delimiter))
