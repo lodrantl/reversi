@@ -2,25 +2,15 @@
 
 import sys
 from kivy.tools.packaging.pyinstaller_hooks import get_deps_minimal, get_deps_all, hookspath, runtime_hooks
-
 block_cipher = None
 
-import os
-
-if os.name == 'nt':
-    from kivy.deps import sdl2, glew
-    delimiter = '\\'
-    ddltree = [Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)]
-else:
-    delimiter = '/'
-    ddltree = []
-
-a = Analysis(['reversi{}main.py'.format(delimiter)],
+a = Analysis([os.path.join('reversi', 'main.py')],
              pathex=['.'] + sys.path,
              binaries=[],
              datas=[],
              hookspath=hookspath(),
              runtime_hooks=runtime_hooks(),
+             excludes=['_tkinter', 'Tkinter', 'enchant', 'twisted'],
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
              cipher=block_cipher,
@@ -29,16 +19,49 @@ a = Analysis(['reversi{}main.py'.format(delimiter)],
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 
-exe = EXE(pyz,
+if sys.platform == "linux" or sys.platform == "linux2":
+    exe = EXE(pyz,
           a.scripts,
           a.binaries,
           a.zipfiles,
           a.datas,
-          Tree('reversi{}'.format(delimiter)),
-          *ddltree,
+          Tree(os.path.join('reversi', '')),
           name='reversi',
           debug=True,
           strip=False,
           upx=True,
-          console=True,
-          icon='reversi{}grafika{}ikona.ico'.format(delimiter, delimiter))
+          console=True)
+
+elif sys.platform == "darwin":
+    exe = EXE(pyz,
+              a.scripts,
+              exclude_binaries=True,
+              name='reversi',
+              debug=False,
+              strip=False,
+              upx=True,
+              console=False,
+              icon=os.path.join('reversi', 'grafika', 'ikona.png'))
+    coll = COLLECT(exe,
+                   Tree(os.path.join('reversi', '')),
+                   a.binaries,
+                   a.zipfiles,
+                   a.datas,
+                   strip=False,
+                   upx=True,
+                   name='reversi')
+
+elif sys.platform == "win32":
+    from kivy.deps import sdl2, glew
+    exe = EXE(pyz,
+              a.scripts,
+              a.binaries,
+              a.zipfiles,
+              a.datas,
+              [Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],
+              name='reversi',
+              debug=True,
+              strip=False,
+              upx=True,
+              console=True,
+              icon=os.path.join('reversi', 'grafika', 'ikona.ico'))

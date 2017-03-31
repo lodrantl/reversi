@@ -41,7 +41,7 @@ install:
   - "pip install --disable-pip-version-check --user --upgrade pip"
 
   # Install the build dependencies of the project.
-  - "%CMD_IN_ENV% pip install cython"
+  - "%CMD_IN_ENV% pip install cython==0.23"
   - "%CMD_IN_ENV% pip install -r build-scripts/dev-requirements.txt"
 
   # Install development kivy wheel
