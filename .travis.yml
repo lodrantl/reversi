@@ -1,6 +1,5 @@
 language: python
 
-# see https://docs.travis-ci.com/user/multi-os/
 matrix:
   include:
     - os: linux
