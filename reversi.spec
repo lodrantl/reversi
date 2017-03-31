@@ -1,11 +1,17 @@
 # -*- mode: python -*-
 
-from kivy.deps import sdl2, glew
 import sys
 from kivy.tools.packaging.pyinstaller_hooks import get_deps_minimal, get_deps_all, hookspath, runtime_hooks
 
 block_cipher = None
 
+import os
+
+if os.name == 'nt':
+    from kivy.deps import sdl2, glew
+    ddltree = [Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)]
+else:
+    ddltree = []
 
 a = Analysis(['reversi\\main.py'],
              pathex=['.'] + sys.path,
@@ -27,7 +33,7 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,
           Tree('reversi\\'),
-          *[Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],
+          *ddltree,
           name='reversi',
           debug=True,
           strip=False,
