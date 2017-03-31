@@ -4,6 +4,8 @@ matrix:
   include:
     - os: linux
       python: 3.5
+      dist: trusty
+      sudo: required
 
 install:
   - "lsb_release -a"
