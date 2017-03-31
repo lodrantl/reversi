@@ -9,11 +9,13 @@ import os
 
 if os.name == 'nt':
     from kivy.deps import sdl2, glew
+    path = 'reversi\\main.py'
     ddltree = [Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)]
 else:
+    path = 'reversi/main.py'
     ddltree = []
 
-a = Analysis(['reversi\\main.py'],
+a = Analysis([path],
              pathex=['.'] + sys.path,
              binaries=[],
              datas=[],
