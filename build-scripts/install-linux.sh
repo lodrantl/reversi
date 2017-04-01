@@ -13,3 +13,6 @@ pip install pygments docutils pyinstaller
 
 #Install kivy master branch
 pip install git+https://github.com/kivy/kivy.git@master
+
+#Build executable files
+python -m PyInstaller reversi.spec

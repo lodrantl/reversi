@@ -18,8 +18,5 @@ install:
   - if [[ $TRAVIS_OS_NAME == "osx" ]]; then bash build-scripts/install-mac.sh; fi
   - if [[ $TRAVIS_OS_NAME == "linux" ]]; then bash build-scripts/install-linux.sh; fi
 
-  #Build executable files
-  - python -m PyInstaller reversi.spec
-
 #Run tests
 script: python -m pytest
