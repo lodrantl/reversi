@@ -17,6 +17,7 @@ install:
   #Run install scripts per system
   - if [[ $TRAVIS_OS_NAME == "osx" ]]; then bash build-scripts/install-mac.sh; fi
   - if [[ $TRAVIS_OS_NAME == "linux" ]]; then bash build-scripts/install-linux.sh; fi
+  - ls -la dist/
 
 #Run tests
 script: python -m pytest
