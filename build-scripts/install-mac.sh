@@ -2,6 +2,7 @@
 set -x #echo on
 
 export PYENV_VERSION=$PYTHON
+export PYTHON_CONFIGURE_OPTS="--enable-shared"
 
 # Per the `pyenv homebrew recommendations <https://github.com/yyuu/pyenv/wiki#suggested-build-environment>`_.
 brew install openssl readline
