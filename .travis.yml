@@ -8,6 +8,7 @@ matrix:
       sudo: required
     - os: osx
       language: generic
+      env: PYTHON=3.5.3
 
 install:
   #Print system info
@@ -18,7 +19,7 @@ install:
   - if [[ $TRAVIS_OS_NAME == "linux" ]]; then bash build-scripts/install-linux.sh; fi
 
   #Build executable files
-  - python3 -m PyInstaller reversi.spec
+  - python -m PyInstaller reversi.spec
 
 #Run tests
-script: pytest
+script: python -m pytest
