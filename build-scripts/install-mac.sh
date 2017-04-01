@@ -15,7 +15,7 @@ pyenv install $PYENV_VERSION
 # ``pyenv shell $PYTHON`` would work, but ``pyenv init`` doesn't seem to
 # modify the Bash environment. ??? So, I hand-set the variables instead.
 export PYENV_VERSION=$PYTHON
-pyenv init
+export PATH="/Users/travis/.pyenv/shims:${PATH}"
 
 # A manual check that the correct version of Python is running.
 python --version
