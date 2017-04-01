@@ -29,7 +29,7 @@ python -m pip install -I Cython==0.23
 
 #Install pyinstaller and upx
 brew install upx
-python -m pip install pyinstaller
+python -m pip install pyinstaller pytest
 
 #Install kivy master branch
 USE_OSX_FRAMEWORKS=0 python -m pip install https://github.com/kivy/kivy/archive/master.zip
