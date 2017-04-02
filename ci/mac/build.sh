@@ -11,7 +11,7 @@ hdiutil create -srcfolder dist/Reversi.app dist/Reversi.dmg
 
 # Move to final dir
 mkdir dist/final
-mv dist/Reversi.app dist/final/
+mv dist/Reversi.dmg dist/final/
 
 # Show files
 ls -la dist/
