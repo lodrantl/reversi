@@ -9,7 +9,7 @@ if [[ $TRAVIS_OS_NAME == "osx" ]]; then
     brew outdated pyenv || brew upgrade pyenv
 
     pyenv install $PYENV_VERSION
-    export PATH="/Users/travis/.pyenv/shims:${PATH}"
+    eval $(pyenv init -)"
 
     # A manual check that the correct version of Python is running.
     python --version
