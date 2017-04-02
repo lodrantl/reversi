@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -x #echo on
+set -ev #echo on
 
 export PYENV_VERSION=$PYTHON
 export PYTHON_CONFIGURE_OPTS="--enable-shared"
