@@ -9,7 +9,7 @@ if [[ $TRAVIS_OS_NAME == "osx" ]]; then
     brew outdated pyenv || brew upgrade pyenv
 
     pyenv install $PYENV_VERSION
-    eval $(pyenv init -)"
+    eval "$(pyenv init -)"
 
     # A manual check that the correct version of Python is running.
     python --version
