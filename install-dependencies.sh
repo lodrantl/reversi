@@ -27,9 +27,6 @@ if [[ $TRAVIS_OS_NAME == "osx" ]]; then
 
     #Install kivy master branch
     USE_OSX_FRAMEWORKS=0 python -m pip install https://github.com/kivy/kivy/archive/master.zip
-
-    #Build executable files
-    python -m PyInstaller reversi.spec
 fi
 
 if [[ $TRAVIS_OS_NAME == "linux" ]]; then
