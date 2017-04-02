@@ -1,23 +1,43 @@
 language: python
+
 matrix:
   include:
-  - os: osx
-    language: generic
-    env: PYTHON=3.5.3
+#    - os: linux
+#      python: 3.5
+#      dist: trusty
+#      sudo: required
+    - os: osx
+      language: generic
+      env: PYTHON=3.5.3
+
 install:
-- uname -a
-- if [[ $TRAVIS_OS_NAME == "osx" ]]; then brew update; fi
-- chmod +x ci/install-dependencies.sh
-- source ./ci/install-dependencies.sh
+  # Print system info
+  - uname -a
+
+  # Update brew packages on macOS
+  - if [[ $TRAVIS_OS_NAME == "osx" ]]; then brew update; fi
+
+  # Install dependencies per system
+  - chmod +x ci/linux/*
+  - chmod +x ci/mac/*
+
+  - if [[ $TRAVIS_OS_NAME == "osx" ]]; then source ./ci/mac/install.sh; fi
+  - if [[ $TRAVIS_OS_NAME == "linux" ]]; then source ./ci/linux/install.sh; fi
+
 script:
-- python -m pytest
-- chmod +x ci/build-executable.sh
-- ./ci/build-executable.sh
+  - python -m pytest
+  # Build executables
+  - if [[ $TRAVIS_OS_NAME == "osx" ]]; then ./ci/mac/build.sh; fi
+  - if [[ $TRAVIS_OS_NAME == "linux" ]]; then ./ci/linux/build.sh; fi
+
 deploy:
   provider: releases
   api_key:
     secure: vplKU7nNbKD6XYFOWZxYc9KCAH7IOvV2bSZsPu+noEeE+E9tgR8kbL+goGxBXEw/Yibcp9icHPLWuQuNMMwpiJTXKanzhCGPVDLG4bJ40CDPlqz7BCKZcYyUyeGgOr2r0BJid5SFeznA/74gIfg8BscoeR9U4mL36XixfYZzhUeXkGWZh23swu/hlQTbD1iJu0flSXzjKEZnvMRMvs+NVS+hYDNLkEZLwfxhA+YmnVHw9uU1mPYwXLNWLlfMYj99Q1N1ja9xr803jk6xCuaA31FvkZyzKuo2NQGO0ndUgmGJXnwyT277qnJ4Sfyrubzc5+u4J91IJw+xTMqCXhgyuflRoQpY3vbC6qQJ1U0io40bD5rRUQT1z0YRyHmk797dmFN1rqPWQ7g5sFefed211NAKBqn24e5pWUzaO89zYbBXbCUZ+jj40v+O+xAqyh+FlGgrmbfDhmQrGxgyD8KUnyCm94S5wK8IlTytMMNANhfdh8CNJo7PtL0S4s7My03qzdSIl4nYmhA29dzy3TCpr0ZXaoirJ85KNgkKZnGmqAatSsaA1Hrh7MgPQ4SfKqWMlN41huZEcwohO7/cNBM27f2dywoR1r3P0ZDzqf22hhMxy1ldEFhYsoA/0jfzspmQBIXbJyc53dcH9atlz1qmUoaxo0vWDVtC4xTsXA8e0xo=
-  file: dist/Reversi.dmg
+  file_glob: true
+  file: dist/final/*
+  skip_cleanup: true
+  overwrite: true
   on:
     repo: lodrantl/reversi
     branch: ci-build
