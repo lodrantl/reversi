@@ -11,17 +11,21 @@ matrix:
       env: PYTHON=3.5.3
 
 install:
-  #Print system info
+  # Print system info
   - uname -a
 
-  #Run install scripts per system
-  - chmod +x build-scripts/install-mac.sh
-  - chmod +x build-scripts/install-linux.sh
+  # Update brew packages on macOS
   - if [[ $TRAVIS_OS_NAME == "osx" ]]; then brew update; fi
-  - if [[ $TRAVIS_OS_NAME == "osx" ]]; then source ./build-scripts/install-mac.sh; fi
-  - if [[ $TRAVIS_OS_NAME == "linux" ]]; then source ./build-scripts/install-linux.sh; fi
+
+  # Install dependencies per system
+  - chmod +x install-dependencies.sh
+  - source ./install-dependencies.sh
+
   - ls -la dist/
   - ls -la dist/reversi
 
-#Run tests
-script: python -m pytest
+script:
+  # Build executables with pyinstaller
+  - python -m PyInstaller reversi.spec
+  # Run tests
+  - python -m pytest

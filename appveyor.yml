@@ -42,7 +42,7 @@ install:
 
   # Install the build dependencies of the project.
   - "%CMD_IN_ENV% pip install cython==0.23"
-  - "%CMD_IN_ENV% pip install -r build-scripts/dev-requirements.txt"
+  - "%CMD_IN_ENV% pip install -r dev-requirements.txt"
 
   # Install development kivy wheel
   - "curl -fsS -o Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl https://kivy.org/downloads/appveyor/kivy/Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl"
