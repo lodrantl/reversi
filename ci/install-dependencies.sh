@@ -7,7 +7,7 @@ if [[ $TRAVIS_OS_NAME == "osx" ]]; then
 
     # See https://docs.travis-ci.com/user/osx-ci-environment/#A-note-on-upgrading-packages.
     brew outdated pyenv || brew upgrade pyenv
-
+https://github.com/lodrantl/reversi.git
     pyenv install $PYENV_VERSION
     eval "$(pyenv init -)"
 

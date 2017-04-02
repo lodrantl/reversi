@@ -42,7 +42,8 @@ install:
 
   # Install the build dependencies of the project.
   - "%CMD_IN_ENV% pip install cython==0.23"
-  - "%CMD_IN_ENV% pip install -r dev-requirements.txt"
+  - "%CMD_IN_ENV% pip install docutils pygments pypiwin32 kivy.deps.glew kivy.deps.glew_dev kivy.deps.sdl2 kivy.deps.sdl2_dev kivy.deps.gstreamer_dev kivy.deps.angle"
+  - "%CMD_IN_ENV% pip install pyinstaller pytest"
 
   # Install development kivy wheel
   - "curl -fsS -o Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl https://kivy.org/downloads/appveyor/kivy/Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl"
@@ -51,21 +52,13 @@ install:
   # Enable remote desktop (OpenGL fix)
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-desktop.ps1'))
 
-
-build_script:
-  # Build the pyinstaller exe
-  - "%CMD_IN_ENV% python -m PyInstaller reversi.spec"
-
-#test_script:
+test_script:
   # Run the project tests
-  #- "%CMD_IN_ENV% python setup.py nosetests"
+  - "%CMD_IN_ENV% python -m pytest"
 
-#after_test:
-  # If tests are successful, create binary packages for the project.
-  #- "%CMD_IN_ENV% python setup.py bdist_wheel"
-  #- "%CMD_IN_ENV% python setup.py bdist_wininst"
-  #- "%CMD_IN_ENV% python setup.py bdist_msi"
-  #- ps: "ls dist"
+after_test:
+  # Build our binary
+  - "%CMD_IN_ENV% python -m PyInstaller reversi.spec"
 
 artifacts:
   # Archive the generated packages in the ci.appveyor.com build report.

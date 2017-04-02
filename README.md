@@ -19,10 +19,11 @@ Mac / Linux:
 ```bash
 source activate reversi_env
 ```
-Namesti potrebne pakete:
-```bash
-pip install -r requirements.txt
-```
+Namesti kivy:
+* [Windows](https://kivy.org/docs/installation/installation-windows.html)
+* [macOS](https://kivy.org/docs/installation/installation-osx.html)
+* [Linux](https://kivy.org/docs/installation/installation-linux.html)
+
 ### [Plan dela](./PLAN.md)
 
 ### [Shema projekta](./SHEMA.md)

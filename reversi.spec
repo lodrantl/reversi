@@ -1,6 +1,7 @@
 # -*- mode: python -*-
 
 import sys
+import os
 from kivy.tools.packaging.pyinstaller_hooks import get_deps_minimal, get_deps_all, hookspath, runtime_hooks
 block_cipher = None
 
@@ -36,11 +37,12 @@ elif sys.platform == "darwin":
               a.scripts,
               exclude_binaries=True,
               name='reversi',
-              debug=False,
+              debug=True,
               strip=False,
               upx=True,
-              console=False,
-              icon=os.path.join('reversi', 'grafika', 'ikona.png'))
+              console=True,
+              icon=os.path.join('reversi', 'grafika', 'ikona.icns'))
+
     coll = COLLECT(exe,
                    Tree(os.path.join('reversi', '')),
                    a.binaries,
@@ -49,6 +51,11 @@ elif sys.platform == "darwin":
                    strip=False,
                    upx=True,
                    name='reversi')
+
+    app = BUNDLE(coll,
+                 name='reversi.app',
+                 icon=os.path.join('reversi', 'grafika', 'ikona.icns'),
+                 bundle_identifier=None)
 
 elif sys.platform == "win32":
     from kivy.deps import sdl2, glew

@@ -18,13 +18,11 @@ install:
   - if [[ $TRAVIS_OS_NAME == "osx" ]]; then brew update; fi
 
   # Install dependencies per system
-  - chmod +x install-dependencies.sh
-  - source ./install-dependencies.sh
+  - chmod +x ci/install-dependencies.sh
+  - source ./ci/install-dependencies.sh
 
 script:
-  # Build executables with pyinstaller
-  - python -m PyInstaller reversi.spec
-  # Run tests
   - python -m pytest
-  - ls -la dist/
-  - ls -la dist/reversi
+  # Build executables
+  - chmod +x ci/build-executable.sh
+  - ./ci/build-executable.sh
