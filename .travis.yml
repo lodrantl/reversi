@@ -21,11 +21,10 @@ install:
   - chmod +x install-dependencies.sh
   - source ./install-dependencies.sh
 
-  - ls -la dist/
-  - ls -la dist/reversi
-
 script:
   # Build executables with pyinstaller
   - python -m PyInstaller reversi.spec
   # Run tests
   - python -m pytest
+  - ls -la dist/
+  - ls -la dist/reversi
