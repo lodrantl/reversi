@@ -61,7 +61,7 @@ test_script:
 after_test:
   # Build our binary
   - "%CMD_IN_ENV% python -m PyInstaller reversi.spec"
-  - "move dist\Reversi.exe dist\reversi_v0.1-nightly-win32.exe"
+  - "move dist\\Reversi.exe dist\\reversi_v0.1-nightly-win32.exe"
 
 artifacts:
   # Archive the generated packages in the ci.appveyor.com build report.
