@@ -62,11 +62,11 @@ test_script:
 after_test:
   # Build our binary
   - "%CMD_IN_ENV% python -m PyInstaller reversi.spec"
-  - "move dist\\Reversi.exe reversi-%VERSION%-nightly-win%PYTHON_ARCH%.exe"
+  - "%CMD_IN_ENV% move dist\\Reversi.exe reversi-%VERSION%-nightly-win%PYTHON_ARCH%.exe"
 
 artifacts:
   # Archive the generated packages in the ci.appveyor.com build report.
-  - path: reversi-%VERSION%-nightly-win%PYTHON_ARCH%.exe"
+  - path: "reversi-%VERSION%-nightly-win%PYTHON_ARCH%.exe"
 
 deploy:
   provider: S3
