@@ -53,7 +53,7 @@ elif sys.platform == "darwin":
                    name='reversi')
 
     app = BUNDLE(coll,
-                 name='Reversi.app',
+                 name='reversi.app',
                  icon=os.path.join('reversi', 'grafika', 'ikona.icns'),
                  bundle_identifier=None)
 
@@ -66,7 +66,7 @@ elif sys.platform == "win32":
               a.datas,
               Tree(os.path.join('reversi', '')),
               *[Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],
-              name='Reversi',
+              name='reversi',
               debug=True,
               strip=False,
               upx=True,

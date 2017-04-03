@@ -1,5 +1,8 @@
 language: python
 
+env:
+  - VERSION: "v0.1-nightly"
+
 matrix:
   include:
 #    - os: linux
@@ -42,3 +45,6 @@ deploy:
   on:
     repo: lodrantl/reversi
     branch: ci-build
+
+
+

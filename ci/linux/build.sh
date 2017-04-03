@@ -7,9 +7,10 @@ python -m PyInstaller -y reversi.spec
 
 # Move to final dir
 mkdir dist/final
-mv dist/reversi dist/final/
+mv dist/reversi dist/final/reversi-${VERSION}-${TRAVIS_OS_NAME}
 
 # Run tests
+ls -la dist/
 ls -la dist/final
 
 

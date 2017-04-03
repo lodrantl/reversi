@@ -7,6 +7,8 @@ Reversi igra napisana v Python ogrodju Kivy.
 ## Nightly builds
 * [Windows 32-bit](https://s3-eu-west-1.amazonaws.com/reversi-nightlies/reversi-v0.1-nightly-win32.exe)
 * [Windows 64-bit](https://s3-eu-west-1.amazonaws.com/reversi-nightlies/reversi-v0.1-nightly-win_amd64.exe)
+* [macOS](https://s3-eu-west-1.amazonaws.com/reversi-nightlies/reversi-v0.1-nightly-mac.dmg)
+* [Linux](https://s3-eu-west-1.amazonaws.com/reversi-nightlies/reversi-v0.1-nightly-linux)
 
 ## Priprava okolja
 Razvojno okolje bomo nastavili z Anacondo, kasneje pa bomo aplikacijo zapakirali z PyInstaller oz. cx_freeze.

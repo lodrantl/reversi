@@ -7,15 +7,14 @@ python -m pytest
 python -m PyInstaller -y reversi.spec
 
 # Build dmg
-hdiutil create -srcfolder dist/Reversi.app dist/Reversi.dmg
+hdiutil create -srcfolder dist/reversi.app dist/reversi.dmg
 
 # Move to final dir
 mkdir dist/final
-mv dist/Reversi.dmg dist/final/
+mv dist/reversi.dmg dist/final/reversi-${VERSION}-${TRAVIS_OS_NAME}.dmg
 
 # Show files
 ls -la dist/
-ls -la dist/reversi
 ls -la dist/final
 
 #Workaround for https://github.com/travis-ci/travis-ci/issues/6522
