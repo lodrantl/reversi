@@ -232,23 +232,25 @@
 
 <DialogKonec>
     background_color: 0,0,0,0
-    size_hint: None, None
-    size: 400, 400
-    title: 'KONEC IGRE'
-    title_color: barva_sekundarna
-    title_align: 'center'
-    title_size: '40sp'
+    size_hint: .5, .5
     BoxLayout
         orientation: 'vertical'
         Label:
-            text: 'ZELIS IGRATI PONOVNO?'
+            text: '[color=#ffffff][b]  Zelis igrati ponovno? [/b][/color]'
+            markup: True
+            font_size: '30sp'
+            size: self.texture_size
+            background_color: 'green'
         RelativeLayout
-            orientation: 'horizontal'
             LepGumb:
                 text: 'Glavni meni'
-                size_hint: 1, 1
+                size_hint: .4, .4
+                pos_hint: {'center_x': 0.25, 'center_y': 0.5}
+                on_release: app.koncaj_igro()
+                on_release: root.dismiss()
             LepGumb:
                 text: 'Igraj znova'
-                size_hint: 1, 1
-
-
+                size_hint: .4, .4
+                pos_hint: {'center_x': 0.75, 'center_y': 0.5}
+                on_release: app.zacni_dva_igralca()
+                on_release: root.dismiss()

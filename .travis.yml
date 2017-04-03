@@ -45,7 +45,6 @@ deploy:
   acl: public_read
   on:
     repo: lodrantl/reversi
-    branch: ci-build
-
+    branch: master
 
 

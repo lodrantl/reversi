@@ -45,7 +45,7 @@ def filter_binaries(all_binaries):
     print('Your exe will depend on the following packages:')
     print(excluded_pkgs)
 
-    inc_libs = set(['libpython2.7.so.1.0'])
+    inc_libs = set(['libpython3.5.so.1.0'])
     binaries = [x for x in all_binaries if x[0] not in excluded_files]
     return binaries
 
