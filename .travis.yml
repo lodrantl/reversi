@@ -1,7 +1,8 @@
 language: python
 
 env:
-  - VERSION: "v0.1-nightly"
+  global:
+    - VERSION: "v0.1-nightly"
 
 matrix:
   include:
