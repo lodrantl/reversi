@@ -47,38 +47,6 @@ class IgraZaslon(Screen):
     ime_crnega = StringProperty('Računalnik')
     ime_belega = StringProperty('Človek')
 
-class LepWidget(Widget):
-    """
-    Lepo oblikovanje za vse gumbe v aplikaciji
-    """
-
-    notranja_barva = ListProperty([1,1,1,1])
-    def on_state(self, event, x):
-        """
-        Ob pritisku gumba spremeni notranjo barvo
-        """
-        if x == 'down':
-            self.notranja_barva = self.izbrana_barva
-        elif x == 'normal':
-            self.notranja_barva = [1, 1, 1, 1]
-
-
-# class LepRadio(LepGumb, ToggleButtonBehavior):
-#     """
-#     Lepo oblikovan radio gumb, za uporabo v celotni aplikaciji
-#     """
-#     notranja_barva = ListProperty([1, 1, 1, 1])
-#
-#     def on_state(self, event, x):
-#         """
-#         Ob pritisku gumba spremeni notranjo barvo
-#         """
-#         if x == 'down':
-#             self.notranja_barva = [0.8, 1, 0.8, 1]
-#         elif x == 'normal':
-#             self.notranja_barva = [1, 1, 1, 1]
-
-
 
 class Polje(ButtonBehavior, Image, HoverBehavior):
     """
