@@ -76,4 +76,4 @@ deploy:
   bucket: reversi-nightlies
   region: eu-west-1
   set_public: true
-  artifact: reversi-%VERSION%-nightly-win%PYTHON_ARCH%.exe"
+  artifact: "reversi-%VERSION%-nightly-win%PYTHON_ARCH%.exe"
