@@ -64,7 +64,7 @@ elif sys.platform == "win32":
               a.binaries,
               a.zipfiles,
               a.datas,
-              [Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],
+              *[Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],
               name='Reversi',
               debug=True,
               strip=False,
