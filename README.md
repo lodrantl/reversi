@@ -1,7 +1,12 @@
 # reversi
 Reversi igra napisana v Python ogrodju Kivy.
 
-[![Build status](https://ci.appveyor.com/api/projects/status/tbeqt4jq9bvpayo9?svg=true)](https://ci.appveyor.com/project/lodrantl/reversi)
+[![Build status Appveyor](https://ci.appveyor.com/api/projects/status/tbeqt4jq9bvpayo9?svg=true)](https://ci.appveyor.com/project/lodrantl/reversi)
+[![Build status Travis](https://travis-ci.org/lodrantl/reversi.svg?branch=master)](https://travis-ci.org/lodrantl/reversi)
+
+## Nightly builds
+* [Windows 32-bit](https://s3-eu-west-1.amazonaws.com/reversi-nightlies/dist/reversi-v0.1-nightly-win32.exe)
+* [Windows 64-bit](https://s3-eu-west-1.amazonaws.com/reversi-nightlies/dist/reversi-v0.1-nightly-win_amd64.exe)
 
 ## Priprava okolja
 Razvojno okolje bomo nastavili z Anacondo, kasneje pa bomo aplikacijo zapakirali z PyInstaller oz. cx_freeze.
