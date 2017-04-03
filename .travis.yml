@@ -5,10 +5,10 @@ env:
 
 matrix:
   include:
-#    - os: linux
-#      python: 3.5
-#      dist: trusty
-#      sudo: required
+    - os: linux
+      python: 3.5
+      dist: trusty
+      sudo: required
     - os: osx
       language: generic
       env: PYTHON=3.5.3
