@@ -64,6 +64,7 @@ elif sys.platform == "win32":
               a.binaries,
               a.zipfiles,
               a.datas,
+              Tree(os.path.join('reversi', '')),
               *[Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],
               name='Reversi',
               debug=True,
