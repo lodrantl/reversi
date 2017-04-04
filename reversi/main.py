@@ -28,9 +28,7 @@ from kivy.uix.togglebutton import ToggleButton, ToggleButtonBehavior
 from kivy.metrics import sp
 from kivy.uix.modalview import ModalView
 
-
-from reversi.igra import Stanje, Igra
-from reversi.hoverable import HoverBehavior
+from reversi import Stanje, Igra, Clovek, Racunalnik, HoverBehavior
 
 Window.minimum_width = 500
 Window.minimum_height = 550
@@ -40,7 +38,13 @@ Window.minimum_height = 550
 class MeniZaslon(Screen):
     pass
 class NastavitveZaslon(Screen):
-    pass
+    def radio_vrednost(self, skupina):
+        gumb = next([x for x in ToggleButton.get_widgets(skupina) if x.state == 'down'], None)
+        if gumb:
+            return gumb.text
+        else:
+            raise Exception('Noben gumb ni izbran!!')
+
 class PravilaZaslon(Screen):
     pass
 class IgraZaslon(Screen):
@@ -97,7 +101,7 @@ class Deska(RelativeLayout):
     V self.igra je shranjeno trenutno stanje v obliki razreda Igra
     """
     polja = []
-    igra = ObjectProperty(Igra(), rebind=True)
+    igra = None
 
     stevilo_crnih = NumericProperty(-1)
     stevilo_belih = NumericProperty(-1)
@@ -115,9 +119,23 @@ class Deska(RelativeLayout):
                 t = Polje(pos_hint={'x': .125 * j, 'y': .125 * i}, koordinate=[i,j])
                 self.add_widget(t)
                 self.polja[i].append(t)
-        self.igra = Igra()
-        self.osvezi()
 
+    def nova_igra(self, tezavnost=False, barva=False):
+        if tezavnost != False and barva != False:
+            if barva == Stanje.BELO:
+                self.beli = Clovek()
+                self.crni = Racunalnik(tezavnost)
+            else:
+                self.beli = Racunalnik(tezavnost)
+                self.crni = Clovek()
+            self.igra = Igra()
+            self.osvezi()
+        else:
+            print("nova igra")
+            self.beli = Clovek()
+            self.crni = Clovek()
+            self.igra = Igra()
+            self.osvezi()
 
     def osvezi(self):
         """
@@ -132,6 +150,8 @@ class Deska(RelativeLayout):
                 if (i, j) in self.igra.mozne_poteze:
                     self.polja[i][j].nastavi(Stanje.MOGOCE)
                 else:
+                    if self.igra.deska[i][j] != Stanje.PRAZNO:
+                        print('polje', i, j, self.igra.deska[i][j])
                     self.polja[i][j].nastavi(self.igra.deska[i][j])
 
     def odigraj_potezo(self, koordinate):
@@ -143,6 +163,10 @@ class Deska(RelativeLayout):
         self.igra.odigraj_potezo(koordinate)
         self.osvezi()
 
+        if not self.igra.konec:
+            po = DialogKonec()
+            po.open()
+
 class DialogKonec(ModalView):
     pass
 
@@ -150,14 +174,7 @@ class ReversiApp(App):
     """
     Glavni Kivy Application razred, definira ScreenManager z našimi zasloni in vsebuje par uporabnih konstant
     """
-
-    def zacni_en_igralec(self):
-        self.root.current = 'igra'
-
-    def zacni_dva_igralca(self):
-        self.root.current = 'igra'
-        po = DialogKonec()
-        po.open()
+    igra_zaslon = ObjectProperty()
 
     def koncaj_igro(self):
         self.root.current = 'meni'
@@ -167,7 +184,8 @@ class ReversiApp(App):
         sm = ScreenManager()
         sm.add_widget(MeniZaslon(name='meni'))
         sm.add_widget(NastavitveZaslon(name='nastavitve'))
-        sm.add_widget(IgraZaslon(name='igra'))
+        self.igra_zaslon = IgraZaslon(name='igra')
+        sm.add_widget(self.igra_zaslon)
         sm.add_widget(PravilaZaslon(name='pravila'))
         return sm
 

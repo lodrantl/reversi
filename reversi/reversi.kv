@@ -25,7 +25,8 @@
             pos_hint: {'center_x': 0.5, 'center_y': 0.7}
         LepGumb:
             text: 'Dva igralca'
-            on_release: app.zacni_dva_igralca()
+            on_release: app.igra_zaslon.deska.nova_igra()
+            on_release: root.manager.current = 'igra'
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
         LepGumb:
             text: 'Pravila'
@@ -101,7 +102,7 @@
             pos_hint: {'center_x': 0.25, 'center_y': 0.14}
         LepGumb:
             text: 'Igraj'
-            on_release: app.zacni_dva_igralca()
+            on_release: app.igra_zaslon.deska.nova_igra(tezavnost=root.radio_vrednost('tezavnost'), barva=root.radio_vrednost('barva'))
             pos_hint: {'center_x': 0.75, 'center_y': 0.14}
 
 <IgraZaslon>:
@@ -132,7 +133,6 @@
             Label:
                 color: 0,0,0,1
                 text: str(root.deska.stevilo_belih)
-                id: 'labela'
                 pos_hint: {'center_x': 0.45, 'center_y': 0.5}
             Zeton:
                 source: 'grafika/crni_zeton.png'
