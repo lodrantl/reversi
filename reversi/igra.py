@@ -6,6 +6,10 @@ Logika igra reversi
 
 """
 
+import logging
+
+logger = logging.getLogger('reversi_igra')
+logger.setLevel(20)
 
 class Stanje():
     BELO = 'belo'
@@ -35,7 +39,7 @@ class Igra:
         self.deska[3][3], self.deska[4][4] = Stanje.CRNO, Stanje.CRNO
         self.deska[3][4], self.deska[4][3] = Stanje.BELO, Stanje.BELO
         self.mozne_poteze = self.dobi_mozne_poteze()
-        print(self.deska)
+        logging.debug(self.deska)
 
 
     def dobi_mozne_poteze(self):
@@ -79,24 +83,23 @@ class Igra:
 
             self.mozne_poteze = self.dobi_mozne_poteze()
             if len(self.mozne_poteze) == 0:
-                print("Še enkrat na vrsti")
+                logging.debug("Še enkrat na vrsti")
                 self.na_potezi = Stanje.obrni(self.na_potezi)
                 self.mozne_poteze = self.dobi_mozne_poteze()
                 if len(self.mozne_poteze) == 0:
                     self.konec = True
-                    print("konec igre")
-            print(self.mozne_poteze)
+                    logging.debug("konec igre")
+            logging.debug(self.mozne_poteze)
 
         else:
-            print("Polje ni na izbiro")
-            pass
+            raise Exception("Polje ni na izbiro")
 
     def obrni_za(self, x, y):
         for smer_x, smer_y in SMERI:
             i, j = x + smer_x, y + smer_y
             trenutna_polja = []
             while 0 <= i and i <= 7 and 0 <= j and j <= 7:
-                print((i, j))
+                logging.debug((i, j))
                 if self.deska[i][j] == Stanje.PRAZNO:
                     break
                 if self.deska[i][j] == self.na_potezi:

@@ -66,11 +66,13 @@
                 height: '100sp'
                 orientation: 'horizontal'
                 LepRadio:
-                    text: 'beli'
+                    text: '\u010Drni'
+                    value: Stanje.CRNO
                     group: 'barva'
                     state: 'down'
                 LepRadio:
-                    text: '\u010Drni'
+                    text: 'beli'
+                    value: Stanje.BELO
                     group: 'barva'
         Label:
             text: '[color=#ffffff][b]  Te\u017Eavnost:[/b][/color]'
@@ -89,13 +91,16 @@
                 LepRadio:
                     text: 'lahko'
                     group: 'tezavnost'
+                    value: 0
                 LepRadio:
                     text: 'srednje'
                     group: 'tezavnost'
                     state: 'down'
+                    value: 1
                 LepRadio:
                     text: 'te\u017Eko'
                     group: 'tezavnost'
+                    value: 2
         LepGumb:
             text: 'Nazaj'
             on_release: root.manager.current = 'meni'
@@ -103,6 +108,7 @@
         LepGumb:
             text: 'Igraj'
             on_release: app.igra_zaslon.deska.nova_igra(tezavnost=root.radio_vrednost('tezavnost'), barva=root.radio_vrednost('barva'))
+            on_release: root.manager.current = 'igra'
             pos_hint: {'center_x': 0.75, 'center_y': 0.14}
 
 <IgraZaslon>:
@@ -121,7 +127,7 @@
             height: '70sp'
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
             BarvniLabel:
-                text: root.ime_belega
+                text: root.deska.ime_belega
                 font_size: '30sp'
                 size_hint: 0.4, 1
                 background_color: barva_sekundarna if root.deska.na_potezi == Stanje.BELO else [0, 0, 0, 0]
@@ -142,7 +148,7 @@
                 text: str(root.deska.stevilo_crnih)
                 pos_hint: {'center_x': 0.55, 'center_y': 0.5}
             BarvniLabel:
-                text: root.ime_crnega
+                text: root.deska.ime_crnega
                 font_size: '30sp'
                 size_hint: 0.4, 1
                 background_color: barva_sekundarna if root.deska.na_potezi == Stanje.CRNO else [0, 0, 0, 0]
@@ -236,7 +242,7 @@
     BoxLayout
         orientation: 'vertical'
         Label:
-            text: '[color=#ffffff][b]  Zelis igrati ponovno? [/b][/color]'
+            text: '[color=#ffffff][b]  \u017Eelis igrati ponovno? [/b][/color]'
             markup: True
             font_size: '30sp'
             size: self.texture_size

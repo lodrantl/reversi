@@ -9,6 +9,7 @@ Glavni razred reversi aplikacije, vsebuje konfiguracijo uporabniškega vmesnika
 # Spremeni trenutno mapo, če je aplikacija zagnana kot PyInstaller exe (dirty)
 import sys
 import os
+
 if getattr(sys, 'frozen', False):
     os.chdir(sys._MEIPASS)
 
@@ -27,37 +28,46 @@ from kivy.uix.button import ButtonBehavior
 from kivy.uix.togglebutton import ToggleButton, ToggleButtonBehavior
 from kivy.metrics import sp
 from kivy.uix.modalview import ModalView
+from kivy.clock import mainthread
 
+import logging
 from reversi import Stanje, Igra, Clovek, Racunalnik, HoverBehavior
 
 Window.minimum_width = 500
 Window.minimum_height = 550
 
+logger = logging.getLogger('reversi_main')
+logger.setLevel(logging.DEBUG)
 
 # Declare all application screens.
 class MeniZaslon(Screen):
     pass
+
+
 class NastavitveZaslon(Screen):
     def radio_vrednost(self, skupina):
-        gumb = next([x for x in ToggleButton.get_widgets(skupina) if x.state == 'down'], None)
+        gumb = [x for x in ToggleButton.get_widgets(skupina) if x.state == 'down']
         if gumb:
-            return gumb.text
+            print(gumb[0].value)
+            return gumb[0].value
         else:
             raise Exception('Noben gumb ni izbran!!')
 
+
 class PravilaZaslon(Screen):
     pass
+
+
 class IgraZaslon(Screen):
-    ime_crnega = StringProperty('Računalnik')
-    ime_belega = StringProperty('Človek')
+    pass
 
 
 class Polje(ButtonBehavior, Image, HoverBehavior):
     """
     Razred vsake polja na plošči, hrani stanje in pa pozna svoje koordinate
     """
-    stanje = OptionProperty(Stanje.PRAZNO, options=[Stanje.BELO, Stanje.CRNO, Stanje.PRAZNO, Stanje.MOGOCE])
     koordinate = ListProperty([-1, -1])
+    stanje = OptionProperty(Stanje.PRAZNO, options=[Stanje.BELO, Stanje.CRNO, Stanje.PRAZNO, Stanje.MOGOCE])
     stil = StringProperty('')
 
     def on_enter(self):
@@ -101,11 +111,14 @@ class Deska(RelativeLayout):
     V self.igra je shranjeno trenutno stanje v obliki razreda Igra
     """
     polja = []
-    igra = None
+
+    ime_belega = StringProperty('')
+    ime_crnega = StringProperty('')
 
     stevilo_crnih = NumericProperty(-1)
     stevilo_belih = NumericProperty(-1)
     na_potezi = OptionProperty(Stanje.BELO, options=[Stanje.BELO, Stanje.CRNO])
+    igralca = dict()
 
     def __init__(self, **kwargs):
         """
@@ -116,26 +129,29 @@ class Deska(RelativeLayout):
         for i in range(8):
             self.polja.append([])
             for j in range(8):
-                t = Polje(pos_hint={'x': .125 * j, 'y': .125 * i}, koordinate=[i,j])
+                t = Polje(pos_hint=dict(x=.125 * j, y=.125 * i), koordinate=[i, j])
                 self.add_widget(t)
                 self.polja[i].append(t)
 
     def nova_igra(self, tezavnost=False, barva=False):
         if tezavnost != False and barva != False:
             if barva == Stanje.BELO:
-                self.beli = Clovek()
-                self.crni = Racunalnik(tezavnost)
+                self.ime_belega = 'Igralec'
+                self.ime_crnega = 'Računalnik'
             else:
-                self.beli = Racunalnik(tezavnost)
-                self.crni = Clovek()
-            self.igra = Igra()
-            self.osvezi()
+                self.ime_crnega = 'Igralec'
+                self.ime_belega = 'Računalnik'
+
+            self.igralca[barva] = Clovek(barva)
+            self.igralca[Stanje.obrni(barva)] = Racunalnik(self.odigraj_potezo, Stanje.obrni(barva), tezavnost)
         else:
-            print("nova igra")
-            self.beli = Clovek()
-            self.crni = Clovek()
-            self.igra = Igra()
-            self.osvezi()
+            self.ime_belega = 'Igralec 1'
+            self.ime_crnega = 'Igralec 2'
+            self.igralca[Stanje.CRNO] = Clovek(Stanje.CRNO)
+            self.igralca[Stanje.BELO] = Clovek(Stanje.BELO)
+        self.igra = Igra()
+        self.osvezi()
+        self.igralca[self.na_potezi].zacni_potezo(self.igra)
 
     def osvezi(self):
         """
@@ -145,30 +161,35 @@ class Deska(RelativeLayout):
         self.stevilo_crnih = self.igra.stevilo_crnih
         self.stevilo_belih = self.igra.stevilo_belih
         self.na_potezi = self.igra.na_potezi
+
         for i in range(8):
             for j in range(8):
-                if (i, j) in self.igra.mozne_poteze:
+                if (i, j) in self.igra.mozne_poteze and self.igralca[self.na_potezi].je_clovek:
                     self.polja[i][j].nastavi(Stanje.MOGOCE)
                 else:
-                    if self.igra.deska[i][j] != Stanje.PRAZNO:
-                        print('polje', i, j, self.igra.deska[i][j])
                     self.polja[i][j].nastavi(self.igra.deska[i][j])
 
+    @mainthread
     def odigraj_potezo(self, koordinate):
         """
         Odigra potezo na pritisnjenem polju
         :param koordinate: koordinate, tuple (x, y)
         :return:
         """
+
         self.igra.odigraj_potezo(koordinate)
         self.osvezi()
 
-        if not self.igra.konec:
+        if self.igra.konec:
             po = DialogKonec()
             po.open()
+        else:
+            self.igralca[self.na_potezi].zacni_potezo(self.igra)
+
 
 class DialogKonec(ModalView):
     pass
+
 
 class ReversiApp(App):
     """
