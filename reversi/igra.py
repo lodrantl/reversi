@@ -12,12 +12,19 @@ logger = logging.getLogger('reversi_igra')
 logger.setLevel(20)
 
 class Stanje():
+    """
+    Stanje, ki ga bodo imeli žetoni na deski.
+    """
     BELO = 'belo'
     CRNO = 'crno'
     PRAZNO = 'prazno'
     MOGOCE = 'mogoce'
 
     def obrni(stanje):
+        """
+        Črno stanje spremeni v belo in obratno.
+        :return: Novo stanje
+        """
         if stanje == Stanje.BELO:
             return Stanje.CRNO
         elif stanje == Stanje.CRNO:
@@ -26,6 +33,10 @@ class Stanje():
 SMERI = [(1, 0), (0, 1), (0, -1), (-1, 0), (1, 1), (1, -1), (-1, 1), (-1, -1)]
 
 class Igra:
+    """
+    Razred, katerega elemnti nosijo podatke o stanju igre, kot so število črnih in belih žetonov na polju,
+    kdo je na potezi, kakšne so možne poteze, kako izgleda deska.
+    """
     konec = False
     #deska = [[Stanje.PRAZNO for _ in range(8)] for _ in range(8)] CUUDNOOOO
     na_potezi = Stanje.CRNO
@@ -34,6 +45,10 @@ class Igra:
     stevilo_crnih = 2
 
     def __init__(self):
+        """
+        Naredi matriko, ki predstavlja desko, nanj na sredino postavi dva bela in črna žetona, preveri,
+        katere so možne poteze.
+        """
         self.deska  = [[Stanje.PRAZNO for _ in range(8)] for _ in range(8)]
 
         self.deska[3][3], self.deska[4][4] = Stanje.CRNO, Stanje.CRNO
@@ -43,6 +58,10 @@ class Igra:
 
 
     def dobi_mozne_poteze(self):
+        """
+        Preveri, katere so možne poteze, ki jih lahko igralec, ki je trenutno na vrsti izvede.
+        :return: množica moožnih potez
+        """
         mozne_poteze = set()
         for i in range(8):
             for j in range(8):
@@ -53,6 +72,12 @@ class Igra:
 
 
     def _preveri_polje(self, x, y):
+        """
+        Za dano polje s koordinatami x in y preveri, če igralec, ki je na vrsti lahko igra na to polje.
+        :param x: x koordinata polja
+        :param y: y koordinata polja
+        :return: True, če igralec lahko igra na to polje, False, sicer.
+        """
         if self.deska[x][y] == Stanje.PRAZNO:
             for smer_x, smer_y in SMERI:
                 zastavica = False
@@ -69,6 +94,12 @@ class Igra:
         return False
 
     def odigraj_potezo(self, koordinate):
+        """
+        Igralec igra potezo na koordinatah, žeton se tja postavi, če je možno, sicer ne. Žetoni na deski se obrnejo.
+        Na vrsti je naslednji. Ko je konec igre, se vklopi stikalo na konec.
+        :param koordinate: (x, y) koordinate, kjer bi igralec rad izvedel potezo.
+        :return:
+        """
         x, y = koordinate
         if (x, y) in self.mozne_poteze:
             self.deska[x][y] = self.na_potezi
@@ -95,6 +126,12 @@ class Igra:
             raise Exception("Polje ni na izbiro")
 
     def obrni_za(self, x, y):
+        """
+        Za nov žeton na koordinatah x, y preveri v vse smeri, kateri žetoni so za obrnit in jih obrne.
+        :param x: x koordinata novega žetona
+        :param y: y koordinata novega žetona
+        :return:
+        """
         for smer_x, smer_y in SMERI:
             i, j = x + smer_x, y + smer_y
             trenutna_polja = []
@@ -109,6 +146,11 @@ class Igra:
                 i, j = i + smer_x, j + smer_y
 
     def obrni_zetone(self, seznam):
+        """
+        Žetonom v seznamu zamneja stanje iz belega v črno in obratno, ter poskrbi za štetje žetonov na deski ob obratih.
+        :param seznam: Seznam žetonov, ki jih obrnemo
+        :return:
+        """
         for x, y in seznam:
             if self.deska[x][y] == Stanje.BELO:
                 self.stevilo_belih -= 1
