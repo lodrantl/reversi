@@ -3,8 +3,6 @@ import time
 import threading
 
 class Racunalnik():
-    je_clovek = False
-
     def __init__(self, callback, tezavnost):
         self.callback = callback
         self.tezavnost = tezavnost

@@ -2,7 +2,7 @@
 .. module:: reversi.igra
 .. moduleauthor:: Luka Lodrant <luka.lodrant@gmail.com, Lenart Treven <lenart.treven44@gmail.com>
 
-Logika igra reversi
+Logika igre reversi
 
 """
 
@@ -11,7 +11,8 @@ import logging
 logger = logging.getLogger('reversi_igra')
 logger.setLevel(20)
 
-class Stanje():
+
+class Stanje:
     """
     Stanje, ki ga bodo imeli žetoni na deski.
     """
@@ -20,6 +21,7 @@ class Stanje():
     PRAZNO = 'prazno'
     MOGOCE = 'mogoce'
 
+    @staticmethod
     def obrni(stanje):
         """
         Črno stanje spremeni v belo in obratno.
@@ -30,32 +32,31 @@ class Stanje():
         elif stanje == Stanje.CRNO:
             return Stanje.BELO
 
+
 SMERI = [(1, 0), (0, 1), (0, -1), (-1, 0), (1, 1), (1, -1), (-1, 1), (-1, -1)]
+
 
 class Igra:
     """
     Razred, katerega elemnti nosijo podatke o stanju igre, kot so število črnih in belih žetonov na polju,
     kdo je na potezi, kakšne so možne poteze, kako izgleda deska.
     """
-    konec = False
-    #deska = [[Stanje.PRAZNO for _ in range(8)] for _ in range(8)] CUUDNOOOO
-    na_potezi = Stanje.CRNO
-    mozne_poteze = set()
-    stevilo_belih = 2
-    stevilo_crnih = 2
 
     def __init__(self):
         """
         Naredi matriko, ki predstavlja desko, nanj na sredino postavi dva bela in črna žetona, preveri,
         katere so možne poteze.
         """
-        self.deska  = [[Stanje.PRAZNO for _ in range(8)] for _ in range(8)]
+        self.koncana = False
+        self.na_potezi = Stanje.CRNO
+        self.stevilo_belih = self.stevilo_crnih = 2
+
+        self.deska = [[Stanje.PRAZNO for _ in range(8)] for _ in range(8)]
 
         self.deska[3][3], self.deska[4][4] = Stanje.CRNO, Stanje.CRNO
         self.deska[3][4], self.deska[4][3] = Stanje.BELO, Stanje.BELO
-        self.mozne_poteze = self.dobi_mozne_poteze()
-        logging.debug(self.deska)
 
+        self.mozne_poteze = self.dobi_mozne_poteze()
 
     def dobi_mozne_poteze(self):
         """
@@ -68,8 +69,6 @@ class Igra:
                 if self._preveri_polje(i, j):
                     mozne_poteze.add((i, j))
         return mozne_poteze
-
-
 
     def _preveri_polje(self, x, y):
         """
@@ -135,7 +134,7 @@ class Igra:
         for smer_x, smer_y in SMERI:
             i, j = x + smer_x, y + smer_y
             trenutna_polja = []
-            while 0 <= i and i <= 7 and 0 <= j and j <= 7:
+            while 0 <= i <= 7 and 0 <= j <= 7:
                 logging.debug((i, j))
                 if self.deska[i][j] == Stanje.PRAZNO:
                     break

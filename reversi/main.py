@@ -39,6 +39,7 @@ Window.minimum_height = 550
 logger = logging.getLogger('reversi_main')
 logger.setLevel(logging.DEBUG)
 
+
 # Declare all application screens.
 class MeniZaslon(Screen):
     pass
@@ -66,7 +67,7 @@ class Polje(ButtonBehavior, Image, HoverBehavior):
     """
     Razred vsake polja na plošči, hrani stanje in pa pozna svoje koordinate
     """
-    koordinate = ListProperty([-1, -1])
+    koordinate = ListProperty()
     stanje = OptionProperty(Stanje.PRAZNO, options=[Stanje.BELO, Stanje.CRNO, Stanje.PRAZNO, Stanje.MOGOCE])
     stil = StringProperty('')
 
@@ -110,15 +111,12 @@ class Deska(RelativeLayout):
     Razred, ki vsebuje desko, ob inicializaciji nase postavi 64 polj in jih shrani v tabelo.
     V self.igra je shranjeno trenutno stanje v obliki razreda Igra
     """
-    polja = []
+    ime_belega = StringProperty()
+    ime_crnega = StringProperty()
+    stevilo_crnih = NumericProperty()
+    stevilo_belih = NumericProperty()
 
-    ime_belega = StringProperty('')
-    ime_crnega = StringProperty('')
-
-    stevilo_crnih = NumericProperty(-1)
-    stevilo_belih = NumericProperty(-1)
     na_potezi = OptionProperty(Stanje.BELO, options=[Stanje.BELO, Stanje.CRNO])
-    igralca = dict()
 
     def __init__(self, **kwargs):
         """
@@ -126,6 +124,10 @@ class Deska(RelativeLayout):
         :param kwargs: argumenti za Kivy RelativeLayout
         """
         super(Deska, self).__init__(**kwargs)
+        self.polja = []
+        self.igra = None
+        self.igralca = dict()
+
         for i in range(8):
             self.polja.append([])
             for j in range(8):
@@ -134,7 +136,7 @@ class Deska(RelativeLayout):
                 self.polja[i].append(t)
 
     def nova_igra(self, tezavnost=False, barva=False):
-        if tezavnost != False and barva != False:
+        if tezavnost is not False and barva is not False:
             if barva == Stanje.BELO:
                 self.ime_belega = 'Igralec'
                 self.ime_crnega = 'Računalnik'
@@ -149,6 +151,7 @@ class Deska(RelativeLayout):
             self.ime_crnega = 'Igralec 2'
             self.igralca[Stanje.CRNO] = Clovek()
             self.igralca[Stanje.BELO] = Clovek()
+        print(self.igralca)
         self.igra = Igra()
         self.osvezi()
         self.igralca[self.na_potezi].zacni_potezo(self.igra)
@@ -164,7 +167,7 @@ class Deska(RelativeLayout):
 
         for i in range(8):
             for j in range(8):
-                if (i, j) in self.igra.mozne_poteze and self.igralca[self.na_potezi].je_clovek:
+                if (i, j) in self.igra.mozne_poteze and type(self.igralca[self.na_potezi]) == Clovek:
                     self.polja[i][j].nastavi(Stanje.MOGOCE)
                 else:
                     self.polja[i][j].nastavi(self.igra.deska[i][j])
@@ -180,7 +183,7 @@ class Deska(RelativeLayout):
         self.igra.odigraj_potezo(koordinate)
         self.osvezi()
 
-        if self.igra.konec:
+        if self.igra.koncana:
             po = DialogKonec()
             po.open()
         else:
