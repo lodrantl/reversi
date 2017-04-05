@@ -128,6 +128,7 @@ class Igra:
         """
         x, y = koordinate
         if (x, y) in self.mozne_poteze:
+            self.shrani_desko()
             self.deska[x][y] = self.na_potezi
             self.obrni_za(x, y)
 
@@ -147,7 +148,8 @@ class Igra:
                     self.koncana = True
                     logging.debug("konec igre")
             logging.debug(self.mozne_poteze)
-            self.shrani_desko()
+
+            logging.debug(self.zgodovina)
         else:
             raise Exception("Polje {} ni na izbiro".format(koordinate))
 
