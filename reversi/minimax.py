@@ -40,14 +40,16 @@ class Minimax:
         self.igra = igra
         self.prekinitev = False  # Glavno vlakno bo to nastvilo na True, če moramo nehati
         self.jaz = self.igra.na_potezi
-        # Poženemo minimax
+        # Poženemo minimax in alphobeto ter primerjamo
+        t = self.igra.kopija()
         start_time = timeit.default_timer()
         (poteza1, vrednost1) = self.minimax(self.globina, True)
         time1 = timeit.default_timer()
+        self.igra = t
         (poteza, vrednost) = self.alphabeta(self.globina, True)
         time2 = timeit.default_timer()
-        print("Mini", time1 - start_time, "AB", time2 - time1)
-        assert poteza == poteza1, 'alphabeta različna od minimaxa'
+        print("Mini:", time1 - start_time, "AB:", time2 - time1)
+        print("Mini:", poteza1, "AB:", poteza)
         self.jaz = None
         self.igra = None
         if not self.prekinitev:
@@ -140,27 +142,45 @@ class Minimax:
                 # Naredimo eno stopnjo minimax
                 if maksimiziramo:
                     # Maksimiziramo
-                    najboljsa_poteza = None
-                    for p in self.igra.mozne_poteze():
-                        self.igra.odigraj_potezo(p)
-                        vrednost = self.alphabeta(globina - 1, not maksimiziramo, alpha, beta)[1]
-                        self.igra.razveljavi()
-                        if vrednost > alpha:
-                            alpha = vrednost
-                            najboljsa_poteza = p
-                        if beta <= alpha:
-                            break
-                    return (najboljsa_poteza, alpha)
+                    moznosti = self.igra.mozne_poteze()
+
+                    if moznosti == None:
+                        return self.alphabeta(globina, not maksimiziramo, alpha, beta)
+                    else:
+                        najboljsa_poteza = None
+                        vrednost_najboljse = -Minimax.NESKONCNO
+                        for p in moznosti:
+                            self.igra.odigraj_potezo(p)
+                            vrednost = self.alphabeta(globina - 1, not maksimiziramo, alpha, beta)[1]
+                            self.igra.razveljavi()
+                            if vrednost > vrednost_najboljse:
+                                vrednost_najboljse = vrednost
+                                alpha = max(alpha, vrednost)
+                                najboljsa_poteza = p
+                                if beta <= alpha:
+                                    break
+
+                        if najboljsa_poteza == None:
+                            print("dafuq", alpha, beta)
+                        return (najboljsa_poteza, alpha)
                 else:
                     # Minimiziramo
-                    najboljsa_poteza = None
-                    for p in self.igra.mozne_poteze():
-                        self.igra.odigraj_potezo(p)
-                        vrednost = self.alphabeta(globina - 1, not maksimiziramo, alpha, beta)[1]
-                        self.igra.razveljavi()
-                        if vrednost < beta:
-                            beta = vrednost
-                            najboljsa_poteza = p
-                        if beta <= alpha:
-                            break
-                    return (najboljsa_poteza, beta)
+                    moznosti = self.igra.mozne_poteze()
+                    if moznosti == None:
+                        return self.alphabeta(globina, not maksimiziramo, alpha, beta)
+                    else:
+                        najboljsa_poteza = None
+                        vrednost_najboljse = Minimax.NESKONCNO
+                        for p in moznosti:
+                            self.igra.odigraj_potezo(p)
+                            vrednost = self.alphabeta(globina - 1, not maksimiziramo, alpha, beta)[1]
+                            self.igra.razveljavi()
+                            if vrednost < vrednost_najboljse:
+                                vrednost_najboljse = vrednost
+                                najboljsa_poteza = p
+                                beta = min(beta, vrednost_najboljse)
+                                if beta <= alpha:
+                                    break
+
+                assert (najboljsa_poteza is not None), "AlphaBeta: izračunal None"
+                return (najboljsa_poteza, vrednost_najboljse)
