@@ -164,10 +164,10 @@ class Deska(RelativeLayout):
         self.stevilo_crnih = self.igra.stevilo_crnih
         self.stevilo_belih = self.igra.stevilo_belih
         self.na_potezi = self.igra.na_potezi
-
+        poteze = self.igra.mozne_poteze()
         for i in range(8):
             for j in range(8):
-                if (i, j) in self.igra.mozne_poteze and type(self.igralca[self.na_potezi]) == Clovek:
+                if (i, j) in poteze and type(self.igralca[self.na_potezi]) == Clovek:
                     self.polja[i][j].nastavi(Stanje.MOGOCE)
                 else:
                     self.polja[i][j].nastavi(self.igra.deska[i][j])
@@ -196,7 +196,7 @@ class Deska(RelativeLayout):
     def koncaj_igro(self):
         for i in self.igralca.values():
             if type(i) == Racunalnik:
-                i.prenehaj_razmisljat()
+                i.prekini()
         App.get_running_app().root.current = 'meni'
 
     def koncaj_igro_popup(self):

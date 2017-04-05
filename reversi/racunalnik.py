@@ -16,7 +16,10 @@ class Racunalnik():
     def zacni_potezo(self, igra):
         if self.tezavnost == 0:
             time.sleep(0.3)
-            poteza = random.choice(list(igra.mozne_poteze))
+            poteza = random.choice(list(igra.mozne_poteze()))
             self.callback(poteza)
         else:
-            threading.Thread(target=self.minimax.izracunaj_potezo, args=(igra,)).start()
+            threading.Thread(target=self.minimax.izracunaj_potezo, args=(igra.kopija(),)).start()
+
+    def prekini(self):
+        self.minimax.prekini()

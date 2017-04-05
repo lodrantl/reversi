@@ -71,7 +71,8 @@ class Minimax:
                     # Maksimiziramo
                     najboljsa_poteza = None
                     vrednost_najboljse = -Minimax.NESKONCNO
-                    for p in self.igra.mozne_poteze:
+                    print(self.igra.mozne_poteze())
+                    for p in self.igra.mozne_poteze():
                         self.igra.odigraj_potezo(p)
                         vrednost = self.minimax(globina-1, not maksimiziramo)[1]
                         self.igra.razveljavi()
@@ -82,7 +83,7 @@ class Minimax:
                     # Minimiziramo
                     najboljsa_poteza = None
                     vrednost_najboljse = Minimax.NESKONCNO
-                    for p in self.igra.mozne_poteze:
+                    for p in self.igra.mozne_poteze():
                         self.igra.odigraj_potezo(p)
                         vrednost = self.minimax(globina-1, not maksimiziramo)[1]
                         self.igra.razveljavi()

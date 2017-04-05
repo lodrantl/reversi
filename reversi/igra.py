@@ -57,7 +57,6 @@ class Igra:
         self.deska[3][3], self.deska[4][4] = Stanje.CRNO, Stanje.CRNO
         self.deska[3][4], self.deska[4][3] = Stanje.BELO, Stanje.BELO
 
-        self.mozne_poteze = self.dobi_mozne_poteze()
         self.zgodovina = []
 
     def shrani_desko(self):
@@ -70,7 +69,6 @@ class Igra:
         deska, na_potezi = self.zgodovina.pop()
         self.deska = deska
         self.na_potezi = na_potezi
-        self.mozne_poteze = self.dobi_mozne_poteze()
 
     def kopija(self):
         """Vrni kopijo te igre, brez zgodovine."""
@@ -81,11 +79,10 @@ class Igra:
         # algoritem vlekel poteze
         k = Igra()
         k.deska = [self.deska[i][:] for i in range(8)]
-        k.mozne_poteze = k.dobi_mozne_poteze()
         k.na_potezi = self.na_potezi
         return k
 
-    def dobi_mozne_poteze(self):
+    def mozne_poteze(self):
         """
         Preveri, katere so možne poteze, ki jih lahko igralec, ki je trenutno na vrsti izvede.
         :return: množica moožnih potez
@@ -127,7 +124,7 @@ class Igra:
         :return:
         """
         x, y = koordinate
-        if (x, y) in self.mozne_poteze:
+        if (x, y) in self.mozne_poteze():
             self.shrani_desko()
             self.deska[x][y] = self.na_potezi
             self.obrni_za(x, y)
@@ -139,15 +136,13 @@ class Igra:
                 self.stevilo_crnih += 1
                 self.na_potezi = Stanje.BELO
 
-            self.mozne_poteze = self.dobi_mozne_poteze()
-            if len(self.mozne_poteze) == 0:
+            if len(self.mozne_poteze()) == 0:
                 logging.debug("Še enkrat na vrsti")
                 self.na_potezi = Stanje.obrni(self.na_potezi)
-                self.mozne_poteze = self.dobi_mozne_poteze()
-                if len(self.mozne_poteze) == 0:
+                if len(self.mozne_poteze()) == 0:
                     self.koncana = True
                     logging.debug("konec igre")
-            logging.debug(self.mozne_poteze)
+            logging.debug(self.mozne_poteze())
 
             logging.debug(self.zgodovina)
         else:
