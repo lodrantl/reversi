@@ -161,7 +161,7 @@
         LepGumb:
             text: 'Kon\u010Daj igro'
             font_size: '20sp'
-            on_release: app.koncaj_igro()
+            on_release: root.deska.koncaj_igro_popup()
             size: '150sp', '65sp'
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
         Widget: #Bottom margin
@@ -236,27 +236,62 @@
             pos: self.pos[0] + sp(10), self.pos[1] + sp(5)
             size: self.size[0] - sp(20), self.size[1] - sp(10)
 
-<DialogKonec>
+<PonoviIgroPopup>
     background_color: 0,0,0,0
-    size_hint: .5, .5
+    size_hint: None, None
+    size: '380sp', '250sp'
+    zmagovalec: 'beli' if self.deska.stevilo_belih > self.deska.stevilo_crnih else '\u010Drni'
+    auto_dismiss: False
     BoxLayout
         orientation: 'vertical'
         Label:
-            text: '[color=#ffffff][b]  \u017Eelis igrati ponovno? [/b][/color]'
+            text: '[color=#ffffff][b] Izena\u010Deno [/b][/color]' if root.deska.stevilo_belih == root.deska.stevilo_crnih else '[color=#ffffff][b]  Zmagovalec je {}  [/b][/color]'.format(root.zmagovalec)
+            markup: True
+            font_size: '35sp'
+            size: self.texture_size
+            background_color: 'green'
+        Label:
+            text: '[color=#ffffff][b]  \u017Delis igrati ponovno? [/b][/color]'
+            markup: True
+            font_size: '25sp'
+            size: self.texture_size
+            background_color: 'green'
+        RelativeLayout
+            LepGumb:
+                text: 'Glavni meni'
+                size: '160sp', '50sp'
+                pos_hint: {'center_x': 0.25, 'center_y': 0.5}
+                on_release: root.deska.koncaj_igro()
+                on_release: root.dismiss()
+            LepGumb:
+                text: 'Igraj znova'
+                size: '160sp', '50sp'
+                pos_hint: {'center_x': 0.75, 'center_y': 0.5}
+                on_release: root.deska.ponovi_igro()
+                on_release: root.dismiss()
+
+<KoncajIgroPopup>
+    background_color: 0,0,0,0
+    size_hint: None, None
+    size: '380sp', '160sp'
+    auto_dismiss: False
+    BoxLayout
+        orientation: 'vertical'
+        Label:
+            text: '[color=#ffffff][b] Ste prepri\u010Dani? [/b][/color]'
             markup: True
             font_size: '30sp'
             size: self.texture_size
             background_color: 'green'
         RelativeLayout
             LepGumb:
-                text: 'Glavni meni'
-                size_hint: .4, .4
+                text: 'Prekli\u010Di'
+                size: '160sp', '50sp'
                 pos_hint: {'center_x': 0.25, 'center_y': 0.5}
-                on_release: root.deska.koncaj_igro()
                 on_release: root.dismiss()
             LepGumb:
-                text: 'Igraj znova'
-                size_hint: .4, .4
+                text: 'Zapusti igro'
+                size: '160sp', '50sp'
                 pos_hint: {'center_x': 0.75, 'center_y': 0.5}
-                on_release: root.deska.ponovi_igro()
+                on_release: root.deska.koncaj_igro()
                 on_release: root.dismiss()

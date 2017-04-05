@@ -184,7 +184,7 @@ class Deska(RelativeLayout):
         self.osvezi()
 
         if self.igra.koncana:
-            po = DialogKonec(deska = self)
+            po = PonoviIgroPopup(deska = self)
             po.open()
         else:
             self.igralca[self.na_potezi].zacni_potezo(self.igra)
@@ -199,13 +199,24 @@ class Deska(RelativeLayout):
                 i.prenehaj_razmisljat()
         App.get_running_app().root.current = 'meni'
 
+    def koncaj_igro_popup(self):
+        po = KoncajIgroPopup(deska=self)
+        po.open()
 
-class DialogKonec(ModalView):
+
+class PonoviIgroPopup(ModalView):
     deska = ObjectProperty()
     def __init__(self, **kwargs):
-        super(DialogKonec, self).__init__(**kwargs)
+        super(PonoviIgroPopup, self).__init__(**kwargs)
         self.deska = kwargs['deska']
-    pass
+
+
+class KoncajIgroPopup(ModalView):
+    deska = ObjectProperty()
+    def __init__(self, **kwargs):
+        super(KoncajIgroPopup, self).__init__(**kwargs)
+        self.deska = kwargs['deska']
+
 
 
 class ReversiApp(App):

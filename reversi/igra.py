@@ -112,11 +112,11 @@ class Igra:
                 self.na_potezi = Stanje.BELO
 
             self.mozne_poteze = self.dobi_mozne_poteze()
-            if len(self.mozne_poteze) != 0:
+            if len(self.mozne_poteze) == 0:
                 logging.debug("Še enkrat na vrsti")
                 self.na_potezi = Stanje.obrni(self.na_potezi)
                 self.mozne_poteze = self.dobi_mozne_poteze()
-                if len(self.mozne_poteze) != 0:
+                if len(self.mozne_poteze) == 0:
                     self.koncana = True
                     logging.debug("konec igre")
             logging.debug(self.mozne_poteze)
