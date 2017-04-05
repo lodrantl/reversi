@@ -2,7 +2,8 @@
 #:import Stanje igra.Stanje
 
 #:set barva_primarna [.5, 0, .5, 1]
-#:set barva_sekundarna [0, .5, 0, 1]
+#:set barva_sekundarna [1, 0.8, 1, 1]
+#:set barva_terciarna [0.8, 1, 0.8, 1]
 
 
 <MeniZaslon>:
@@ -22,20 +23,20 @@
         LepGumb:
             text: 'En igralec'
             on_release: root.manager.current = 'nastavitve'
-            pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.72}
         LepGumb:
             text: 'Dva igralca'
             on_release: app.igra_zaslon.deska.nova_igra()
             on_release: root.manager.current = 'igra'
-            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.52}
         LepGumb:
             text: 'Pravila'
             on_release: root.manager.current = 'pravila'
-            pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.32}
         LepGumb:
             text: 'Izhod'
             on_release: app.stop()
-            pos_hint: {'center_x': 0.5, 'center_y': 0.1}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.12}
 
 <NastavitveZaslon>:
     RelativeLayout:
@@ -57,59 +58,68 @@
             font_size: '30sp'
             size_hint: None, None
             size: self.texture_size
-            pos_hint: {'x': 0, 'center_y': 0.7}
-        AnchorLayout:
-            size_hint: 0.7, 0.28
-            pos_hint: {'x': 0.3, 'center_y': 0.7}
-            BoxLayout:
-                size_hint_y: None
-                height: '100sp'
-                orientation: 'horizontal'
-                LepRadio:
-                    text: '\u010Drni'
-                    value: Stanje.CRNO
-                    group: 'barva'
-                    state: 'down'
-                LepRadio:
-                    text: 'beli'
-                    value: Stanje.BELO
-                    group: 'barva'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+        BoxLayout:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.65}
+            size_hint_y: None
+            height: '100sp'
+            orientation: 'horizontal'
+            spacing: '10sp'
+            BoxSpacing
+            LepRadio:
+                size_hint: 0.5, 1
+                text: '\u010Drni'
+                value: Stanje.CRNO
+                group: 'barva'
+                state: 'down'
+            LepRadio:
+                size_hint: 0.5, 1
+                text: 'beli'
+                value: Stanje.BELO
+                group: 'barva'
+            BoxSpacing
         Label:
             text: '[color=#ffffff][b]  Te\u017Eavnost:[/b][/color]'
             markup: True
             font_size: '30sp'
             size_hint: None, None
             size: self.texture_size
-            pos_hint: {'x': 0, 'center_y': 0.42}
-        AnchorLayout:
-            size_hint: 0.7, 0.28
-            pos_hint: {'x': 0.3, 'center_y': 0.42}
-            BoxLayout:
-                size_hint_y: None
-                height: '100sp'
-                orientation: 'horizontal'
-                LepRadio:
-                    text: 'lahko'
-                    group: 'tezavnost'
-                    value: 0
-                LepRadio:
-                    text: 'srednje'
-                    group: 'tezavnost'
-                    state: 'down'
-                    value: 1
-                LepRadio:
-                    text: 'te\u017Eko'
-                    group: 'tezavnost'
-                    value: 2
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        BoxLayout:
+            pos_hint: {'center_x': 0.5, 'center_y': 0.35}
+            size_hint_y: None
+            height: '100sp'
+            orientation: 'horizontal'
+            spacing: '10sp'
+            BoxSpacing
+            LepRadio:
+                size_hint: 0.33, 1
+                text: 'lahko'
+                group: 'tezavnost'
+                value: 0
+            LepRadio:
+                size_hint: 0.33, 1
+                text: 'srednje'
+                group: 'tezavnost'
+                state: 'down'
+                value: 1
+            LepRadio:
+                size_hint: 0.33, 1
+                text: 'te\u017Eko'
+                group: 'tezavnost'
+                value: 2
+            BoxSpacing
         LepGumb:
             text: 'Nazaj'
+            height: '80sp'
             on_release: root.manager.current = 'meni'
-            pos_hint: {'center_x': 0.25, 'center_y': 0.14}
+            pos_hint: {'center_x': 0.25, 'center_y': 0.1}
         LepGumb:
             text: 'Igraj'
+            height: '80sp'
             on_release: app.igra_zaslon.deska.nova_igra(tezavnost=root.radio_vrednost('tezavnost'), barva=root.radio_vrednost('barva'))
             on_release: root.manager.current = 'igra'
-            pos_hint: {'center_x': 0.75, 'center_y': 0.14}
+            pos_hint: {'center_x': 0.75, 'center_y': 0.1}
 
 <IgraZaslon>:
     deska: deska
@@ -129,8 +139,10 @@
             BarvniLabel:
                 text: root.deska.ime_belega
                 font_size: '30sp'
-                size_hint: 0.4, 1
-                background_color: barva_sekundarna if root.deska.na_potezi == Stanje.BELO else [0, 0, 0, 0]
+                size_hint_x: None
+                width: '170sp'
+                color: 0, 0, 0, 1
+                state: 'down' if root.deska.na_potezi == Stanje.BELO else 'normal'
                 pos_hint: {'center_x': 0.2, 'center_y': 0.5}
             Zeton:
                 source: 'grafika/beli_zeton.png'
@@ -150,8 +162,9 @@
             BarvniLabel:
                 text: root.deska.ime_crnega
                 font_size: '30sp'
-                size_hint: 0.4, 1
-                background_color: barva_sekundarna if root.deska.na_potezi == Stanje.CRNO else [0, 0, 0, 0]
+                size_hint_x: None
+                width: '170sp'
+                state: 'down' if root.deska.na_potezi == Stanje.CRNO else 'normal'
                 pos_hint: {'center_x': 0.8, 'center_y': 0.5}
         AnchorLayout:
             size_hint_y: None
@@ -193,7 +206,8 @@
 <LepWidget@Widget>:
     color: 0, 0, 0, 1
     background_color: 0, 0, 0, 0
-    izbrana_barva: 1, 0.8, 1, 1
+    izbrana_barva: barva_sekundarna
+    state: 'normal'
     canvas.before:
         Color:
             rgba: 1, 1, 1, 1
@@ -215,26 +229,20 @@
     size_hint: None, None
     size: '154sp', '100sp'
     font_size: '25sp'
-    izbrana_barva: 0.8, 1, 0.8, 1
+    izbrana_barva: barva_terciarna
 
 <LepGumb@LepWidget+Button>:
     size_hint: None, None
     size: '231sp', '100sp'
     font_size: '25sp'
-    izbrana_barva: 1, 0.8, 1, 1
 
 <Zeton@Image>:
     size_hint: None, None
     size: '65sp', '65sp'
 
-<BarvniLabel@Label>:
+<BarvniLabel@LepWidget+Label>:
     background_color: 0.5, 0.5, 0.5, 1
-    canvas.before:
-        Color:
-            rgba: self.background_color
-        RoundedRectangle:
-            pos: self.pos[0] + sp(10), self.pos[1] + sp(5)
-            size: self.size[0] - sp(20), self.size[1] - sp(10)
+    izbrana_barva: barva_terciarna
 
 <PonoviIgroPopup>
     background_color: 0,0,0,0
@@ -295,3 +303,7 @@
                 pos_hint: {'center_x': 0.75, 'center_y': 0.5}
                 on_release: root.deska.koncaj_igro()
                 on_release: root.dismiss()
+
+<BoxSpacing@Widget>:
+    size_hint: None, None
+    size: 0, 0

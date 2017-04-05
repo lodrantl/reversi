@@ -1,4 +1,5 @@
 import logging
+import timeit
 
 from igra import Stanje, Igra
 
@@ -40,7 +41,13 @@ class Minimax:
         self.prekinitev = False  # Glavno vlakno bo to nastvilo na True, če moramo nehati
         self.jaz = self.igra.na_potezi
         # Poženemo minimax
-        (poteza, vrednost) = self.minimax(self.globina, True)
+        start_time = timeit.default_timer()
+        (poteza1, vrednost1) = self.minimax(self.globina, True)
+        time1 = timeit.default_timer()
+        (poteza, vrednost) = self.alphabeta(self.globina, True)
+        time2 = timeit.default_timer()
+        print("Mini", time1 - start_time, "AB", time2 - time1)
+        assert poteza == poteza1, 'alphabeta različna od minimaxa'
         self.jaz = None
         self.igra = None
         if not self.prekinitev:
@@ -109,3 +116,51 @@ class Minimax:
 
                 assert (najboljsa_poteza is not None), "minimax: izračunana poteza je None"
                 return (najboljsa_poteza, vrednost_najboljse)
+
+    def alphabeta(self, globina, maksimiziramo, alpha = -NESKONCNO, beta = NESKONCNO):
+        """Glavna metoda minimax."""
+        if self.prekinitev:
+            # Sporočili so nam, da moramo prekiniti
+            logging.debug("Minimax prekinja, globina = {0}".format(globina))
+            return (None, 0)
+        zmagovalec = self.igra.zmagovalec()
+        if zmagovalec:
+            # Igre je konec, vrnemo njeno vrednost
+            if zmagovalec == self.jaz:
+                return (None, Minimax.ZMAGA)
+            elif zmagovalec == Stanje.obrni(self.jaz):
+                return (None, -Minimax.ZMAGA)
+            else:
+                return (None, 0)
+        else:
+            # Igre ni konec
+            if globina == 0:
+                return (None, self.vrednost_pozicije())
+            else:
+                # Naredimo eno stopnjo minimax
+                if maksimiziramo:
+                    # Maksimiziramo
+                    najboljsa_poteza = None
+                    for p in self.igra.mozne_poteze():
+                        self.igra.odigraj_potezo(p)
+                        vrednost = self.alphabeta(globina - 1, not maksimiziramo, alpha, beta)[1]
+                        self.igra.razveljavi()
+                        if vrednost > alpha:
+                            alpha = vrednost
+                            najboljsa_poteza = p
+                        if beta <= alpha:
+                            break
+                    return (najboljsa_poteza, alpha)
+                else:
+                    # Minimiziramo
+                    najboljsa_poteza = None
+                    for p in self.igra.mozne_poteze():
+                        self.igra.odigraj_potezo(p)
+                        vrednost = self.alphabeta(globina - 1, not maksimiziramo, alpha, beta)[1]
+                        self.igra.razveljavi()
+                        if vrednost < beta:
+                            beta = vrednost
+                            najboljsa_poteza = p
+                        if beta <= alpha:
+                            break
+                    return (najboljsa_poteza, beta)
