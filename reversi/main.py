@@ -189,7 +189,9 @@ class Deska(RelativeLayout):
         else:
             self.igralca[self.na_potezi].zacni_potezo(self.igra)
 
-
+    def ponovi_igro(self):
+        self.igra = Igra()
+        self.osvezi()
 class DialogKonec(ModalView):
     pass
 
