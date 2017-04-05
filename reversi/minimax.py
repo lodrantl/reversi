@@ -41,17 +41,12 @@ class Minimax:
         self.prekinitev = False  # Glavno vlakno bo to nastvilo na True, če moramo nehati
         self.jaz = self.igra.na_potezi
         # Poženemo minimax in alphobeto ter primerjamo
-        t = self.igra.kopija()
-        start_time = timeit.default_timer()
-        (poteza1, vrednost1) = self.minimax(self.globina, True)
-        time1 = timeit.default_timer()
-        self.igra = t
+
         (poteza, vrednost) = self.alphabeta(self.globina, True)
-        time2 = timeit.default_timer()
-        print("Mini:", time1 - start_time, "AB:", time2 - time1)
-        print("Mini:", poteza1, "AB:", poteza)
+
         self.jaz = None
         self.igra = None
+
         if not self.prekinitev:
             # Potezo izvedemo v primeru, da nismo bili prekinjeni
             logging.debug("minimax: poteza {0}, vrednost {1}".format(poteza, vrednost))

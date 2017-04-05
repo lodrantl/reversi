@@ -117,7 +117,7 @@
         LepGumb:
             text: 'Igraj'
             height: '80sp'
-            on_release: app.igra_zaslon.deska.nova_igra(tezavnost=root.radio_vrednost('tezavnost'), barva=root.radio_vrednost('barva'))
+            on_release: app.igra_zaslon.deska.nova_igra(root.radio_vrednost('tezavnost'), root.radio_vrednost('barva'))
             on_release: root.manager.current = 'igra'
             pos_hint: {'center_x': 0.75, 'center_y': 0.1}
 
@@ -135,7 +135,6 @@
         RelativeLayout:
             size_hint: 1, None
             height: '70sp'
-            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
             BarvniLabel:
                 text: root.deska.ime_belega
                 font_size: '30sp'
@@ -177,18 +176,23 @@
             on_release: root.deska.koncaj_igro_popup()
             size: '150sp', '65sp'
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-        Widget: #Bottom margin
-            size_hint: None, None
-            size: '1sp', 0
+        BoxSpacing
 
 <Polje>
     source: 'grafika/' + self.stanje + self.stil + '.png'
     size_hint: 0.125, 0.125
+    mipmap: True
 
 <Deska>
     size_hint: None, None
-    velikost: min(self.parent.width, self.parent.height)
+    velikost: min(self.parent.width, self.parent.height) - sp(10)
     size: self.velikost, self.velikost
+    canvas.before:
+        Color:
+            rgba: 0, 0.5, 0, 1
+        Rectangle:
+            size: self.size[0] + sp(10), self.size[1] + sp(10)
+            pos: - sp(5), -sp(5)
 
 <PravilaZaslon>:
     BoxLayout:
@@ -248,22 +252,20 @@
     background_color: 0,0,0,0
     size_hint: None, None
     size: '380sp', '250sp'
-    sporocilo: 'Neodlo\u010Deno' if self.deska.igra.zmagovalec() == Stanje.NEODLOCENO else 'Zmaga beli' if self.deska.igra.zmagovalec() == Stanje.BELO  else 'Zmaga \u010Drni'
+    sporocila: {Stanje.NEODLOCENO: 'Neodlo\u010Deno', Stanje.BELO: 'Zmaga beli', Stanje.CRNO: 'Zmaga crni'}
     auto_dismiss: False
     BoxLayout
         orientation: 'vertical'
         Label:
-            text: '[color=#ffffff][b]{}[/b][/color]'.format(root.sporocilo)
+            text: '[color=#ffffff][b]{}[/b][/color]'.format(root.sporocila[root.deska.igra.zmagovalec()])
             markup: True
             font_size: '35sp'
             size: self.texture_size
-            background_color: 'green'
         Label:
             text: '[color=#ffffff][b]\u017Delis igrati ponovno?[/b][/color]'
             markup: True
             font_size: '25sp'
             size: self.texture_size
-            background_color: 'green'
         RelativeLayout
             LepGumb:
                 text: 'Glavni meni'
@@ -290,7 +292,6 @@
             markup: True
             font_size: '30sp'
             size: self.texture_size
-            background_color: 'green'
         RelativeLayout
             LepGumb:
                 text: 'Prekli\u010Di'
