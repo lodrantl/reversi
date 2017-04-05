@@ -117,7 +117,7 @@ class Igra:
                 self.na_potezi = Stanje.obrni(self.na_potezi)
                 self.mozne_poteze = self.dobi_mozne_poteze()
                 if len(self.mozne_poteze) == 0:
-                    self.konec = True
+                    self.koncana = True
                     logging.debug("konec igre")
             logging.debug(self.mozne_poteze)
 
