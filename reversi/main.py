@@ -145,7 +145,7 @@ class Deska(RelativeLayout):
                 self.ime_belega = 'Računalnik'
 
             self.igralca[barva] = Clovek()
-            self.igralca[Stanje.obrni(barva)] = Racunalnik(self.odigraj_potezo, tezavnost)
+            self.igralca[Stanje.obrni(barva)] = Racunalnik(self.odigraj_potezo, tezavnost, Stanje.obrni(barva))
         else:
             self.ime_belega = 'Igralec 1'
             self.ime_crnega = 'Igralec 2'

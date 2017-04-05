@@ -20,6 +20,7 @@ class Stanje:
     CRNO = 'crno'
     PRAZNO = 'prazno'
     MOGOCE = 'mogoce'
+    NEODLOCENO = 'neodloceno'
 
     @staticmethod
     def obrni(stanje):
@@ -57,6 +58,32 @@ class Igra:
         self.deska[3][4], self.deska[4][3] = Stanje.BELO, Stanje.BELO
 
         self.mozne_poteze = self.dobi_mozne_poteze()
+        self.zgodovina = []
+
+    def shrani_desko(self):
+        """Shrani trenutno pozicijo, da se bomo lahko kasneje vrnili vanjo
+           z metodo razveljavi."""
+        p = [self.deska[i][:] for i in range(8)]
+        self.zgodovina.append((p, self.na_potezi))
+
+    def razveljavi(self):
+        deska, na_potezi = self.zgodovina.pop()
+        self.deska = deska
+        self.na_potezi = na_potezi
+        self.mozne_poteze = self.dobi_mozne_poteze()
+
+    def kopija(self):
+        """Vrni kopijo te igre, brez zgodovine."""
+        # Kopijo igre naredimo, ko poženemo na njej algoritem.
+        # Če bi algoritem poganjali kar na glavni igri, ki jo
+        # uporablja GUI, potem bi GUI mislil, da se menja stanje
+        # igre (kdo je na potezi, kdo je zmagal) medtem, ko bi
+        # algoritem vlekel poteze
+        k = Igra()
+        k.deska = [self.deska[i][:] for i in range(8)]
+        k.mozne_poteze = k.dobi_mozne_poteze()
+        k.na_potezi = self.na_potezi
+        return k
 
     def dobi_mozne_poteze(self):
         """
@@ -120,9 +147,9 @@ class Igra:
                     self.koncana = True
                     logging.debug("konec igre")
             logging.debug(self.mozne_poteze)
-
+            self.shrani_desko()
         else:
-            raise Exception("Polje ni na izbiro")
+            raise Exception("Polje {} ni na izbiro".format(koordinate))
 
     def obrni_za(self, x, y):
         """
@@ -161,3 +188,11 @@ class Igra:
                 self.deska[x][y] = Stanje.BELO
             else:
                 raise Exception("Na plošči še ni žetona")
+
+    def zmagovalec(self):
+        if self.koncana:
+            if self.stevilo_crnih == self.stevilo_crnih:
+                return Stanje.NEODLOCENO
+            return Stanje.BELO if self.stevilo_belih > self.stevilo_crnih else Stanje.CRNO
+        else:
+            return None
