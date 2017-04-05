@@ -32,6 +32,7 @@ class Stanje:
             return Stanje.CRNO
         elif stanje == Stanje.CRNO:
             return Stanje.BELO
+        raise Exception("Neobrnljivo stanje {}.".format(stanje))
 
 
 SMERI = [(1, 0), (0, 1), (0, -1), (-1, 0), (1, 1), (1, -1), (-1, 1), (-1, -1)]
@@ -50,7 +51,6 @@ class Igra:
         """
         self.koncana = False
         self.na_potezi = Stanje.CRNO
-        self.stevilo_belih = self.stevilo_crnih = 2
 
         self.deska = [[Stanje.PRAZNO for _ in range(8)] for _ in range(8)]
 
@@ -66,9 +66,7 @@ class Igra:
         self.zgodovina.append((p, self.na_potezi))
 
     def razveljavi(self):
-        deska, na_potezi = self.zgodovina.pop()
-        self.deska = deska
-        self.na_potezi = na_potezi
+        (self.deska, self.na_potezi) = self.zgodovina.pop()
 
     def kopija(self):
         """Vrni kopijo te igre, brez zgodovine."""
@@ -81,6 +79,17 @@ class Igra:
         k.deska = [self.deska[i][:] for i in range(8)]
         k.na_potezi = self.na_potezi
         return k
+
+    def stevilo_zetonov(self):
+        beli = 0
+        crni = 0
+        for vrstica in self.deska:
+            for j in vrstica:
+                if j == Stanje.BELO:
+                    beli += 1
+                if j == Stanje.CRNO:
+                    crni += 1
+        return (beli, crni)
 
     def mozne_poteze(self):
         """
@@ -129,12 +138,7 @@ class Igra:
             self.deska[x][y] = self.na_potezi
             self.obrni_za(x, y)
 
-            if self.na_potezi == Stanje.BELO:
-                self.stevilo_belih += 1
-                self.na_potezi = Stanje.CRNO
-            elif self.na_potezi == Stanje.CRNO:
-                self.stevilo_crnih += 1
-                self.na_potezi = Stanje.BELO
+            self.na_potezi = Stanje.obrni(self.na_potezi)
 
             if len(self.mozne_poteze()) == 0:
                 logging.debug("Še enkrat na vrsti")
@@ -175,21 +179,13 @@ class Igra:
         :return:
         """
         for x, y in seznam:
-            if self.deska[x][y] == Stanje.BELO:
-                self.stevilo_belih -= 1
-                self.stevilo_crnih += 1
-                self.deska[x][y] = Stanje.CRNO
-            elif self.deska[x][y] == Stanje.CRNO:
-                self.stevilo_belih += 1
-                self.stevilo_crnih -= 1
-                self.deska[x][y] = Stanje.BELO
-            else:
-                raise Exception("Na plošči še ni žetona")
+            self.deska[x][y] = Stanje.obrni(self.deska[x][y])
 
     def zmagovalec(self):
+        beli, crni = self.stevilo_zetonov()
         if self.koncana:
-            if self.stevilo_crnih == self.stevilo_crnih:
+            if beli == crni:
                 return Stanje.NEODLOCENO
-            return Stanje.BELO if self.stevilo_belih > self.stevilo_crnih else Stanje.CRNO
+            return Stanje.BELO if beli > crni else Stanje.CRNO
         else:
             return None

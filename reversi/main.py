@@ -161,8 +161,8 @@ class Deska(RelativeLayout):
         Osveži desko na ekranu z novim stanjem v self.igra
         :return:
         """
-        self.stevilo_crnih = self.igra.stevilo_crnih
-        self.stevilo_belih = self.igra.stevilo_belih
+        self.stevilo_belih, self.stevilo_crnih = self.igra.stevilo_zetonov()
+
         self.na_potezi = self.igra.na_potezi
         poteze = self.igra.mozne_poteze()
         for i in range(8):

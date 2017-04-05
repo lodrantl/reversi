@@ -2,6 +2,16 @@ import logging
 
 from reversi.igra import Stanje, Igra
 
+UTEZI = [
+    [120, -20, 20, 5, 5, 20, -20, 120],
+    [-20, -40, -5, -5, -5, -5, -40, -20],
+    [20, -5, 15, 3, 3, 15, -5, 20],
+    [5, -5, 3, 3, 3, 3, -5, 5],
+    [5, -5, 3, 3, 3, 3, -5, 5],
+    [20, -5, 15, 3, 3, 15, -5, 20],
+    [-20, -40, -5, -5, -5, -5, -40, -20],
+    [120, -20, 20, 5, 5, 20, -20, 120]
+]
 
 ######################################################################
 ## Algoritem minimax
@@ -13,9 +23,9 @@ class Minimax:
 
     def __init__(self, globina, callback):
         self.globina = globina  # do katere globine iščemo?
-        self.callback = callback # funkcija ki jo pokličemo ko končamo
-        self.prekinitev = False # ali moramo končati?
-        self.igra = None # objekt, ki opisuje igro (ga dobimo kasneje)
+        self.callback = callback  # funkcija ki jo pokličemo ko končamo
+        self.prekinitev = False  # ali moramo končati?
+        self.igra = None  # objekt, ki opisuje igro (ga dobimo kasneje)
         self.jaz = None  # katerega igralca igramo (podatek dobimo kasneje)
 
     def prekini(self):
@@ -27,7 +37,7 @@ class Minimax:
         """Izračunaj potezo za trenutno stanje dane igre."""
         # To metodo pokličemo iz vzporednega vlakna
         self.igra = igra
-        self.prekinitev = False # Glavno vlakno bo to nastvilo na True, če moramo nehati
+        self.prekinitev = False  # Glavno vlakno bo to nastvilo na True, če moramo nehati
         self.jaz = self.igra.na_potezi
         # Poženemo minimax
         (poteza, vrednost) = self.minimax(self.globina, True)
@@ -39,18 +49,25 @@ class Minimax:
             self.callback(poteza)
 
     # Vrednosti igre
-    ZMAGA = 100000 # Mora biti vsaj 10^5
-    NESKONCNO = ZMAGA + 1 # Več kot zmaga
+    ZMAGA = 100000  # Mora biti vsaj 10^5
+    NESKONCNO = ZMAGA + 1  # Več kot zmaga
 
     def vrednost_pozicije(self):
-        return 5
-
+        nasprotnik = Stanje.obrni(self.jaz)
+        vrednost = 0
+        for i in range(8):
+            for j in range(8):
+                if self.igra.deska[i][j] == self.jaz:
+                    vrednost += UTEZI[i][j]
+                if self.igra.deska[i][j] == nasprotnik:
+                        vrednost -= UTEZI[i][j]
+        return vrednost
 
     def minimax(self, globina, maksimiziramo):
         """Glavna metoda minimax."""
         if self.prekinitev:
             # Sporočili so nam, da moramo prekiniti
-            logging.debug ("Minimax prekinja, globina = {0}".format(globina))
+            logging.debug("Minimax prekinja, globina = {0}".format(globina))
             return (None, 0)
         zmagovalec = self.igra.zmagovalec()
         if zmagovalec:
@@ -71,10 +88,9 @@ class Minimax:
                     # Maksimiziramo
                     najboljsa_poteza = None
                     vrednost_najboljse = -Minimax.NESKONCNO
-                    print(self.igra.mozne_poteze())
                     for p in self.igra.mozne_poteze():
                         self.igra.odigraj_potezo(p)
-                        vrednost = self.minimax(globina-1, not maksimiziramo)[1]
+                        vrednost = self.minimax(globina - 1, not maksimiziramo)[1]
                         self.igra.razveljavi()
                         if vrednost > vrednost_najboljse:
                             vrednost_najboljse = vrednost
@@ -85,7 +101,7 @@ class Minimax:
                     vrednost_najboljse = Minimax.NESKONCNO
                     for p in self.igra.mozne_poteze():
                         self.igra.odigraj_potezo(p)
-                        vrednost = self.minimax(globina-1, not maksimiziramo)[1]
+                        vrednost = self.minimax(globina - 1, not maksimiziramo)[1]
                         self.igra.razveljavi()
                         if vrednost < vrednost_najboljse:
                             vrednost_najboljse = vrednost
