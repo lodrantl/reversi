@@ -15,4 +15,6 @@ class Racunalnik():
         p = random.choice(list(igra.mozne_poteze))
         self.callback(p)
 
+    def prenehaj_razmisljat(self):
+        pass
 

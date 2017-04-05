@@ -184,7 +184,7 @@ class Deska(RelativeLayout):
         self.osvezi()
 
         if self.igra.koncana:
-            po = DialogKonec()
+            po = DialogKonec(deska = self)
             po.open()
         else:
             self.igralca[self.na_potezi].zacni_potezo(self.igra)
@@ -192,7 +192,19 @@ class Deska(RelativeLayout):
     def ponovi_igro(self):
         self.igra = Igra()
         self.osvezi()
+
+    def koncaj_igro(self):
+        for i in self.igralca.values():
+            if type(i) == Racunalnik:
+                i.prenehaj_razmisljat()
+        App.get_running_app().root.current = 'meni'
+
+
 class DialogKonec(ModalView):
+    deska = ObjectProperty()
+    def __init__(self, **kwargs):
+        super(DialogKonec, self).__init__(**kwargs)
+        self.deska = kwargs['deska']
     pass
 
 
@@ -201,9 +213,6 @@ class ReversiApp(App):
     Glavni Kivy Application razred, definira ScreenManager z našimi zasloni in vsebuje par uporabnih konstant
     """
     igra_zaslon = ObjectProperty()
-
-    def koncaj_igro(self):
-        self.root.current = 'meni'
 
     def build(self):
         self.icon = 'grafika/ikona.png'
