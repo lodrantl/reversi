@@ -1,11 +1,17 @@
-from reversi import Igra
+import env
+
+from reversi.igra import Igra
 import random
 
-def test_kopija():
+def nakljucna_igra(n=15):
     igra = Igra()
 
-    for i in range(10):
-        igra.odigraj_potezo(random.choice(igra.mozne_poteze))
+    for i in range(n):
+        igra.odigraj_potezo(random.choice(list(igra.mozne_poteze())))
+    return igra
 
-    assert igra.mozne_poteze == igra.kopija().mozne_poteze
-    assert igra.deska == igra.kopija().deska
+def test_kopija():
+    igra = nakljucna_igra()
+    kopija = igra.kopija()
+    assert igra.deska == kopija.deska
+    assert igra.na_potezi == kopija.na_potezi

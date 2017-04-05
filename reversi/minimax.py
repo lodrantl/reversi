@@ -1,6 +1,6 @@
 import logging
 
-from reversi.igra import Stanje, Igra
+from igra import Stanje, Igra
 
 UTEZI = [
     [120, -20, 20, 5, 5, 20, -20, 120],

@@ -6,33 +6,36 @@ Glavni razred reversi aplikacije, vsebuje konfiguracijo uporabniškega vmesnika
 
 """
 
-# Spremeni trenutno mapo, če je aplikacija zagnana kot PyInstaller exe (dirty)
 import sys
 import os
+import logging
 
+# Spremeni trenutno mapo, če je aplikacija zagnana kot PyInstaller exe (dirty)
 if getattr(sys, 'frozen', False):
     os.chdir(sys._MEIPASS)
 
+# Nastavi velikost okna
+from kivy.config import Config
+Config.set('graphics', 'width', '500')
+Config.set('graphics', 'height', '550')
+
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.gridlayout import GridLayout
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.button import Button
 from kivy.uix.image import Image
-from enum import Enum
 from kivy.core.window import Window
-from kivy.uix.widget import Widget
-from kivy.uix.anchorlayout import AnchorLayout
 from kivy.properties import NumericProperty, ListProperty, OptionProperty, StringProperty, ObjectProperty
 from kivy.uix.button import ButtonBehavior
 from kivy.uix.togglebutton import ToggleButton, ToggleButtonBehavior
-from kivy.metrics import sp
 from kivy.uix.modalview import ModalView
 from kivy.clock import mainthread
 
-import logging
-from reversi import Stanje, Igra, Clovek, Racunalnik, HoverBehavior
+from igra import Stanje, Igra
+from hoverable import HoverBehavior
+from racunalnik import Racunalnik
+from clovek import Clovek
 
+# Nastavi minimalno velikost okna
 Window.minimum_width = 500
 Window.minimum_height = 550
 
@@ -49,7 +52,6 @@ class NastavitveZaslon(Screen):
     def radio_vrednost(self, skupina):
         gumb = [x for x in ToggleButton.get_widgets(skupina) if x.state == 'down']
         if gumb:
-            print(gumb[0].value)
             return gumb[0].value
         else:
             raise Exception('Noben gumb ni izbran!!')
@@ -151,7 +153,7 @@ class Deska(RelativeLayout):
             self.ime_crnega = 'Igralec 2'
             self.igralca[Stanje.CRNO] = Clovek()
             self.igralca[Stanje.BELO] = Clovek()
-        print(self.igralca)
+
         self.igra = Igra()
         self.osvezi()
         self.igralca[self.na_potezi].zacni_potezo(self.igra)

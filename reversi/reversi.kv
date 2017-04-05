@@ -1,5 +1,5 @@
 #:kivy 1.9.1
-#:import Stanje reversi.Stanje
+#:import Stanje igra.Stanje
 
 #:set barva_primarna [.5, 0, .5, 1]
 #:set barva_sekundarna [0, .5, 0, 1]
@@ -21,7 +21,7 @@
             mipmap: True
         LepGumb:
             text: 'En igralec'
-            on_release: root.manager.current = 'nastavitve'     ### popravi ime
+            on_release: root.manager.current = 'nastavitve'
             pos_hint: {'center_x': 0.5, 'center_y': 0.7}
         LepGumb:
             text: 'Dva igralca'
@@ -52,7 +52,7 @@
             pos_hint: {'center_x': 0.5, 'center_y': 0.92}
             mipmap: True
         Label:
-            text: '[color=#ffffff][b]  Igraj kot:[/b][/color]'
+            text: '[color=#ffffff][b]Igraj kot:[/b][/color]'
             markup: True
             font_size: '30sp'
             size_hint: None, None
@@ -240,18 +240,18 @@
     background_color: 0,0,0,0
     size_hint: None, None
     size: '380sp', '250sp'
-    zmagovalec: 'beli' if self.deska.stevilo_belih > self.deska.stevilo_crnih else '\u010Drni'
+    sporocilo: 'Neodlo\u010Deno' if self.deska.igra.zmagovalec() == Stanje.NEODLOCENO else 'Zmaga beli' if self.deska.igra.zmagovalec() == Stanje.BELO  else 'Zmaga \u010Drni'
     auto_dismiss: False
     BoxLayout
         orientation: 'vertical'
         Label:
-            text: '[color=#ffffff][b] Izena\u010Deno [/b][/color]' if root.deska.stevilo_belih == root.deska.stevilo_crnih else '[color=#ffffff][b]  Zmagovalec je {}  [/b][/color]'.format(root.zmagovalec)
+            text: '[color=#ffffff][b]{}[/b][/color]'.format(root.sporocilo)
             markup: True
             font_size: '35sp'
             size: self.texture_size
             background_color: 'green'
         Label:
-            text: '[color=#ffffff][b]  \u017Delis igrati ponovno? [/b][/color]'
+            text: '[color=#ffffff][b]\u017Delis igrati ponovno?[/b][/color]'
             markup: True
             font_size: '25sp'
             size: self.texture_size
@@ -278,7 +278,7 @@
     BoxLayout
         orientation: 'vertical'
         Label:
-            text: '[color=#ffffff][b] Ste prepri\u010Dani? [/b][/color]'
+            text: '[color=#ffffff][b]Ste prepri\u010Dani?[/b][/color]'
             markup: True
             font_size: '30sp'
             size: self.texture_size

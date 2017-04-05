@@ -2,7 +2,7 @@ import random
 import time
 import threading
 
-from reversi.minimax import Minimax
+from minimax import Minimax
 
 class Racunalnik():
     def __init__(self, callback, tezavnost, barva):
@@ -14,12 +14,16 @@ class Racunalnik():
             self.minimax = Minimax(self.tezavnost * 3, self.callback)
 
     def zacni_potezo(self, igra):
+        threading.Thread(target=self.izracunaj_potezo, args=(igra,)).start()
+
+    def izracunaj_potezo(self, igra):
         if self.tezavnost == 0:
             time.sleep(0.3)
             poteza = random.choice(list(igra.mozne_poteze()))
             self.callback(poteza)
         else:
-            threading.Thread(target=self.minimax.izracunaj_potezo, args=(igra.kopija(),)).start()
+            self.minimax.izracunaj_potezo(igra.kopija())
 
     def prekini(self):
-        self.minimax.prekini()
+        if self.tezavnost > 0:
+            self.minimax.prekini()
