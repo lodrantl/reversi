@@ -1,5 +1,12 @@
+"""
+.. module:: reversi.minimax
+.. moduleauthor:: Luka Lodrant <luka.lodrant@gmail.com>, Lenart Treven <lenart.treven44@gmail.com>
+
+Algoritem Minimax z alfa-beta rezi
+
+"""
+
 import logging
-import timeit
 
 from igra import Stanje, Igra
 
@@ -14,36 +21,53 @@ UTEZI = [
     [120, -20, 20, 5, 5, 20, -20, 120]
 ]
 
-######################################################################
-## Algoritem minimax
 
 class Minimax:
-    # Algoritem minimax predstavimo z objektom, ki hrani stanje igre in
-    # algoritma, nima pa dostopa do GUI (ker ga ne sme uporabljati, saj deluje
-    # v drugem vlaknu kot tkinter).
+    """
+    Minimax algoritem predstavljen kot objekt, uprablja igro opisano v igra.py,
+    nima pa dostopa do GUI elementov, saj teče v svoji niti.
+    """
 
     def __init__(self, globina, callback):
-        self.globina = globina  # do katere globine iščemo?
-        self.callback = callback  # funkcija ki jo pokličemo ko končamo
+        """
+        :param globina: globina do katere algoritem preiskuje drevo
+        :param callback: funkcija, ki jo ob koncu pokliče z koordinatami izbrane poteze (npr. self.callback((1,2)))
+                            funkcija naj sama poskrbi, da bo zagnana v pravi niti
+        """
+        self.globina = globina
+        self.callback = callback
+
         self.prekinitev = False  # ali moramo končati?
         self.igra = None  # objekt, ki opisuje igro (ga dobimo kasneje)
         self.jaz = None  # katerega igralca igramo (podatek dobimo kasneje)
 
     def prekini(self):
-        """Metoda, ki jo pokliče GUI, če je treba nehati razmišljati, ker
-           je uporabnik zaprl okno ali izbral novo igro."""
+        """
+        Metoda, ki jo pokliče GUI, če je treba nehati razmišljati, ker
+        je uporabnik zaprl okno ali izbral novo igro.
+        """
         self.prekinitev = True
 
     def izracunaj_potezo(self, igra):
-        """Izračunaj potezo za trenutno stanje dane igre."""
-        # To metodo pokličemo iz vzporednega vlakna
+        """
+        Izračunaj potezo za trenutno stanje dane igre.
+        To metodo naj se pokliče v vzporednem vlaknu.
+        :param igra: kopija trenutne igre kot objekt razreda Igra
+        """
         self.igra = igra
         self.prekinitev = False  # Glavno vlakno bo to nastvilo na True, če moramo nehati
         self.jaz = self.igra.na_potezi
-        # Poženemo minimax in alphobeto ter primerjamo
 
+        # Poženemo minimax
+        i2 = self.igra.kopija()
         (poteza, vrednost) = self.alphabeta(self.globina, True)
 
+        # Preverimo, da minimax in alfabeta vrneta enak rezultat
+        # self.igra = i2
+        # (poteza2, vrednost2) = self.minimax(self.globina, True)
+        # assert poteza == poteza2, "{}, {}".format(poteza, poteza2)
+
+        # Odstranimo trenutno stanje igre
         self.jaz = None
         self.igra = None
 
@@ -53,10 +77,14 @@ class Minimax:
             self.callback(poteza)
 
     # Vrednosti igre
-    ZMAGA = 100000  # Mora biti vsaj 10^5
+    ZMAGA = 100000  # Mora biti večje od najvišje vrednosti pozicije
     NESKONCNO = ZMAGA + 1  # Več kot zmaga
 
     def vrednost_pozicije(self):
+        """
+        Izračuna oceno trenutne pozicije z uporabo matrike uteži
+        :return: ocena trenutne pozicije
+        """
         nasprotnik = Stanje.obrni(self.jaz)
         vrednost = 0
         for i in range(8):
@@ -64,11 +92,15 @@ class Minimax:
                 if self.igra.deska[i][j] == self.jaz:
                     vrednost += UTEZI[i][j]
                 if self.igra.deska[i][j] == nasprotnik:
-                        vrednost -= UTEZI[i][j]
+                    vrednost -= UTEZI[i][j]
         return vrednost
 
     def minimax(self, globina, maksimiziramo):
-        """Glavna metoda minimax."""
+        """
+        Glavna metoda minimax brez alfa beta rezov
+        :param globina: globina do katere algoritem preiskuje drevo
+        :param maksimiziramo: boolean: ali želimo vrednost maksimizirati ali minimizirati
+        """
         if self.prekinitev:
             # Sporočili so nam, da moramo prekiniti
             logging.debug("Minimax prekinja, globina = {0}".format(globina))
@@ -114,12 +146,19 @@ class Minimax:
                 assert (najboljsa_poteza is not None), "minimax: izračunana poteza je None"
                 return (najboljsa_poteza, vrednost_najboljse)
 
-    def alphabeta(self, globina, maksimiziramo, alpha = -NESKONCNO, beta = NESKONCNO):
-        """Glavna metoda minimax."""
+    def alphabeta(self, globina, maksimiziramo, alpha=-NESKONCNO, beta=NESKONCNO):
+        """
+        Glavna metoda minimax z alfa beta rezi
+        :param globina: globina do katere algoritem preiskuje drevo
+        :param maksimiziramo: boolean: ali želimo vrednost maksimizirati ali minimizirati
+        :param alpha: največja najdena vrednost v drevesu na poti do izhodišča
+        :param beta: najmanjša najdena vrednost v drevesu na poti do izhodišča
+        """
         if self.prekinitev:
             # Sporočili so nam, da moramo prekiniti
             logging.debug("Minimax prekinja, globina = {0}".format(globina))
             return (None, 0)
+
         zmagovalec = self.igra.zmagovalec()
         if zmagovalec:
             # Igre je konec, vrnemo njeno vrednost
@@ -134,48 +173,41 @@ class Minimax:
             if globina == 0:
                 return (None, self.vrednost_pozicije())
             else:
+                # Če trenutni igralec nima možne poteze zamenjamo igralca
+                moznosti = self.igra.mozne_poteze()
+                if len(moznosti) == 0:
+                    logging.debug()
+                    return self.alphabeta(globina, not maksimiziramo, alpha, beta)
+
                 # Naredimo eno stopnjo minimax
                 if maksimiziramo:
                     # Maksimiziramo
-                    moznosti = self.igra.mozne_poteze()
-
-                    if moznosti == None:
-                        return self.alphabeta(globina, not maksimiziramo, alpha, beta)
-                    else:
-                        najboljsa_poteza = None
-                        vrednost_najboljse = -Minimax.NESKONCNO
-                        for p in moznosti:
-                            self.igra.odigraj_potezo(p)
-                            vrednost = self.alphabeta(globina - 1, not maksimiziramo, alpha, beta)[1]
-                            self.igra.razveljavi()
-                            if vrednost > vrednost_najboljse:
-                                vrednost_najboljse = vrednost
-                                alpha = max(alpha, vrednost)
-                                najboljsa_poteza = p
-                                if beta <= alpha:
-                                    break
-
-                        if najboljsa_poteza == None:
-                            print("dafuq", alpha, beta)
-                        return (najboljsa_poteza, alpha)
+                    najboljsa_poteza = None
+                    vrednost_najboljse = -Minimax.NESKONCNO
+                    for p in moznosti:
+                        self.igra.odigraj_potezo(p)
+                        vrednost = self.alphabeta(globina - 1, not maksimiziramo, alpha, beta)[1]
+                        self.igra.razveljavi()
+                        if vrednost > vrednost_najboljse:
+                            vrednost_najboljse = vrednost
+                            alpha = max(alpha, vrednost)
+                            najboljsa_poteza = p
+                            if beta <= alpha:
+                                break
                 else:
                     # Minimiziramo
-                    moznosti = self.igra.mozne_poteze()
-                    if moznosti == None:
-                        return self.alphabeta(globina, not maksimiziramo, alpha, beta)
-                    else:
-                        najboljsa_poteza = None
-                        vrednost_najboljse = Minimax.NESKONCNO
-                        for p in moznosti:
-                            self.igra.odigraj_potezo(p)
-                            vrednost = self.alphabeta(globina - 1, not maksimiziramo, alpha, beta)[1]
-                            self.igra.razveljavi()
-                            if vrednost < vrednost_najboljse:
-                                vrednost_najboljse = vrednost
-                                najboljsa_poteza = p
-                                beta = min(beta, vrednost_najboljse)
-                                if beta <= alpha:
-                                    break
+                    najboljsa_poteza = None
+                    vrednost_najboljse = Minimax.NESKONCNO
+                    for p in moznosti:
+                        self.igra.odigraj_potezo(p)
+                        vrednost = self.alphabeta(globina - 1, not maksimiziramo, alpha, beta)[1]
+                        self.igra.razveljavi()
+                        if vrednost < vrednost_najboljse:
+                            vrednost_najboljse = vrednost
+                            najboljsa_poteza = p
+                            beta = min(beta, vrednost_najboljse)
+                            if beta <= alpha:
+                                break
 
                 assert (najboljsa_poteza is not None), "AlphaBeta: izračunal None"
                 return (najboljsa_poteza, vrednost_najboljse)

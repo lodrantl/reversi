@@ -46,8 +46,7 @@ class Igra:
 
     def __init__(self):
         """
-        Naredi matriko, ki predstavlja desko, nanj na sredino postavi dva bela in črna žetona, preveri,
-        katere so možne poteze.
+        Naredi matriko, ki predstavlja desko, nanj na sredino postavi dva bela in črna žetona.
         """
         self.koncana = False
         self.na_potezi = Stanje.CRNO
@@ -130,7 +129,6 @@ class Igra:
         Igralec igra potezo na koordinatah, žeton se tja postavi, če je možno, sicer ne. Žetoni na deski se obrnejo.
         Na vrsti je naslednji. Ko je konec igre, se vklopi stikalo na konec.
         :param koordinate: (x, y) koordinate, kjer bi igralec rad izvedel potezo.
-        :return:
         """
         x, y = koordinate
         if (x, y) in self.mozne_poteze():
@@ -139,7 +137,6 @@ class Igra:
             self.obrni_za(x, y)
 
             self.na_potezi = Stanje.obrni(self.na_potezi)
-
             if len(self.mozne_poteze()) == 0:
                 logging.debug("Še enkrat na vrsti")
                 self.na_potezi = Stanje.obrni(self.na_potezi)
@@ -157,7 +154,6 @@ class Igra:
         Za nov žeton na koordinatah x, y preveri v vse smeri, kateri žetoni so za obrnit in jih obrne.
         :param x: x koordinata novega žetona
         :param y: y koordinata novega žetona
-        :return:
         """
         for smer_x, smer_y in SMERI:
             i, j = x + smer_x, y + smer_y
@@ -176,12 +172,15 @@ class Igra:
         """
         Žetonom v seznamu zamneja stanje iz belega v črno in obratno, ter poskrbi za štetje žetonov na deski ob obratih.
         :param seznam: Seznam žetonov, ki jih obrnemo
-        :return:
         """
         for x, y in seznam:
             self.deska[x][y] = Stanje.obrni(self.deska[x][y])
 
     def zmagovalec(self):
+        """
+        Če je igra končana vrne Stanje zmagovalca, če ne None
+        :return: Stanje zmagovalca oz. None
+        """
         beli, crni = self.stevilo_zetonov()
         if self.koncana:
             if beli == crni:

@@ -1,6 +1,6 @@
 """
 .. module:: reversi.main
-.. moduleauthor:: Luka Lodrant <luka.lodrant@gmail.com, Lenart Treven <lenart.treven44@gmail.com>
+.. moduleauthor:: Luka Lodrant <luka.lodrant@gmail.com>, Lenart Treven <lenart.treven44@gmail.com>
 
 Glavni razred reversi aplikacije, vsebuje konfiguracijo uporabniškega vmesnika
 
@@ -14,6 +14,9 @@ import logging
 if getattr(sys, 'frozen', False):
     os.chdir(sys._MEIPASS)
 
+import kivy
+kivy.require('1.9.1')
+
 # Nastavi velikost okna
 from kivy.config import Config
 Config.set('graphics', 'width', '500')
@@ -22,11 +25,12 @@ Config.set('graphics', 'height', '550')
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.image import Image
 from kivy.core.window import Window
 from kivy.properties import NumericProperty, ListProperty, OptionProperty, StringProperty, ObjectProperty
 from kivy.uix.button import ButtonBehavior
-from kivy.uix.togglebutton import ToggleButton, ToggleButtonBehavior
+from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.modalview import ModalView
 from kivy.clock import mainthread
 
@@ -34,6 +38,8 @@ from igra import Stanje, Igra
 from hoverable import HoverBehavior
 from racunalnik import Racunalnik
 from clovek import Clovek
+
+from kivymd.theming import  ThemeManager
 
 # Nastavi minimalno velikost okna
 Window.minimum_width = 500
@@ -65,13 +71,13 @@ class IgraZaslon(Screen):
     pass
 
 
-class Polje(ButtonBehavior, Image, HoverBehavior):
+class Polje(ButtonBehavior, AnchorLayout, HoverBehavior):
     """
     Razred vsake polja na plošči, hrani stanje in pa pozna svoje koordinate
     """
     koordinate = ListProperty()
     stanje = OptionProperty(Stanje.PRAZNO, options=[Stanje.BELO, Stanje.CRNO, Stanje.PRAZNO, Stanje.MOGOCE])
-    stil = StringProperty('')
+    mozno = StringProperty('')
 
     def on_enter(self):
         """
@@ -79,15 +85,15 @@ class Polje(ButtonBehavior, Image, HoverBehavior):
         :return:
         """
         if self.stanje == Stanje.MOGOCE:
-            self.stil = '_' + self.parent.na_potezi
+            self.mozno = self.parent.na_potezi
 
     def on_leave(self):
         """
         Izbrišemo prosojen žeton
         :return:
         """
-        if self.stil.startswith('_'):
-            self.stil = ''
+        if self.mozno:
+            self.mozno = ''
 
     def on_press(self):
         """
@@ -194,16 +200,21 @@ class Deska(RelativeLayout):
     def ponovi_igro(self):
         self.igra = Igra()
         self.osvezi()
+        self.igralca[self.na_potezi].zacni_potezo(self.igra)
 
     def koncaj_igro(self):
         for i in self.igralca.values():
             if type(i) == Racunalnik:
                 i.prekini()
-        App.get_running_app().root.current = 'meni'
+        self.manager.current = 'meni'
 
     def koncaj_igro_popup(self):
         po = KoncajIgroPopup(deska=self)
         po.open()
+
+    def razveljavi(self):
+        #TODO
+        pass
 
 
 class PonoviIgroPopup(ModalView):
@@ -225,17 +236,10 @@ class ReversiApp(App):
     """
     Glavni Kivy Application razred, definira ScreenManager z našimi zasloni in vsebuje par uporabnih konstant
     """
-    igra_zaslon = ObjectProperty()
+    theme_cls = ThemeManager()
 
     def build(self):
         self.icon = 'grafika/ikona.png'
-        sm = ScreenManager()
-        sm.add_widget(MeniZaslon(name='meni'))
-        sm.add_widget(NastavitveZaslon(name='nastavitve'))
-        self.igra_zaslon = IgraZaslon(name='igra')
-        sm.add_widget(self.igra_zaslon)
-        sm.add_widget(PravilaZaslon(name='pravila'))
-        return sm
 
 
 if __name__ == '__main__':

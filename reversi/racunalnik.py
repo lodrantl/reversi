@@ -10,8 +10,7 @@ class Racunalnik():
         self.tezavnost = tezavnost
         self.barva = barva
 
-        if self.tezavnost > 0:
-            self.minimax = Minimax(self.tezavnost * 3, self.callback)
+        self.minimax = Minimax(self.tezavnost + 2, self.callback)
 
     def zacni_potezo(self, igra):
         threading.Thread(target=self.izracunaj_potezo, args=(igra,)).start()

@@ -15,3 +15,5 @@ def test_kopija():
     kopija = igra.kopija()
     assert igra.deska == kopija.deska
     assert igra.na_potezi == kopija.na_potezi
+    igra.odigraj_potezo(random.choice(list(igra.mozne_poteze())))
+    assert igra.deska != kopija.deska
