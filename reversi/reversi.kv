@@ -224,6 +224,7 @@ ScreenManager:
             LepGumb:
                 text: 'RAZVELJAVI'
                 font_size: '27sp'
+                omogocen: root.deska.obstaja_zgodovina
                 on_release: root.deska.razveljavi()
                 size: '170sp', '65sp'
                 pos_hint: {'center_x': 0.25, 'center_y': 0.5}
@@ -294,9 +295,10 @@ ScreenManager:
     izbrana_barva: app.tema.ozadje_svetlo
     state: 'normal'
     font_size: '35sp'
+    omogocen: True
     canvas.before:
         Color:
-            rgba: app.tema.locila
+            rgba: app.tema.onemogoceno if not self.omogocen else app.tema.locila
         Rectangle:
             pos: self.pos
             size: self.size
@@ -306,7 +308,7 @@ ScreenManager:
             pos: self.x + sp(3), self.y + sp(3)
             size: self.width - sp(6), self.height - sp(6)
         Color:
-            rgba: self.izbrana_barva if self.state == 'down' else app.tema.locila
+            rgba: app.tema.onemogoceno if not self.omogocen else (self.izbrana_barva if self.state == 'down' else app.tema.locila)
         Rectangle:
             pos: self.x + sp(6), self.y + sp(6)
             size: self.width - sp(12), self.height - sp(12)
@@ -319,6 +321,7 @@ ScreenManager:
 
 <LepGumb@LepWidget+Button>:
     size_hint: None, None
+    izbrana_barva: app.tema.ozadje_svetlo
     size: '231sp', '90sp'
 
 <Zeton@Image>:
@@ -426,5 +429,4 @@ ScreenManager:
         Rectangle:
             size: self.width - sp(1), self.height - sp(1)
             pos: self.x, self.y
-    on_press: print("haha")
-    on_release: app.tema.nastavi(self.barva)
+    on_press: app.tema.nastavi(self.barva)

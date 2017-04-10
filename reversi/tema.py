@@ -6,21 +6,22 @@ from kivy.uix.widget import Widget
 class Tema(Widget):
     deska = ListProperty()
     deska_rob = ListProperty()
-    primarna_temna = ListProperty()
-    primarna_temna = ListProperty()
     ozadje = ListProperty()
-    ozadje_svetla = ListProperty()
+    ozadje_temno = ListProperty()
+    ozadje_svetlo = ListProperty()
+    senca = ListProperty()
+    poudarjeno = ListProperty()
     tekst_ozadje = ListProperty()
     tekst_ozadje_temno = ListProperty()
-    poudarjeno = ListProperty()
     tekst_locila = ListProperty()
-    senca = ListProperty()
     locila = ListProperty()
+    onemogoceno = ListProperty()
 
     def __init__(self, ime):
         self.deska = hex('#8BC34A')
         self.deska_rob = hex('#689F38')
         self.nastavi(ime)
+
 
     def nastavi(self, ime):
         if ime == 'svetla':
@@ -40,6 +41,7 @@ class Tema(Widget):
         self.tekst_ozadje_temno = hex('#FFFFFF')
         self.tekst_locila = hex('#FFFFFF')
         self.locila = hex('#3F51B5')
+        self.onemogoceno = hex('#505050')
 
     def modra(self):
         self.ozadje = hex('#3F51B5')
@@ -51,7 +53,7 @@ class Tema(Widget):
         self.senca = hex('#757575')
         self.tekst_locila = hex('#212121')
         self.locila = hex('#FFFFFF')
-
+        self.onemogoceno = hex('#AAAAAA')
 
     def oranzna(self):
         self.ozadje = hex('#FF5722')
@@ -62,4 +64,6 @@ class Tema(Widget):
         self.tekst_ozadje = hex('#FFFFFF')
         self.tekst_ozadje_temno = hex('#FFFFFF')
         self.tekst_locila = hex('#212121')
-        self.locila = hex('#BDBDBD')
+        self.locila = hex('#FFFFFF')
+        self.onemogoceno = hex('#AAAAAA')
+

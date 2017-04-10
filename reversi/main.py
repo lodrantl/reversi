@@ -26,9 +26,9 @@ from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.anchorlayout import AnchorLayout
-from kivy.uix.image import Image
+from kivy.uix.widget import Widget
 from kivy.core.window import Window
-from kivy.properties import NumericProperty, ListProperty, OptionProperty, StringProperty, ObjectProperty
+from kivy.properties import NumericProperty, ListProperty, OptionProperty, StringProperty, ObjectProperty, BooleanProperty
 from kivy.uix.button import ButtonBehavior
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.modalview import ModalView
@@ -122,6 +122,7 @@ class Deska(RelativeLayout):
     ime_crnega = StringProperty()
     stevilo_crnih = NumericProperty()
     stevilo_belih = NumericProperty()
+    obstaja_zgodovina = BooleanProperty(False)
 
     na_potezi = OptionProperty(Stanje.BELO, options=[Stanje.BELO, Stanje.CRNO])
 
@@ -169,6 +170,7 @@ class Deska(RelativeLayout):
         :return:
         """
         self.stevilo_belih, self.stevilo_crnih = self.igra.stevilo_zetonov()
+        self.obstaja_zgodovina = len(self.igra.zgodovina) > 0
 
         self.na_potezi = self.igra.na_potezi
         poteze = self.igra.mozne_poteze()
@@ -231,8 +233,6 @@ class KoncajIgroPopup(ModalView):
     def __init__(self, **kwargs):
         super(KoncajIgroPopup, self).__init__(**kwargs)
         self.deska = kwargs['deska']
-
-
 
 class ReversiApp(App):
     """
