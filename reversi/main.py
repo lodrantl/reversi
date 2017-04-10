@@ -82,7 +82,6 @@ class Polje(ButtonBehavior, AnchorLayout, HoverBehavior):
         Če se z miško pomaknemo v možno polje se v polju pojavi prosojen žeton
         :return:
         """
-        print("on enter", self.koordinate)
         if self.stanje == Stanje.MOGOCE:
             self.mozno = self.parent.na_potezi
 
@@ -91,7 +90,6 @@ class Polje(ButtonBehavior, AnchorLayout, HoverBehavior):
         Izbrišemo prosojen žeton
         :return:
         """
-        print("on leave", self.koordinate)
         if self.mozno:
             self.mozno = ''
 
@@ -213,8 +211,13 @@ class Deska(RelativeLayout):
         po.open()
 
     def razveljavi(self):
-        #TODO
-        pass
+        if len(self.igra.zgodovina):
+            self.igra.razveljavi()
+            self.osvezi()
+            if type(self.igralca[self.igra.na_potezi]) == Racunalnik:
+                self.igra.razveljavi()
+                self.osvezi()
+
 
 
 class PonoviIgroPopup(ModalView):
