@@ -5,15 +5,25 @@
 
 # Nastavitve barvne teme
 
-# MODRA
-#:set b_primarna_temna hex('#303F9F')
-#:set b_primarna hex('#3F51B5')
+## SVETLA
+#:set b_primarna_temna hex('#3F51B5')
+#:set b_primarna hex('#FFFFFF')
 #:set b_primarna_svetla hex('#C5CAE9')
-#:set b_poudarjen_tekst hex('#FFFFFF')
+#:set b_poudarjen_tekst hex('#3F51B5')
 #:set b_poudarjeno hex('#8BC34A')
-#:set b_primarna_tekst hex('#212121')
+#:set b_primarna_tekst hex('#FFFFFF')
 #:set b_sekundarna_tekst hex('#757575')
-#:set b_locila hex('#BDBDBD')
+#:set b_locila hex('#3F51B5')
+
+# MODRA
+##:set b_primarna_temna hex('#303F9F')
+##:set b_primarna hex('#3F51B5')
+##:set b_primarna_svetla hex('#C5CAE9')
+##:set b_poudarjen_tekst hex('#FFFFFF')
+##:set b_poudarjeno hex('#8BC34A')
+##:set b_primarna_tekst hex('#212121')
+##:set b_sekundarna_tekst hex('#757575')
+##:set b_locila hex('#FFFFFF')
 
 # ORANŽNA
 ##:set b_primarna_temna hex('#E64A19')
@@ -46,7 +56,7 @@ ScreenManager:
     RelativeLayout:
         canvas:
             Color:
-                rgba: b_primarna_temna
+                rgba: b_primarna
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -90,7 +100,7 @@ ScreenManager:
     RelativeLayout:
         canvas:
             Color:
-                rgba: b_primarna_temna
+                rgba: b_primarna
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -188,7 +198,7 @@ ScreenManager:
     BoxLayout:
         canvas:
             Color:
-                rgba: b_primarna_temna
+                rgba: b_primarna
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -312,17 +322,17 @@ ScreenManager:
     font_size: '35sp'
     canvas.before:
         Color:
-            rgba: 1, 1, 1, 1
+            rgba: b_locila
         Rectangle:
             pos: self.pos
             size: self.size
         Color:
-            rgba: b_primarna_temna
+            rgba: b_primarna
         Rectangle:
             pos: self.x + sp(3), self.y + sp(3)
             size: self.width - sp(6), self.height - sp(6)
         Color:
-            rgba: self.izbrana_barva if self.state == 'down' else [1, 1 ,1 , 1]
+            rgba: self.izbrana_barva if self.state == 'down' else b_locila
         Rectangle:
             pos: self.x + sp(6), self.y + sp(6)
             size: self.width - sp(12), self.height - sp(12)
@@ -353,8 +363,14 @@ ScreenManager:
     BoxLayout
         orientation: 'vertical'
         spacing: '10sp'
+        canvas.before:
+            Color:
+                rgba: b_primarna_temna
+            Rectangle:
+                size: self.size
+                pos: self.pos
         Label:
-            color: b_poudarjen_tekst
+            color: b_primarna_tekst
             text: '[b][size=35sp]{}[/size]\n[size=25sp]\u017Delis igrati ponovno?[/size][/b]'.format(root.sporocila[root.deska.igra.zmagovalec()])
             markup: True
             text_size: self.size
@@ -385,8 +401,14 @@ ScreenManager:
     BoxLayout
         orientation: 'vertical'
         spacing: '20sp'
+        canvas.before:
+            Color:
+                rgba: b_primarna_temna
+            Rectangle:
+                size: self.size
+                pos: self.pos
         Label:
-            color: b_poudarjen_tekst
+            color: b_primarna_tekst
             text: '[b]Ste prepri\u010Dani?[/b]'
             markup: True
             font_size: '35sp'

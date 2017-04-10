@@ -39,8 +39,6 @@ from hoverable import HoverBehavior
 from racunalnik import Racunalnik
 from clovek import Clovek
 
-from kivymd.theming import  ThemeManager
-
 # Nastavi minimalno velikost okna
 Window.minimum_width = 500
 Window.minimum_height = 550
@@ -236,7 +234,6 @@ class ReversiApp(App):
     """
     Glavni Kivy Application razred, definira ScreenManager z našimi zasloni in vsebuje par uporabnih konstant
     """
-    theme_cls = ThemeManager()
 
     def build(self):
         self.icon = 'grafika/ikona.png'
