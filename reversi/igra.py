@@ -65,6 +65,10 @@ class Igra:
         self.zgodovina.append((p, self.na_potezi))
 
     def razveljavi(self):
+        """
+        Iz zgodovine odstrani zadnjo pozicijo
+        :return:
+        """
         (self.deska, self.na_potezi) = self.zgodovina.pop()
 
     def kopija(self):
@@ -80,6 +84,10 @@ class Igra:
         return k
 
     def stevilo_zetonov(self):
+        """
+        Prešteje število žetonov na deski.
+        :return: (število_belih_žetonov, število_črnih_žetonov)
+        """
         beli = 0
         crni = 0
         for vrstica in self.deska:

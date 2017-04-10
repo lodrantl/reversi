@@ -82,6 +82,7 @@ class Polje(ButtonBehavior, AnchorLayout, HoverBehavior):
         Če se z miško pomaknemo v možno polje se v polju pojavi prosojen žeton
         :return:
         """
+        print("on enter", self.koordinate)
         if self.stanje == Stanje.MOGOCE:
             self.mozno = self.parent.na_potezi
 
@@ -90,6 +91,7 @@ class Polje(ButtonBehavior, AnchorLayout, HoverBehavior):
         Izbrišemo prosojen žeton
         :return:
         """
+        print("on leave", self.koordinate)
         if self.mozno:
             self.mozno = ''
 
