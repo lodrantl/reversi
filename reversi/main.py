@@ -38,6 +38,7 @@ from igra import Stanje, Igra
 from hoverable import HoverBehavior
 from racunalnik import Racunalnik
 from clovek import Clovek
+from tema import Tema
 
 # Nastavi minimalno velikost okna
 Window.minimum_width = 500
@@ -211,12 +212,10 @@ class Deska(RelativeLayout):
         po.open()
 
     def razveljavi(self):
-        if len(self.igra.zgodovina):
+        self.igra.razveljavi()
+        if type(self.igralca[self.igra.na_potezi]) == Racunalnik:
             self.igra.razveljavi()
-            self.osvezi()
-            if type(self.igralca[self.igra.na_potezi]) == Racunalnik:
-                self.igra.razveljavi()
-                self.osvezi()
+        self.osvezi()
 
 
 
@@ -239,6 +238,7 @@ class ReversiApp(App):
     """
     Glavni Kivy Application razred, definira ScreenManager z našimi zasloni in vsebuje par uporabnih konstant
     """
+    tema = ObjectProperty(Tema('svetla'))
 
     def build(self):
         self.icon = 'grafika/ikona.png'

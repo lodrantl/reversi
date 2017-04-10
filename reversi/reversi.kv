@@ -1,43 +1,6 @@
 #:kivy 1.9.1
 #:import Stanje igra.Stanje
-
 #:import hex kivy.utils.get_color_from_hex
-
-# Nastavitve barvne teme
-
-## SVETLA
-#:set b_primarna_temna hex("#3F51B5")
-#:set b_primarna hex('#FFFFFF')
-#:set b_primarna_svetla hex('#C5CAE9')
-#:set b_poudarjen_tekst hex('#3F51B5')
-#:set b_poudarjeno hex('#8BC34A')
-#:set b_primarna_tekst hex('#FFFFFF')
-#:set b_sekundarna_tekst hex('#757575')
-#:set b_locila hex('#3F51B5')
-
-# MODRA
-##:set b_primarna_temna hex('#303F9F')
-##:set b_primarna hex('#3F51B5')
-##:set b_primarna_svetla hex('#C5CAE9')
-##:set b_poudarjen_tekst hex('#FFFFFF')
-##:set b_poudarjeno hex('#8BC34A')
-##:set b_primarna_tekst hex('#212121')
-##:set b_sekundarna_tekst hex('#757575')
-##:set b_locila hex('#FFFFFF')
-
-# ORANŽNA
-##:set b_primarna_temna hex('#E64A19')
-##:set b_primarna hex('#FF5722')
-##:set b_primarna_svetla hex('#FFCCBC')
-##:set b_poudarjen_tekst hex('#FFFFFF')
-##:set b_poudarjeno hex('#8BC34A')
-##:set b_primarna_tekst hex('#212121')
-##:set b_sekundarna_tekst hex('#757575')
-##:set b_locila hex('#BDBDBD')
-
-# Barva deske
-#:set b_deske hex('#8BC34A')
-#:set b_roba_deske hex('#689F38')
 
 ScreenManager:
     MeniZaslon:
@@ -56,16 +19,28 @@ ScreenManager:
     RelativeLayout:
         canvas:
             Color:
-                rgba: b_primarna
+                rgba: app.tema.ozadje
             Rectangle:
                 size: self.size
                 pos: self.pos
+        IzbirnikBarve:
+            barva: 'oranzna'
+            prikazna_barva: hex('#FF5722')
+            pos: 0,0
+        IzbirnikBarve:
+            barva: 'modra'
+            prikazna_barva: hex('#3F51B5')
+            pos: 0,'16sp'
+        IzbirnikBarve:
+            barva: 'svetla'
+            prikazna_barva: hex('#FFFFFF')
+            pos: 0,'32sp'
         Label:
             text: '[b]REVERSI[/b]'
             markup: True
             font_name: 'grafika/koliko-Bold.ttf'
-            color: b_sekundarna_tekst
-            font_size: '83sp'
+            color: app.tema.senca
+            font_size: '80sp'
             size_hint: None, None
             size: '447sp', '70sp'
             pos_hint: {'center_x': 0.5, 'center_y': 0.89}
@@ -73,11 +48,11 @@ ScreenManager:
             text: '[b]REVERSI[/b]'
             markup: True
             font_name: 'grafika/koliko-Bold.ttf'
-            color: b_poudarjeno
+            color: app.tema.poudarjeno
             font_size: '80sp'
             size_hint: None, None
             size: '447sp', '70sp'
-            pos_hint: {'center_x': 0.5, 'center_y': 0.895}
+            pos_hint: {'center_x': 0.495, 'center_y': 0.895}
         LepGumb:
             text: 'EN IGRALEC'
             on_release: root.manager.current = 'nastavitve'
@@ -100,7 +75,7 @@ ScreenManager:
     RelativeLayout:
         canvas:
             Color:
-                rgba: b_primarna
+                rgba: app.tema.ozadje
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -108,8 +83,8 @@ ScreenManager:
             text: '[b]NASTAVITVE[/b]'
             markup: True
             font_name: 'grafika/koliko-Bold.ttf'
-            color: b_sekundarna_tekst
-            font_size: '72sp'
+            color: app.tema.senca
+            font_size: '70sp'
             size_hint: None, None
             size: '447sp', '60sp'
             pos_hint: {'center_x': 0.5, 'center_y': 0.9}
@@ -117,13 +92,13 @@ ScreenManager:
             text: '[b]NASTAVITVE[/b]'
             markup: True
             font_name: 'grafika/koliko-Bold.ttf'
-            color: b_poudarjeno
+            color: app.tema.poudarjeno
             font_size: '70sp'
             size_hint: None, None
             size: '447sp', '60sp'
-            pos_hint: {'center_x': 0.5, 'center_y': 0.905}
+            pos_hint: {'center_x': 0.495, 'center_y': 0.905}
         Label:
-            color: b_poudarjen_tekst
+            color: app.tema.tekst_ozadje
             text: '[b]IGRAJ KOT:[/b]'
             markup: True
             font_size: '40sp'
@@ -150,7 +125,7 @@ ScreenManager:
                 group: 'barva'
             BoxSpacing
         Label:
-            color: b_poudarjen_tekst
+            color: app.tema.tekst_ozadje
             text: '[b]TE\u017DAVNOST:[/b]'
             markup: True
             font_size: '40sp'
@@ -198,7 +173,7 @@ ScreenManager:
     BoxLayout:
         canvas:
             Color:
-                rgba: b_primarna
+                rgba: app.tema.ozadje
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -212,7 +187,6 @@ ScreenManager:
                 font_size: '30sp'
                 size_hint_x: None
                 width: '170sp'
-                color: b_primarna_tekst
                 state: 'down' if root.deska.na_potezi == Stanje.BELO else 'normal'
                 pos_hint: {'center_x': 0.2, 'center_y': 0.5}
             Zeton:
@@ -264,17 +238,17 @@ ScreenManager:
 <Polje>
     canvas.before:
         Color:
-            rgba: b_roba_deske
+            rgba: app.tema.deska_rob
         Rectangle:
             size: self.size
             pos: self.pos
         Color:
-            rgba: b_deske
+            rgba: app.tema.deska
         Rectangle:
             size: self.width * (14 / 15), self.height * (14 / 15)
             pos: self.x + self.width *(1 / 30), self.y + self.height *(1 / 30)
         Color:
-            rgba: b_primarna  if root.stanje == Stanje.MOGOCE and root.mozno == '' else [0, 0, 0, 0]
+            rgba: app.tema.ozadje  if root.stanje == Stanje.MOGOCE and root.mozno == '' else [0, 0, 0, 0]
         Ellipse:
             size: self.width * (1 / 6), self.height * (1 / 6)
             pos: self.center_x - self.width *(1 / 12), self.center_y - self.height *(1 / 12)
@@ -285,7 +259,7 @@ ScreenManager:
             [1, 1, 1, 1] if (root.stanje == Stanje.BELO or root.stanje == Stanje.CRNO) else \
             [1, 1, 1, 0.5] if root.mozno else [0, 0, 0, 0]
         source:
-            r'grafika/beli_zeton.png' if (root.stanje == Stanje.BELO or root.mozno == Stanje.BELO) else \
+            'grafika/beli_zeton.png' if (root.stanje == Stanje.BELO or root.mozno == Stanje.BELO) else \
             ('grafika/crni_zeton.png' if (root.stanje == Stanje.CRNO or root.mozno == Stanje.CRNO) else 'grafika/prazno.png')
         #source: 'grafika/' + root.stanje + root.stil + '.png'
         mipmap: True
@@ -296,7 +270,7 @@ ScreenManager:
     size: self.velikost, self.velikost
     canvas.before:
         Color:
-            rgba: b_roba_deske
+            rgba: app.tema.deska_rob
         Rectangle:
             size: self.width + sp(10), self.height + sp(10)
             pos: - sp(5), -sp(5)
@@ -315,24 +289,24 @@ ScreenManager:
             on_release: root.manager.current = 'meni'
 
 <LepWidget@Widget>:
-    color: b_primarna_tekst
+    color: app.tema.tekst_locila
     background_color: 0, 0, 0, 0
-    izbrana_barva: b_primarna_svetla
+    izbrana_barva: app.tema.ozadje_svetlo
     state: 'normal'
     font_size: '35sp'
     canvas.before:
         Color:
-            rgba: b_locila
+            rgba: app.tema.locila
         Rectangle:
             pos: self.pos
             size: self.size
         Color:
-            rgba: b_primarna
+            rgba: app.tema.ozadje
         Rectangle:
             pos: self.x + sp(3), self.y + sp(3)
             size: self.width - sp(6), self.height - sp(6)
         Color:
-            rgba: self.izbrana_barva if self.state == 'down' else b_locila
+            rgba: self.izbrana_barva if self.state == 'down' else app.tema.locila
         Rectangle:
             pos: self.x + sp(6), self.y + sp(6)
             size: self.width - sp(12), self.height - sp(12)
@@ -340,7 +314,7 @@ ScreenManager:
 <LepRadio@LepWidget+ToggleButton>:
     size_hint: None, None
     size: '154sp', '100sp'
-    izbrana_barva: b_poudarjeno
+    izbrana_barva: app.tema.poudarjeno
     allow_no_selection: False
 
 <LepGumb@LepWidget+Button>:
@@ -352,7 +326,7 @@ ScreenManager:
     size: '65sp', '65sp'
 
 <BarvniLabel@LepWidget+Label>:
-    izbrana_barva: b_poudarjeno
+    izbrana_barva: app.tema.poudarjeno
 
 <PonoviIgroPopup>
     background_color: 0,0,0,0
@@ -365,12 +339,12 @@ ScreenManager:
         spacing: '10sp'
         canvas.before:
             Color:
-                rgba: b_primarna_temna
+                rgba: app.tema.ozadje_temno
             Rectangle:
                 size: self.size
                 pos: self.pos
         Label:
-            color: b_primarna_tekst
+            color: app.tema.tekst_ozadje_temno
             text: '[b][size=35sp]{}[/size]\n[size=25sp]\u017Delis igrati ponovno?[/size][/b]'.format(root.sporocila[root.deska.igra.zmagovalec()])
             markup: True
             text_size: self.size
@@ -403,12 +377,12 @@ ScreenManager:
         spacing: '20sp'
         canvas.before:
             Color:
-                rgba: b_primarna_temna
+                rgba: app.tema.ozadje_temno
             Rectangle:
                 size: self.size
                 pos: self.pos
         Label:
-            color: b_primarna_tekst
+            color: app.tema.tekst_ozadje_temno
             text: '[b]Ste prepri\u010Dani?[/b]'
             markup: True
             font_size: '35sp'
@@ -435,3 +409,22 @@ ScreenManager:
 
 <Label>:
     font_name: 'grafika/Qontra.otf'
+
+<IzbirnikBarve@Button>:
+    size_hint: None, None
+    size: '16sp', '16sp'
+    background_color: 0,0,0,0
+    prikazna_barva: 0, 0, 0, 0
+    canvas.before:
+        Color:
+            rgba: hex('#505050')
+        Rectangle:
+            size: self.size
+            pos: self.pos
+        Color:
+            rgba: self.prikazna_barva
+        Rectangle:
+            size: self.width - sp(1), self.height - sp(1)
+            pos: self.x, self.y
+    on_press: print("haha")
+    on_release: app.tema.nastavi(self.barva)

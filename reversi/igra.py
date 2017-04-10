@@ -69,7 +69,8 @@ class Igra:
         Iz zgodovine odstrani zadnjo pozicijo
         :return:
         """
-        (self.deska, self.na_potezi) = self.zgodovina.pop()
+        if len(self.zgodovina) > 0:
+            (self.deska, self.na_potezi) = self.zgodovina.pop()
 
     def kopija(self):
         """Vrni kopijo te igre, brez zgodovine."""

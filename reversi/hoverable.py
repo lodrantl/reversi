@@ -35,7 +35,7 @@ class HoverBehavior(object):
             return # do proceed if I'm not displayed <=> If have no parent
         pos = args[1]
         #Next lines to_widget allow to compensate for relative layout
-        spx, spy = sp(pos[0]), sp(pos[1])
+        #spx, spy = sp(pos[0]), sp(pos[1])
         inside = self.collide_point(*self.to_widget(*pos))
         if self.hovered == inside:
             #We have already done what was needed
