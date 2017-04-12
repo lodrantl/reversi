@@ -226,7 +226,7 @@ ScreenManager:
                 text: 'RAZVELJAVI'
                 font_size: '27sp'
                 omogocen: root.deska.obstaja_zgodovina
-                on_release: root.deska.razveljavi()
+                on_release: if self.omogocen: root.deska.razveljavi()
                 size: '170sp', '65sp'
                 pos_hint: {'center_x': 0.25, 'center_y': 0.5}
             LepGumb:

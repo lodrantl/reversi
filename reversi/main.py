@@ -148,7 +148,8 @@ class Deska(RelativeLayout):
         :return:
         """
         self.stevilo_belih, self.stevilo_crnih = self.igra.stevilo_zetonov()
-        self.obstaja_zgodovina = len(self.igra.zgodovina) > 0
+        dolzina = len(self.igra.zgodovina)
+        self.obstaja_zgodovina = (dolzina > 1) or (dolzina == 1 and type(self.igralca[self.na_potezi]) == Racunalnik)
 
         self.na_potezi = self.igra.na_potezi
         poteze = self.igra.mozne_poteze()
@@ -208,6 +209,7 @@ class Deska(RelativeLayout):
         if type(self.igralca[self.igra.na_potezi]) == Racunalnik:
             self.igra.razveljavi()
         self.osvezi()
+        self.igralca[self.na_potezi].zacni_potezo(self.igra)
 
 
 class PonoviIgroPopup(ModalView):
