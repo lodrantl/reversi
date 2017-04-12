@@ -36,24 +36,11 @@ ScreenManager:
             barva: 'svetla'
             prikazna_barva: hex('#FFFFFF')
             pos: 0,'32sp'
-        Label:
-            text: '[b]REVERSI[/b]'
-            markup: True
-            font_name: 'grafika/koliko-Bold.ttf'
-            color: app.tema.senca
+        Naslov:
+            text: 'REVERSI'
             font_size: '80sp'
-            size_hint: None, None
             size: '447sp', '70sp'
             pos_hint: {'center_x': 0.5, 'center_y': 0.89}
-        Label:
-            text: '[b]REVERSI[/b]'
-            markup: True
-            font_name: 'grafika/koliko-Bold.ttf'
-            color: app.tema.poudarjeno
-            font_size: '80sp'
-            size_hint: None, None
-            size: '447sp', '70sp'
-            pos_hint: {'center_x': 0.495, 'center_y': 0.895}
         LepGumb:
             text: 'EN IGRALEC'
             on_release: root.manager.current = 'nastavitve'
@@ -80,24 +67,10 @@ ScreenManager:
             Rectangle:
                 size: self.size
                 pos: self.pos
-        Label:
-            text: '[b]NASTAVITVE[/b]'
-            markup: True
-            font_name: 'grafika/koliko-Bold.ttf'
-            color: app.tema.senca
+        Naslov:
+            text: 'NASTAVITVE'
             font_size: '70sp'
-            size_hint: None, None
-            size: '447sp', '60sp'
-            pos_hint: {'center_x': 0.5, 'center_y': 0.9}
-        Label:
-            text: '[b]NASTAVITVE[/b]'
-            markup: True
-            font_name: 'grafika/koliko-Bold.ttf'
-            color: app.tema.poudarjeno
-            font_size: '70sp'
-            size_hint: None, None
-            size: '447sp', '60sp'
-            pos_hint: {'center_x': 0.495, 'center_y': 0.905}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.91}
         Label:
             color: app.tema.tekst_ozadje
             text: '[b]IGRAJ KOT:[/b]'
@@ -112,7 +85,7 @@ ScreenManager:
             height: '100sp'
             orientation: 'horizontal'
             spacing: '10sp'
-            BoxSpacing
+            padding: '10sp'
             LepRadio:
                 size_hint: 0.5, 1
                 text: '\u010Drni'
@@ -124,7 +97,6 @@ ScreenManager:
                 text: 'beli'
                 value: Stanje.BELO
                 group: 'barva'
-            BoxSpacing
         Label:
             color: app.tema.tekst_ozadje
             text: '[b]TE\u017DAVNOST:[/b]'
@@ -139,7 +111,7 @@ ScreenManager:
             height: '100sp'
             orientation: 'horizontal'
             spacing: '10sp'
-            BoxSpacing
+            padding: '10sp'
             LepRadio:
                 size_hint: 0.33, 1
                 text: 'lahko'
@@ -156,7 +128,6 @@ ScreenManager:
                 text: 'te\u017Eko'
                 group: 'tezavnost'
                 value: 2
-            BoxSpacing
         LepGumb:
             text: 'NAZAJ'
             height: '80sp'
@@ -180,6 +151,7 @@ ScreenManager:
                 pos: self.pos
         orientation: 'vertical'
         spacing: '10sp'
+        padding: '10sp'
         RelativeLayout:
             size_hint: 1, None
             height: '70sp'
@@ -235,7 +207,6 @@ ScreenManager:
                 on_release: root.deska.koncaj_igro_popup()
                 size: '170sp', '65sp'
                 pos_hint: {'center_x': 0.75, 'center_y': 0.5}
-        BoxSpacing
 
 <Polje>
     canvas.before:
@@ -278,16 +249,84 @@ ScreenManager:
 
 <PravilaZaslon@Screen>:
     BoxLayout:
+        canvas.before:
+            Color:
+                rgba: app.tema.ozadje
+            Rectangle:
+                size: self.size
+                pos: self.pos
         orientation: 'vertical'
-        Label:
-            text: 'Pravila'
-            font_size: '20sp'
-        Label:
-            text: 'TODO: indepth rule explanation'
-            font_size: '12sp'
-        Button:
-            text: 'Back'
+        padding: 0, 0, 0, sp(10)
+        spacing: '10sp'
+        ScrollView:
+            do_scroll_x: False
+            canvas.before:
+                Color:
+                    rgba: app.tema.ozadje
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            BoxLayout:
+                size_hint_y: None
+                height: sp(1500)
+                orientation: 'vertical'
+                padding: sp(10)
+                Naslov:
+                    text: 'NAVODILA'
+                    font_size: '60sp'
+                    size_hint_y: None
+                    height: '63sp'
+                    pos_hint: {'center_x': 0.5}
+                Label:
+                    text_size: self.size
+                    color: app.tema.tekst_ozadje
+                    font_size: '16sp'
+                    markup: True
+                    text:
+                        "[size=18sp]NASTAVITVE IGRE[/size]\n\
+                        Pred za\u010Detkom igre za enega igralca vam bo ponujena izbira med raznimi nastavitvami. Izberete lahko svojo barvo \u017Eetonov (\u010Drni za\u010Dne) in pa te\u017Eavnost ra\u010Dunalni\u0161kega igralca.\n\n\
+                        [size=18sp]IGRANJE[/size]\n\
+                        Ko se igra za\u010Dne lahko z kliki na z majhnimi krogci ozna\u010Dena polja odigrate potezo. Ra\u010Dunalnik bo svojo potezo odigral samodejno.\n\n\
+                        [size=18sp]RAZVELJAVITEV[/size]\n\
+                        Z uporabo gumba Razveljavi lahko vzamete nazaj kolikor potez \u017Eelite.\n\n\
+                        [size=18sp]RAZMI\u0160LJANJE RA\u010CUNALNIKA[/size]\n\
+                        Pri vi\u0161jih zahtevnostih ra\u010Dunalnik porabi kar nekaj \u010Dasa za izra\u010Dun svoje poteze. Na vrhu ekrana bo vedno prikazano, kdo je na vrsti."
+                Naslov:
+                    text: 'PRAVILA IGRE'
+                    font_size: '60sp'
+                    size_hint_y: None
+                    height: '63sp'
+                    pos_hint: {'center_x': 0.5}
+                Label:
+                    text_size: self.size
+                    color: app.tema.tekst_ozadje
+                    font_size: '16sp'
+                    markup: True
+                    text: "Reversi je preprosta igra za dva igralca na 8x8 igralni deski. Cilj je postaviti \u017Eeton na desko tako, da ujame\u0161 nasprotnikove \u017Eetone med svoje in jih tako obrne\u0161 v svojo barvo. Vsak \u017Eeton je na eni strani \u010Drn, na drugi strani pa bel. Vsak igralec je ene barve. Igra se za\u010Dne z dvema \u017Eetonoma vsake barve na deski. V vsaki potezi mora igralec polo\u017Eiti \u017Eeton na desko tako, da obrne vsaj en nasprotni \u017Eeton. V spodnji poziciji lahko \u010Drni igralec igra na eno iz med petih mo\u017Enih potez, ozna\u010Denih z rumeno barvo. \u010De bo igral na kvardat ozna\u010Den s \u010Drnnim krogom, bo obrnil dva bela \u017Eetona."
+                Image:
+                    source: 'grafika/pozicija_ena.png'
+                Label:
+                    text_size: self.size
+                    color: app.tema.tekst_ozadje
+                    font_size: '16sp'
+                    markup: True
+                    text: "Po igrani potezi z dodanim \u010Drnim \u017Eetonom in dvema obrnjenima \u017Eetonoma je pozicija na deski naslednja:"
+                Image:
+                    source: 'grafika/pozicija_ena.png'
+                Label:
+                    text_size: self.size
+                    color: app.tema.tekst_ozadje
+                    font_size: '16sp'
+                    markup: True
+                    text:
+                        "V novi poziciji ima beli mo\u017Eno potezo, da obrne dva \u010Drna \u017Eetona.\n\n\
+                        \u010De ni mo\u017Ene poteze, v kateri bi igralec lahko obrnil vsaj en nasprotnikov \u017Eeton, je na vrsti nasprotnik. Ko oba igralca nimate ve\u010D mo\u017Enih potez je igra kon\u010Dana. Zmagovalec je tisti, ki ima na deski ve\u010D svojih \u017Eetonov."
+        LepGumb:
+            text: 'NAZAJ'
+            size: '180sp', '70sp'
+            pos_hint: {'center_x': 0.5}
             on_release: root.manager.current = 'meni'
+            font_size: '30sp'
 
 <LepWidget@Widget>:
     color: app.tema.tekst_locila
@@ -340,6 +379,7 @@ ScreenManager:
     BoxLayout
         orientation: 'vertical'
         spacing: '10sp'
+        padding: '10sp'
         canvas.before:
             Color:
                 rgba: app.tema.ozadje_temno
@@ -368,7 +408,6 @@ ScreenManager:
                 on_release: root.deska.ponovi_igro()
                 on_release: root.dismiss()
                 font_size: '30sp'
-        BoxSpacing
 
 <KoncajIgroPopup>
     background_color: 0,0,0,0
@@ -378,6 +417,7 @@ ScreenManager:
     BoxLayout
         orientation: 'vertical'
         spacing: '20sp'
+        padding: '20sp'
         canvas.before:
             Color:
                 rgba: app.tema.ozadje_temno
@@ -404,14 +444,27 @@ ScreenManager:
                 on_release: root.deska.koncaj_igro()
                 on_release: root.dismiss()
                 font_size: '30sp'
-        BoxSpacing
-
-<BoxSpacing@Widget>:
-    size_hint: None, None
-    size: 0, 0
 
 <Label>:
     font_name: 'grafika/Qontra.otf'
+
+<Naslov@RelativeLayout>:
+    text: ''
+    font_size: '80sp'
+    Label:
+        text: '[b]{}[/b]'.format(root.text)
+        markup: True
+        font_name: 'grafika/koliko-Bold.ttf'
+        color: app.tema.senca
+        font_size: root.font_size
+        pos: '0sp', '0sp'
+    Label:
+        text: '[b]{}[/b]'.format(root.text)
+        markup: True
+        font_name: 'grafika/koliko-Bold.ttf'
+        color: app.tema.poudarjeno
+        font_size: root.font_size
+        pos: '2sp', '-2sp'
 
 <IzbirnikBarve@Button>:
     size_hint: None, None

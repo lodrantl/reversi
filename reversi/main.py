@@ -148,8 +148,10 @@ class Deska(RelativeLayout):
         :return:
         """
         self.stevilo_belih, self.stevilo_crnih = self.igra.stevilo_zetonov()
+
         dolzina = len(self.igra.zgodovina)
-        self.obstaja_zgodovina = (dolzina > 1) or (dolzina == 1 and type(self.igralca[self.na_potezi]) == Racunalnik)
+        tip = type(self.igralca[self.na_potezi])
+        self.obstaja_zgodovina = (dolzina > 1) or (dolzina == 1 and tip == Clovek)
 
         self.na_potezi = self.igra.na_potezi
         poteze = self.igra.mozne_poteze()
