@@ -18,11 +18,12 @@ import os
 if getattr(sys, 'frozen', False):
     os.chdir(sys._MEIPASS)
 
-# Nastavi velikost okna
 from kivy.config import Config
-
+# Nastavi velikost okna
 Config.set('graphics', 'width', '500')
 Config.set('graphics', 'height', '550')
+# Izklopi rdeče pikice
+Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
 # Nastavi minimalno velikost okna
 from kivy.core.window import Window

@@ -268,7 +268,7 @@ ScreenManager:
                     pos: self.pos
             BoxLayout:
                 size_hint_y: None
-                height: sum([x.height for x in self.children]) + sp(280)
+                height: sp(960)
                 orientation: 'vertical'
                 padding: sp(10)
                 spacing: sp(10)
@@ -307,11 +307,7 @@ ScreenManager:
                     color: app.tema.tekst_ozadje
                     font_size: '16sp'
                     markup: True
-                    text: "Reversi je preprosta igra za dva igralca na 8x8 igralni deski. Cilj je postaviti \u017Eeton na desko tako, da ujame\u0161 nasprotnikove \u017Eetone med svoje in jih tako obrne\u0161 v svojo barvo. Vsak \u017Eeton je na eni strani \u010Drn, na drugi strani pa bel. Vsak igralec je ene barve. Igra se za\u010Dne z dvema \u017Eetonoma vsake barve na deski. V vsaki potezi mora igralec polo\u017Eiti \u017Eeton na desko tako, da obrne vsaj en nasprotni \u017Eeton. V spodnji poziciji lahko \u010Drni igralec igra na eno iz med petih mo\u017Enih potez, ozna\u010Denih z rumeno barvo. \u010De bo igral na kvardat ozna\u010Den s \u010Drnnim krogom, bo obrnil dva bela \u017Eetona."
-                Image:
-                    size_hint_y: None
-                    source: 'grafika/pozicija_ena.png'
-                    height: '130sp'
+                    text: "Reversi je preprosta igra za dva igralca na 8x8 igralni deski. Cilj je postaviti \u017Eeton na desko tako, da ujame\u0161 nasprotnikove \u017Eetone med svoje in jih tako obrne\u0161 v svojo barvo. Vsak \u017Eeton je na eni strani \u010Drn, na drugi strani pa bel. Vsak igralec je ene barve. Igra se za\u010Dne z dvema \u017Eetonoma vsake barve na deski. V vsaki potezi mora igralec polo\u017Eiti \u017Eeton na desko tako, da obrne vsaj en nasprotni \u017Eeton. V spodnji poziciji lahko \u010Drni igralec igra na eno iz med petih mo\u017Enih potez, ozna\u010Denih z rumeno barvo. \u010Ce bo igral na kvardat ozna\u010Den s rde\u010Dim krogom, bo obrnil dva bela \u017Eetona."
                 Label:
                     size_hint_y: None
                     text_size: self.width, None
@@ -333,7 +329,7 @@ ScreenManager:
                     markup: True
                     text:
                         "V novi poziciji ima beli mo\u017Eno potezo, da obrne dva \u010Drna \u017Eetona.\n\n\
-                        \u010De ni mo\u017Ene poteze, v kateri bi igralec lahko obrnil vsaj en nasprotnikov \u017Eeton, je na vrsti nasprotnik. Ko oba igralca nimate ve\u010D mo\u017Enih potez je igra kon\u010Dana. Zmagovalec je tisti, ki ima na deski ve\u010D svojih \u017Eetonov."
+                        \u010Ce ni mo\u017Ene poteze, v kateri bi igralec lahko obrnil vsaj en nasprotnikov \u017Eeton, je na vrsti nasprotnik. Ko oba igralca nimate ve\u010D mo\u017Enih potez je igra kon\u010Dana. Zmagovalec je tisti, ki ima na deski ve\u010D svojih \u017Eetonov."
         LepGumb:
             text: 'NAZAJ'
             size: '180sp', '70sp'
