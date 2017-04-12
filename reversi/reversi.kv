@@ -266,9 +266,10 @@ ScreenManager:
                 Rectangle:
                     size: self.size
                     pos: self.pos
-            BoxLayout:
+            GridLayout:
+                cols: 1
                 size_hint_y: None
-                height: sp(960)
+                height: self.minimum_height
                 orientation: 'vertical'
                 padding: sp(10)
                 spacing: sp(10)
@@ -293,7 +294,7 @@ ScreenManager:
                         [size=18sp]RAZVELJAVITEV[/size]\n\
                         Z uporabo gumba Razveljavi lahko vzamete nazaj kolikor potez \u017Eelite.\n\n\
                         [size=18sp]RAZMI\u0160LJANJE RA\u010CUNALNIKA[/size]\n\
-                        Pri vi\u0161jih zahtevnostih ra\u010Dunalnik porabi kar nekaj \u010Dasa za izra\u010Dun svoje poteze. Na vrhu ekrana bo vedno prikazano, kdo je na vrsti."
+                        Pri vi\u0161jih zahtevnostih ra\u010Dunalnik porabi kar nekaj \u010Dasa za izra\u010Dun svoje poteze. Na vrhu ekrana bo vedno prikazano, kdo je na vrsti.\n\n"
                 Naslov:
                     text: 'PRAVILA IGRE'
                     font_size: '60sp'
@@ -308,6 +309,10 @@ ScreenManager:
                     font_size: '16sp'
                     markup: True
                     text: "Reversi je preprosta igra za dva igralca na 8x8 igralni deski. Cilj je postaviti \u017Eeton na desko tako, da ujame\u0161 nasprotnikove \u017Eetone med svoje in jih tako obrne\u0161 v svojo barvo. Vsak \u017Eeton je na eni strani \u010Drn, na drugi strani pa bel. Vsak igralec je ene barve. Igra se za\u010Dne z dvema \u017Eetonoma vsake barve na deski. V vsaki potezi mora igralec polo\u017Eiti \u017Eeton na desko tako, da obrne vsaj en nasprotni \u017Eeton. V spodnji poziciji lahko \u010Drni igralec igra na eno iz med petih mo\u017Enih potez, ozna\u010Denih z rumeno barvo. \u010Ce bo igral na kvardat ozna\u010Den s rde\u010Dim krogom, bo obrnil dva bela \u017Eetona."
+                Image:
+                    source: 'grafika/pozicija_ena.png'
+                    size_hint_y: None
+                    height: '130sp'
                 Label:
                     size_hint_y: None
                     text_size: self.width, None
