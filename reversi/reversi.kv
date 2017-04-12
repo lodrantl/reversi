@@ -51,7 +51,7 @@ ScreenManager:
             on_release: root.manager.current = 'igra'
             pos_hint: {'center_x': 0.5, 'center_y': 0.52}
         LepGumb:
-            text: 'PRAVILA'
+            text: 'POMO\u010C'
             on_release: root.manager.current = 'pravila'
             pos_hint: {'center_x': 0.5, 'center_y': 0.32}
         LepGumb:
@@ -268,9 +268,10 @@ ScreenManager:
                     pos: self.pos
             BoxLayout:
                 size_hint_y: None
-                height: sp(1500)
+                height: sum([x.height for x in self.children]) + sp(280)
                 orientation: 'vertical'
                 padding: sp(10)
+                spacing: sp(10)
                 Naslov:
                     text: 'NAVODILA'
                     font_size: '60sp'
@@ -278,9 +279,11 @@ ScreenManager:
                     height: '63sp'
                     pos_hint: {'center_x': 0.5}
                 Label:
-                    text_size: self.size
                     color: app.tema.tekst_ozadje
                     font_size: '16sp'
+                    size_hint_y: None
+                    text_size: self.width, None
+                    size: self.texture_size
                     markup: True
                     text:
                         "[size=18sp]NASTAVITVE IGRE[/size]\n\
@@ -298,23 +301,33 @@ ScreenManager:
                     height: '63sp'
                     pos_hint: {'center_x': 0.5}
                 Label:
-                    text_size: self.size
+                    size_hint_y: None
+                    text_size: self.width, None
+                    size: self.texture_size
                     color: app.tema.tekst_ozadje
                     font_size: '16sp'
                     markup: True
                     text: "Reversi je preprosta igra za dva igralca na 8x8 igralni deski. Cilj je postaviti \u017Eeton na desko tako, da ujame\u0161 nasprotnikove \u017Eetone med svoje in jih tako obrne\u0161 v svojo barvo. Vsak \u017Eeton je na eni strani \u010Drn, na drugi strani pa bel. Vsak igralec je ene barve. Igra se za\u010Dne z dvema \u017Eetonoma vsake barve na deski. V vsaki potezi mora igralec polo\u017Eiti \u017Eeton na desko tako, da obrne vsaj en nasprotni \u017Eeton. V spodnji poziciji lahko \u010Drni igralec igra na eno iz med petih mo\u017Enih potez, ozna\u010Denih z rumeno barvo. \u010De bo igral na kvardat ozna\u010Den s \u010Drnnim krogom, bo obrnil dva bela \u017Eetona."
                 Image:
+                    size_hint_y: None
                     source: 'grafika/pozicija_ena.png'
+                    height: '130sp'
                 Label:
-                    text_size: self.size
+                    size_hint_y: None
+                    text_size: self.width, None
+                    size: self.texture_size
                     color: app.tema.tekst_ozadje
                     font_size: '16sp'
                     markup: True
                     text: "Po igrani potezi z dodanim \u010Drnim \u017Eetonom in dvema obrnjenima \u017Eetonoma je pozicija na deski naslednja:"
                 Image:
                     source: 'grafika/pozicija_dva.png'
+                    size_hint_y: None
+                    height: '130sp'
                 Label:
-                    text_size: self.size
+                    size_hint_y: None
+                    text_size: self.width, None
+                    size: self.texture_size
                     color: app.tema.tekst_ozadje
                     font_size: '16sp'
                     markup: True
