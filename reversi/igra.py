@@ -97,7 +97,7 @@ class Igra:
                     beli += 1
                 if j == Stanje.CRNO:
                     crni += 1
-        return (beli, crni)
+        return beli, crni
 
     def mozne_poteze(self):
         """

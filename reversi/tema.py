@@ -1,11 +1,22 @@
-from kivy.utils import get_color_from_hex as hex
+"""
+.. module:: reversi.tema
+.. moduleauthor:: Luka Lodrant <luka.lodrant@gmail.com>, Lenart Treven <lenart.treven44@gmail.com>
+
+Kivy barvna tema aplikacije
+
+"""
+
+from kivy.utils import get_color_from_hex as from_hex
 from kivy.properties import ListProperty
 from kivy.uix.widget import Widget
 
 
 class Tema(Widget):
-    deska = ListProperty()
-    deska_rob = ListProperty()
+    """
+    Kivy barvna tema aplikacije
+    """
+    deska = ListProperty(from_hex('#8BC34A'))
+    deska_rob = ListProperty(from_hex('#689F38'))
     ozadje = ListProperty()
     ozadje_temno = ListProperty()
     ozadje_svetlo = ListProperty()
@@ -18,12 +29,15 @@ class Tema(Widget):
     onemogoceno = ListProperty()
 
     def __init__(self, ime):
-        self.deska = hex('#8BC34A')
-        self.deska_rob = hex('#689F38')
+        super(Tema, self).__init__()
         self.nastavi(ime)
 
-
     def nastavi(self, ime):
+        """
+        Zamenja temo
+        :param ime: ime nove teme
+        """
+
         if ime == 'svetla':
             self.svetla()
         elif ime == 'modra':
@@ -32,38 +46,46 @@ class Tema(Widget):
             self.oranzna()
 
     def svetla(self):
-        self.ozadje = hex('#FFFFFF')
-        self.ozadje_temno = hex('#3F51B5')
-        self.ozadje_svetlo = hex('#6677E3')
-        self.senca = hex('#757575')
-        self.poudarjeno = hex('#8BC34A')
-        self.tekst_ozadje = hex('#3F51B5')
-        self.tekst_ozadje_temno = hex('#FFFFFF')
-        self.tekst_locila = hex('#FFFFFF')
-        self.locila = hex('#3F51B5')
-        self.onemogoceno = hex('#505050')
+        """
+        Belo ozadje z modrimi in zelnimi poudarki
+        """
+        self.ozadje = from_hex('#FFFFFF')
+        self.ozadje_temno = from_hex('#3F51B5')
+        self.ozadje_svetlo = from_hex('#6677E3')
+        self.senca = from_hex('#757575')
+        self.poudarjeno = from_hex('#8BC34A')
+        self.tekst_ozadje = from_hex('#3F51B5')
+        self.tekst_ozadje_temno = from_hex('#FFFFFF')
+        self.tekst_locila = from_hex('#FFFFFF')
+        self.locila = from_hex('#3F51B5')
+        self.onemogoceno = from_hex('#505050')
 
     def modra(self):
-        self.ozadje = hex('#3F51B5')
-        self.ozadje_temno = hex('#303F9F')
-        self.ozadje_svetlo = hex('#C5CAE9')
-        self.poudarjeno = hex('#8BC34A')
-        self.tekst_ozadje = hex('#FFFFFF')
-        self.tekst_ozadje_temno = hex('#FFFFFF')
-        self.senca = hex('#757575')
-        self.tekst_locila = hex('#212121')
-        self.locila = hex('#FFFFFF')
-        self.onemogoceno = hex('#AAAAAA')
+        """
+        Modro ozadje z zelenimi poudarki
+        """
+        self.ozadje = from_hex('#3F51B5')
+        self.ozadje_temno = from_hex('#303F9F')
+        self.ozadje_svetlo = from_hex('#C5CAE9')
+        self.poudarjeno = from_hex('#8BC34A')
+        self.tekst_ozadje = from_hex('#FFFFFF')
+        self.tekst_ozadje_temno = from_hex('#FFFFFF')
+        self.senca = from_hex('#757575')
+        self.tekst_locila = from_hex('#212121')
+        self.locila = from_hex('#FFFFFF')
+        self.onemogoceno = from_hex('#AAAAAA')
 
     def oranzna(self):
-        self.ozadje = hex('#FF5722')
-        self.ozadje_temno = hex('#E64A19')
-        self.ozadje_svetlo = hex('#FFCCBC')
-        self.senca = hex('#757575')
-        self.poudarjeno = hex('#8BC34A')
-        self.tekst_ozadje = hex('#FFFFFF')
-        self.tekst_ozadje_temno = hex('#FFFFFF')
-        self.tekst_locila = hex('#212121')
-        self.locila = hex('#FFFFFF')
-        self.onemogoceno = hex('#AAAAAA')
-
+        """
+        Oranžno ozadje z zelenimi poudarkis
+        """
+        self.ozadje = from_hex('#FF5722')
+        self.ozadje_temno = from_hex('#E64A19')
+        self.ozadje_svetlo = from_hex('#FFCCBC')
+        self.senca = from_hex('#757575')
+        self.poudarjeno = from_hex('#8BC34A')
+        self.tekst_ozadje = from_hex('#FFFFFF')
+        self.tekst_ozadje_temno = from_hex('#FFFFFF')
+        self.tekst_locila = from_hex('#212121')
+        self.locila = from_hex('#FFFFFF')
+        self.onemogoceno = from_hex('#AAAAAA')

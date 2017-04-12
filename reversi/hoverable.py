@@ -4,10 +4,9 @@ License: LGPL
 """
 __author__ = 'Olivier POYEN'
 
-
 from kivy.properties import BooleanProperty, ObjectProperty
 from kivy.core.window import Window
-from kivy.metrics import sp
+
 
 class HoverBehavior(object):
     """Hover behavior.
@@ -19,26 +18,26 @@ class HoverBehavior(object):
     """
 
     hovered = BooleanProperty(False)
-    border_point= ObjectProperty(None)
+    border_point = ObjectProperty(None)
     '''Contains the last relevant point received by the Hoverable. This can
     be used in `on_enter` or `on_leave` in order to know where was dispatched the event.
     '''
 
-    def __init__(self, **kwargs):
+    def __init__(self):
         self.register_event_type('on_enter')
         self.register_event_type('on_leave')
         Window.bind(mouse_pos=self.on_mouse_pos)
-        super(HoverBehavior, self).__init__(**kwargs)
+        super(HoverBehavior, self).__init__()
 
     def on_mouse_pos(self, *args):
         if not self.get_root_window():
-            return # do proceed if I'm not displayed <=> If have no parent
+            return  # do proceed if I'm not displayed <=> If have no parent
         pos = args[1]
-        #Next lines to_widget allow to compensate for relative layout
-        #spx, spy = sp(pos[0]), sp(pos[1])
+        # Next lines to_widget allow to compensate for relative layout
+        # spx, spy = sp(pos[0]), sp(pos[1])
         inside = self.collide_point(*self.to_widget(*pos))
         if self.hovered == inside:
-            #We have already done what was needed
+            # We have already done what was needed
             return
         self.border_point = pos
         self.hovered = inside
@@ -53,20 +52,25 @@ class HoverBehavior(object):
     def on_leave(self):
         pass
 
+
 from kivy.factory import Factory
+
 Factory.register('HoverBehavior', HoverBehavior)
 
-if __name__=='__main__':
+if __name__ == '__main__':
     from kivy.uix.floatlayout import FloatLayout
     from kivy.lang import Builder
     from kivy.uix.label import Label
     from kivy.base import runTouchApp
+
+
     class HoverLabel(Label, HoverBehavior):
         def on_enter(self, *args):
             print("You are in, through this point", self.border_point)
 
         def on_leave(self, *args):
             print("You left through this point", self.border_point)
+
 
     Builder.load_string('''
 <HoverLabel>:

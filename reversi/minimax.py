@@ -8,8 +8,10 @@ Algoritem Minimax z alfa-beta rezi
 
 import logging
 
-from igra import Stanje, Igra
+from igra import Stanje
 
+
+# Uteži uporabljene za ocenjevanje pozicije
 UTEZI = [
     [120, -20, 20, 5, 5, 20, -20, 120],
     [-20, -40, -5, -5, -5, -5, -40, -20],
@@ -59,7 +61,6 @@ class Minimax:
         self.jaz = self.igra.na_potezi
 
         # Poženemo minimax
-        i2 = self.igra.kopija()
         (poteza, vrednost) = self.alphabeta(self.globina, True)
 
         # Preverimo, da minimax in alfabeta vrneta enak rezultat
@@ -176,7 +177,6 @@ class Minimax:
                 # Če trenutni igralec nima možne poteze zamenjamo igralca
                 moznosti = self.igra.mozne_poteze()
                 if len(moznosti) == 0:
-                    logging.debug()
                     return self.alphabeta(globina, not maksimiziramo, alpha, beta)
 
                 # Naredimo eno stopnjo minimax

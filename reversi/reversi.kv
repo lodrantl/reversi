@@ -1,4 +1,4 @@
-#:kivy 1.9.1
+#:kivy 1.9.2
 #:import Stanje igra.Stanje
 #:import hex kivy.utils.get_color_from_hex
 
@@ -15,7 +15,8 @@ ScreenManager:
     PravilaZaslon:
         name: 'pravila'
 
-<MeniZaslon>:
+
+<MeniZaslon@Screen>:
     RelativeLayout:
         canvas:
             Color:
@@ -71,7 +72,7 @@ ScreenManager:
             on_release: app.stop()
             pos_hint: {'center_x': 0.5, 'center_y': 0.12}
 
-<NastavitveZaslon>:
+<NastavitveZaslon@Screen>:
     RelativeLayout:
         canvas:
             Color:
@@ -164,11 +165,11 @@ ScreenManager:
         LepGumb:
             text: 'IGRAJ'
             height: '80sp'
-            on_release: root.deska.nova_igra(root.radio_vrednost('tezavnost'), root.radio_vrednost('barva'))
+            on_release: root.deska.nova_igra(app.radio_vrednost('tezavnost'), app.radio_vrednost('barva'))
             on_release: root.manager.current = 'igra'
             pos_hint: {'center_x': 0.75, 'center_y': 0.1}
 
-<IgraZaslon>:
+<IgraZaslon@Screen>:
     deska: deska
     BoxLayout:
         canvas:
@@ -249,7 +250,7 @@ ScreenManager:
             size: self.width * (14 / 15), self.height * (14 / 15)
             pos: self.x + self.width *(1 / 30), self.y + self.height *(1 / 30)
         Color:
-            rgba: app.tema.ozadje  if root.stanje == Stanje.MOGOCE and root.mozno == '' else [0, 0, 0, 0]
+            rgba: app.tema.ozadje  if root.stanje == Stanje.MOGOCE and root.moznost == '' else [0, 0, 0, 0]
         Ellipse:
             size: self.width * (1 / 6), self.height * (1 / 6)
             pos: self.center_x - self.width *(1 / 12), self.center_y - self.height *(1 / 12)
@@ -258,11 +259,10 @@ ScreenManager:
     Image:
         color:
             [1, 1, 1, 1] if (root.stanje == Stanje.BELO or root.stanje == Stanje.CRNO) else \
-            [1, 1, 1, 0.5] if root.mozno else [0, 0, 0, 0]
+            [1, 1, 1, 0.5] if root.moznost else [0, 0, 0, 0]
         source:
-            'grafika/beli_zeton.png' if (root.stanje == Stanje.BELO or root.mozno == Stanje.BELO) else \
-            ('grafika/crni_zeton.png' if (root.stanje == Stanje.CRNO or root.mozno == Stanje.CRNO) else 'grafika/prazno.png')
-        #source: 'grafika/' + root.stanje + root.stil + '.png'
+            'grafika/beli_zeton.png' if (root.stanje == Stanje.BELO or root.moznost == Stanje.BELO) else \
+            ('grafika/crni_zeton.png' if (root.stanje == Stanje.CRNO or root.moznost == Stanje.CRNO) else 'grafika/prazno.png')
         mipmap: True
 
 <Deska>
@@ -276,7 +276,7 @@ ScreenManager:
             size: self.width + sp(10), self.height + sp(10)
             pos: - sp(5), -sp(5)
 
-<PravilaZaslon>:
+<PravilaZaslon@Screen>:
     BoxLayout:
         orientation: 'vertical'
         Label:

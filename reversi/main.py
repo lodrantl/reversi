@@ -2,33 +2,39 @@
 .. module:: reversi.main
 .. moduleauthor:: Luka Lodrant <luka.lodrant@gmail.com>, Lenart Treven <lenart.treven44@gmail.com>
 
-Glavni razred reversi aplikacije, vsebuje konfiguracijo uporabniškega vmesnika
+Glavni modul reversi aplikacije, vsebuje konfiguracijo uporabniškega vmesnika
 
 """
 
-import sys
-import os
 import logging
 
+logger = logging.getLogger('reversi_main')
+logger.setLevel(logging.DEBUG)
+
 # Spremeni trenutno mapo, če je aplikacija zagnana kot PyInstaller exe (dirty)
+import sys
+import os
+
 if getattr(sys, 'frozen', False):
     os.chdir(sys._MEIPASS)
 
-import kivy
-kivy.require('1.9.1')
-
 # Nastavi velikost okna
 from kivy.config import Config
+
 Config.set('graphics', 'width', '500')
 Config.set('graphics', 'height', '550')
 
+# Nastavi minimalno velikost okna
+from kivy.core.window import Window
+
+Window.minimum_width = 500
+Window.minimum_height = 550
+
 from kivy.app import App
-from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.anchorlayout import AnchorLayout
-from kivy.uix.widget import Widget
-from kivy.core.window import Window
-from kivy.properties import NumericProperty, ListProperty, OptionProperty, StringProperty, ObjectProperty, BooleanProperty
+from kivy.properties import NumericProperty, ListProperty, OptionProperty, StringProperty, ObjectProperty, \
+    BooleanProperty
 from kivy.uix.button import ButtonBehavior
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.modalview import ModalView
@@ -40,43 +46,14 @@ from racunalnik import Racunalnik
 from clovek import Clovek
 from tema import Tema
 
-# Nastavi minimalno velikost okna
-Window.minimum_width = 500
-Window.minimum_height = 550
-
-logger = logging.getLogger('reversi_main')
-logger.setLevel(logging.DEBUG)
-
-
-# Declare all application screens.
-class MeniZaslon(Screen):
-    pass
-
-
-class NastavitveZaslon(Screen):
-    def radio_vrednost(self, skupina):
-        gumb = [x for x in ToggleButton.get_widgets(skupina) if x.state == 'down']
-        if gumb:
-            return gumb[0].value
-        else:
-            raise Exception('Noben gumb ni izbran!!')
-
-
-class PravilaZaslon(Screen):
-    pass
-
-
-class IgraZaslon(Screen):
-    pass
-
 
 class Polje(ButtonBehavior, AnchorLayout, HoverBehavior):
     """
-    Razred vsake polja na plošči, hrani stanje in pa pozna svoje koordinate
+    Razred vsakega polja na plošči, hrani stanje in pozna svoje koordinate
     """
     koordinate = ListProperty()
     stanje = OptionProperty(Stanje.PRAZNO, options=[Stanje.BELO, Stanje.CRNO, Stanje.PRAZNO, Stanje.MOGOCE])
-    mozno = StringProperty('')
+    moznost = StringProperty('')
 
     def on_enter(self):
         """
@@ -84,15 +61,15 @@ class Polje(ButtonBehavior, AnchorLayout, HoverBehavior):
         :return:
         """
         if self.stanje == Stanje.MOGOCE:
-            self.mozno = self.parent.na_potezi
+            self.moznost = self.parent.na_potezi
 
     def on_leave(self):
         """
         Izbrišemo prosojen žeton
         :return:
         """
-        if self.mozno:
-            self.mozno = ''
+        if self.moznost:
+            self.moznost = ''
 
     def on_press(self):
         """
@@ -101,8 +78,8 @@ class Polje(ButtonBehavior, AnchorLayout, HoverBehavior):
         """
 
         if self.stanje == Stanje.MOGOCE:
-            self.stil = ''
-            self.parent.odigraj_potezo(self.koordinate)
+            self.moznost = ''
+            self.parent.igralca[self.parent.na_potezi].klik(self.koordinate)
 
     def nastavi(self, barva):
         """
@@ -143,22 +120,23 @@ class Deska(RelativeLayout):
                 self.add_widget(t)
                 self.polja[i].append(t)
 
-    def nova_igra(self, tezavnost=False, barva=False):
-        if tezavnost is not False and barva is not False:
-            if barva == Stanje.BELO:
-                self.ime_belega = 'Igralec'
-                self.ime_crnega = 'Računalnik'
-            else:
-                self.ime_crnega = 'Igralec'
-                self.ime_belega = 'Računalnik'
+    def nova_igra(self, tezavnost=None, barva=None):
+        """
+        Začne novo igro
+        :param tezavnost: tezavnost racunalnika (od 0 do 2) oz. None v primeru igre za 2 igralca
+        :param barva: barva cloveskega igralca oz. None
+        """
+        if tezavnost is not None and barva is not None:
+            self.ime_belega = 'Igralec' if barva == Stanje.BELO else 'Računalnik'
+            self.ime_crnega = 'Računalnik' if barva == Stanje.BELO else 'Igralec'
 
-            self.igralca[barva] = Clovek()
-            self.igralca[Stanje.obrni(barva)] = Racunalnik(self.odigraj_potezo, tezavnost, Stanje.obrni(barva))
+            self.igralca[barva] = Clovek(self.odigraj_potezo)
+            self.igralca[Stanje.obrni(barva)] = Racunalnik(self.odigraj_potezo, tezavnost)
         else:
             self.ime_belega = 'Igralec 1'
             self.ime_crnega = 'Igralec 2'
-            self.igralca[Stanje.CRNO] = Clovek()
-            self.igralca[Stanje.BELO] = Clovek()
+            self.igralca[Stanje.CRNO] = Clovek(self.odigraj_potezo)
+            self.igralca[Stanje.BELO] = Clovek(self.odigraj_potezo)
 
         self.igra = Igra()
         self.osvezi()
@@ -184,7 +162,7 @@ class Deska(RelativeLayout):
     @mainthread
     def odigraj_potezo(self, koordinate):
         """
-        Odigra potezo na pritisnjenem polju
+        Odigra potezo na pritisnjenem polju v glavni niti
         :param koordinate: koordinate, tuple (x, y)
         :return:
         """
@@ -193,52 +171,84 @@ class Deska(RelativeLayout):
         self.osvezi()
 
         if self.igra.koncana:
-            po = PonoviIgroPopup(deska = self)
+            po = PonoviIgroPopup(deska=self)
             po.open()
         else:
             self.igralca[self.na_potezi].zacni_potezo(self.igra)
 
     def ponovi_igro(self):
+        """
+        Začne novo igro z istimi igralci
+        """
         self.igra = Igra()
         self.osvezi()
         self.igralca[self.na_potezi].zacni_potezo(self.igra)
 
     def koncaj_igro(self):
+        """
+        Konča igro in te vrne na začetni zaslon
+        """
         for i in self.igralca.values():
             if type(i) == Racunalnik:
                 i.prekini()
         self.manager.current = 'meni'
 
     def koncaj_igro_popup(self):
+        """
+        Prikaže dialog z vprašanjem ali ste prepričani zapustit igro
+        """
         po = KoncajIgroPopup(deska=self)
         po.open()
 
     def razveljavi(self):
+        """
+        Razveljavi zadnjo človeško potezo
+        """
         self.igra.razveljavi()
         if type(self.igralca[self.igra.na_potezi]) == Racunalnik:
             self.igra.razveljavi()
         self.osvezi()
 
 
-
 class PonoviIgroPopup(ModalView):
+    """
+    Prikaže dialog z imenom zmagovalca in vprašanjem o ponovitvi igre
+    """
     deska = ObjectProperty()
+
     def __init__(self, **kwargs):
         super(PonoviIgroPopup, self).__init__(**kwargs)
         self.deska = kwargs['deska']
 
 
 class KoncajIgroPopup(ModalView):
+    """
+    Prikaže dialog z vprašanjem o končanju igre
+    """
     deska = ObjectProperty()
+
     def __init__(self, **kwargs):
         super(KoncajIgroPopup, self).__init__(**kwargs)
         self.deska = kwargs['deska']
+
 
 class ReversiApp(App):
     """
     Glavni Kivy Application razred, definira ScreenManager z našimi zasloni in vsebuje par uporabnih konstant
     """
     tema = ObjectProperty(Tema('svetla'))
+
+    @staticmethod
+    def radio_vrednost(skupina):
+        """      
+        :param skupina: ime skupine ToggleButtonov
+        :return: trenutno vrednost skupine
+        """
+        gumb = [x for x in ToggleButton.get_widgets(skupina) if x.state == 'down']
+        if gumb:
+            return gumb[0].value
+        else:
+            raise Exception('Noben gumb ni izbran!!')
 
     def build(self):
         self.icon = 'grafika/ikona.png'
