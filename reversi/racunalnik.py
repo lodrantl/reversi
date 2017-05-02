@@ -10,7 +10,7 @@ import random
 import time
 import threading
 
-from minimax import Minimax
+from mislec import Mislec
 
 
 class Racunalnik:
@@ -27,7 +27,7 @@ class Racunalnik:
         self.tezavnost = tezavnost
 
         if self.tezavnost > 0:
-            self.minimax = Minimax(self.tezavnost + 2, self.callback)
+            self.mislec =  Mislec(self.tezavnost + 2, self.callback)
 
     def zacni_potezo(self, igra):
         """
@@ -46,14 +46,14 @@ class Racunalnik:
             poteza = random.choice(list(igra.mozne_poteze()))
             self.callback(poteza)
         else:
-            self.minimax.izracunaj_potezo(igra.kopija())
+            self.mislec.izracunaj_potezo(igra.kopija())
 
     def prekini(self):
         """
         Prekine minimax 
         """
         if self.tezavnost > 0:
-            self.minimax.prekini()
+            self.mislec.prekini()
 
     def klik(self, koordinate):
         # Ne naredim nič saj sem računalnik

@@ -24,13 +24,13 @@ UTEZI = [
 ]
 
 
-class Minimax:
+class Mislec:
     """
-    Minimax algoritem predstavljen kot objekt, uprablja igro opisano v igra.py,
+    Minimax in AlphaBeta algoritma predstavljena kot objekt, uprablja igro opisano v igra.py,
     nima pa dostopa do GUI elementov, saj teče v svoji niti.
     """
 
-    def __init__(self, globina, callback):
+    def __init__(self, globina, callback, alfabeta = True):
         """
         :param globina: globina do katere algoritem preiskuje drevo
         :param callback: funkcija, ki jo ob koncu pokliče z koordinatami izbrane poteze (npr. self.callback((1,2)))
@@ -38,6 +38,7 @@ class Minimax:
         """
         self.globina = globina
         self.callback = callback
+        self.uporabi_ab = alfabeta
 
         self.prekinitev = False  # ali moramo končati?
         self.igra = None  # objekt, ki opisuje igro (ga dobimo kasneje)
@@ -60,13 +61,11 @@ class Minimax:
         self.prekinitev = False  # Glavno vlakno bo to nastvilo na True, če moramo nehati
         self.jaz = self.igra.na_potezi
 
-        # Poženemo minimax
-        (poteza, vrednost) = self.alphabeta(self.globina, True)
-
-        # Preverimo, da minimax in alfabeta vrneta enak rezultat
-        # self.igra = i2
-        # (poteza2, vrednost2) = self.minimax(self.globina, True)
-        # assert poteza == poteza2, "{}, {}".format(poteza, poteza2)
+        # Poženemo algoritem
+        if self.uporabi_ab:
+            (poteza, vrednost) = self.alphabeta(self.globina, True)
+        else:
+            (poteza, vrednost) = self.minimax(self.globina, True)
 
         # Odstranimo trenutno stanje igre
         self.jaz = None
@@ -110,9 +109,9 @@ class Minimax:
         if zmagovalec:
             # Igre je konec, vrnemo njeno vrednost
             if zmagovalec == self.jaz:
-                return (None, Minimax.ZMAGA)
+                return (None, Mislec.ZMAGA)
             elif zmagovalec == Stanje.obrni(self.jaz):
-                return (None, -Minimax.ZMAGA)
+                return (None, -Mislec.ZMAGA)
             else:
                 return (None, 0)
         else:
@@ -124,7 +123,7 @@ class Minimax:
                 if maksimiziramo:
                     # Maksimiziramo
                     najboljsa_poteza = None
-                    vrednost_najboljse = -Minimax.NESKONCNO
+                    vrednost_najboljse = -Mislec.NESKONCNO
                     for p in self.igra.mozne_poteze():
                         self.igra.odigraj_potezo(p)
                         vrednost = self.minimax(globina - 1, not maksimiziramo)[1]
@@ -135,7 +134,7 @@ class Minimax:
                 else:
                     # Minimiziramo
                     najboljsa_poteza = None
-                    vrednost_najboljse = Minimax.NESKONCNO
+                    vrednost_najboljse = Mislec.NESKONCNO
                     for p in self.igra.mozne_poteze():
                         self.igra.odigraj_potezo(p)
                         vrednost = self.minimax(globina - 1, not maksimiziramo)[1]
@@ -164,9 +163,9 @@ class Minimax:
         if zmagovalec:
             # Igre je konec, vrnemo njeno vrednost
             if zmagovalec == self.jaz:
-                return (None, Minimax.ZMAGA)
+                return (None, Mislec.ZMAGA)
             elif zmagovalec == Stanje.obrni(self.jaz):
-                return (None, -Minimax.ZMAGA)
+                return (None, -Mislec.ZMAGA)
             else:
                 return (None, 0)
         else:
@@ -183,7 +182,7 @@ class Minimax:
                 if maksimiziramo:
                     # Maksimiziramo
                     najboljsa_poteza = None
-                    vrednost_najboljse = -Minimax.NESKONCNO
+                    vrednost_najboljse = -Mislec.NESKONCNO
                     for p in moznosti:
                         self.igra.odigraj_potezo(p)
                         vrednost = self.alphabeta(globina - 1, not maksimiziramo, alpha, beta)[1]
@@ -197,7 +196,7 @@ class Minimax:
                 else:
                     # Minimiziramo
                     najboljsa_poteza = None
-                    vrednost_najboljse = Minimax.NESKONCNO
+                    vrednost_najboljse = Mislec.NESKONCNO
                     for p in moznosti:
                         self.igra.odigraj_potezo(p)
                         vrednost = self.alphabeta(globina - 1, not maksimiziramo, alpha, beta)[1]
