@@ -10,6 +10,20 @@ Reversi igra napisana v Python ogrodju Kivy.
 * [macOS](https://s3-eu-west-1.amazonaws.com/reversi-nightlies/reversi-v0.1-nightly-osx.dmg)
 * [Linux](https://s3-eu-west-1.amazonaws.com/reversi-nightlies/reversi-v0.1-nightly-linux)
 
+## Dependencies
+* Linux
+    ```bash
+    sudo apt-get install -y  ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev
+    ```
+* macOS - ima probleme, ker aplikacija ni podpisana, potrebno je začasno izklopiti GateKeeper
+    ```bash
+    sudo spctl --master-disable
+    
+    UPORABLJAJ APLIKACIJO
+  
+    sudo spctl --master-enable
+    ```
+
 ## Priprava okolja
 Razvojno okolje bomo nastavili z Anacondo, kasneje pa bomo aplikacijo zapakirali z PyInstaller oz. cx_freeze.
 
