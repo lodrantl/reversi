@@ -25,7 +25,10 @@ brew install upx
 python -m pip install pyinstaller pytest
 
 #Install kivy master branch
-USE_OSX_FRAMEWORKS=0 python -m pip install https://github.com/kivy/kivy/archive/master.zip
+#USE_OSX_FRAMEWORKS=0 python -m pip install https://github.com/kivy/kivy/archive/master.zip
+
+#Install kivy stable
+USE_OSX_FRAMEWORKS=0 python -m pip install kivy
 
 #Workaround for https://github.com/travis-ci/travis-ci/issues/6522
 #Turn off exit on failure.

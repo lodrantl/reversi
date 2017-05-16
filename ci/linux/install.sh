@@ -17,7 +17,10 @@ pip install Cython==0.23
 pip install pygments docutils pyinstaller
 
 #Install kivy master branch
-pip install git+https://github.com/kivy/kivy.git@master
+#pip install git+https://github.com/kivy/kivy.git@master
+
+#Install stable kivy
+pip install kivy
 
 #Workaround for https://github.com/travis-ci/travis-ci/issues/6522
 #Turn off exit on failure.

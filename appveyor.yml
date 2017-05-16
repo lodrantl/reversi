@@ -47,8 +47,11 @@ install:
   - "%CMD_IN_ENV% pip install pyinstaller pytest"
 
   # Install development kivy wheel
-  - "curl -fsS -o Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl https://kivy.org/downloads/appveyor/kivy/Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl"
-  - "pip install Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl"
+  #- "curl -fsS -o Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl https://kivy.org/downloads/appveyor/kivy/Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl"
+  #- "pip install Kivy-1.9.2.dev0-cp35-cp35m-win%PYTHON_ARCH%.whl"
+
+  # Install stable kivy wheel
+  - "pip install kivy"
 
   # Enable remote desktop (OpenGL fix)
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-desktop.ps1'))
