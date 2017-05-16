@@ -73,10 +73,10 @@ if sys.platform == "linux" or sys.platform == "linux2":
           a.datas,
           Tree(os.path.join('reversi', '')),
           name='reversi',
-          debug=True,
+          debug=False,
           strip=False,
           upx=True,
-          console=True)
+          console=False)
 
 elif sys.platform == "darwin":
     exe = EXE(pyz,
@@ -113,8 +113,8 @@ elif sys.platform == "win32":
               Tree(os.path.join('reversi', '')),
               *[Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],
               name='reversi',
-              debug=True,
+              debug=False,
               strip=False,
               upx=True,
-              console=True,
+              console=False,
               icon=os.path.join('reversi', 'grafika', 'ikona.ico'))
