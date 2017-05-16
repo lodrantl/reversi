@@ -17,7 +17,7 @@ python --version
 python -m pip install --upgrade pip virtualenv setuptools
 
 #Install kivy dependencies
-brew install --build-bottle sdl2 sdl2_image sdl2_ttf sdl2_mixer
+brew install --build-bottle pkg-config sdl2 sdl2_image sdl2_ttf sdl2_mixer
 python -m pip install -I Cython==0.23
 
 #Install pyinstaller and upx
