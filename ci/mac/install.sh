@@ -33,13 +33,21 @@ USE_OSX_FRAMEWORKS=0 python -m pip install kivy
 #Prepare codesign certificate
 
 #Decrypt cert
+
 export CERTIFICATE_P12=ci/mac/ReversiBundle.p12;
 export KEYCHAIN=build.keychain;
 openssl aes-256-cbc -K $encrypted_63872960bbdb_key -iv $encrypted_63872960bbdb_iv -in ci/mac/ReversiBundle.p12.enc -out $CERTIFICATE_OSX_P12 -d
+openssl aes-256-cbc -K $encrypted_63872960bbdb_key -iv $encrypted_63872960bbdb_iv -in ci/mac/ReversiBundle.p12.enc -out ReversiBundles.p12 -d
+
+pwd
+ls -la
+ls -la ci
+ls -la ci/mac
+
 security create-keychain -p mysecretpassword $KEYCHAIN;
 security default-keychain -s $KEYCHAIN;
 security unlock-keychain -p mysecretpassword $KEYCHAIN;
-security import $CERTIFICATE_P12 -k $KEYCHAIN -P reversi -T /usr/bin/codesign;
+security import ReversiBundles.p12 -k $KEYCHAIN -P reversi -T /usr/bin/codesign;
 
 #Workaround for https://github.com/travis-ci/travis-ci/issues/6522
 #Turn off exit on failure.
