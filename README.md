@@ -15,7 +15,7 @@ Reversi igra napisana v Python ogrodju Kivy.
     ```bash
     sudo apt-get install -y  ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev
     ```
-* macOS - ima probleme, ker aplikacija ni podpisana, potrebno je začasno izklopiti GateKeeper
+* ~~macOS - ima probleme, ker aplikacija ni podpisana, potrebno je začasno izklopiti GateKeeper~~ - Aplikacija je sedaj podpisana z self generated ključem, kar pomeni, da če v nastavitvah varnosti klikne Open anyway, bo aplikacija delovala.
     ```bash
     sudo spctl --master-disable
     

@@ -7,7 +7,7 @@ python -m pytest
 python -m PyInstaller -y reversi.spec
 
 # CodeSign the app
-codesign --deep --force --verbose --sign ReversiCodeSign dist/reversi.app
+codesign --deep --force --verbose=4 --keychain=build.keychain --sign=ReversiCodeSign dist/reversi.app
 
 # Build dmg
 hdiutil create -srcfolder dist/reversi.app dist/reversi.dmg
