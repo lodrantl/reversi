@@ -10,7 +10,7 @@ brew outdated pyenv || brew upgrade pyenv
 #Prepare codesign certificate
 export CERTIFICATE_P12=ci/mac/ReversiBundle.p12;
 export KEYCHAIN=build.keychain;
-openssl aes-256-cbc -K $encrypted_80406b3fc467_key -iv $encrypted_80406b3fc467_iv -in ci/mac/ReversiBundle.p12.enc -out $CERTIFICATE_P1 -d
+openssl aes-256-cbc -K $encrypted_80406b3fc467_key -iv $encrypted_80406b3fc467_iv -in ci/mac/ReversiBundle.p12.enc -out $CERTIFICATE_P12 -d
 
 pwd
 ls -la
